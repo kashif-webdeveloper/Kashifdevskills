@@ -1,17 +1,15 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Kashif Dawar | Full-Stack Web Development & Expert SEO Services</title>
-  
   <meta name="description" content="Kashif Dawar: Full-Stack Developer & SEO Specialist. Building high-ranking, mobile-friendly websites with fast-loading, secure web solutions for your business.">
-  
-  <meta name="keywords" content="Kashif Dawar, Full-Stack Developer, Web Development, React, Node.js, Technical SEO, Site Speed, Mobile-Friendly, Web Solutions, Portfolio">
-  
   <link rel="canonical" href="[YOUR_LIVE_URL_HERE]">
   
-  <meta name="robots" content="index, follow">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     /* ================= CSS Variables ================= */
     :root {
@@ -20,403 +18,389 @@
       --text-color: #2c3e50;
       --background-color: #f8f9fa;
       --card-bg: #ffffff;
-      --shadow-color: rgba(0,0,0,0.08);
-      --font-base: 'Arial', sans-serif;
+      --shadow-color: rgba(0,0,0,0.1);
+      --font-base: 'Poppins', sans-serif;
       --radius: 15px;
-      --transition-speed: 0.3s;
+      --white-text: #ffffff;
     }
-    /* ================= Reset & Global ================= */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: var(--font-base); background: var(--background-color); color: var(--text-color); line-height: 1.6; scroll-behavior: smooth; }
-a { text-decoration: none; color: inherit; }
-h1, h2, h3 { font-weight: 700; }
-ul { list-style: none; padding-left: 0; }
-li { padding-left: 25px; margin-bottom: 12px; position: relative; }
-li::before { content: "✔️"; position: absolute; left: 0; }
 
-/* ================= Navbar ================= */
-.navbar {
-  position: sticky;
-  top: 0;
-  background: white;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding: 15px;
-  box-shadow: 0 3px 15px var(--shadow-color);
-  z-index: 999;
-  transition: background var(--transition-speed);
-}
-.navbar a { font-weight: bold; color: var(--primary-color); transition: color var(--transition-speed); }
-.navbar a.active, .navbar a:hover { color: var(--secondary-color); }
+    /* ================= Global Reset ================= */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: var(--font-base); background: var(--background-color); color: var(--text-color); line-height: 1.6; overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    ul { list-style: none; }
 
-/* ================= Header ================= */
-.header {
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-  color: white;
-  text-align: center;
-  padding: 100px 20px 60px;
-  border-radius: 0 0 50% 50% / 20%;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.header__title { font-size: 3em; text-shadow: 1px 1px 6px rgba(0,0,0,0.2); }
-.header__subtitle { font-size: 1.2em; opacity: 0.85; }
+    /* ================= CRITICAL FIX: Navbar & Mobile Menu ================= */
+    .navbar {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.98); /* Slightly more opaque to prevent see-through issues */
+      padding: 15px 30px;
+      box-shadow: 0 4px 20px var(--shadow-color);
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-/* ================= Section ================= */
-.section {
-  max-width: 1100px;
-  margin: 40px auto;
-  padding: 40px 30px;
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 25px var(--shadow-color);
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-.section:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
-.section__title {
-  text-align: center;
-  color: var(--primary-color);
-  font-size: 2em;
-  margin-bottom: 25px;
-  position: relative;
-}
-.section__title::after {
-  content: "";
-  display: block;
-  width: 60px;
-  height: 3px;
-  background: var(--primary-color);
-  margin: 10px auto 0;
-  border-radius: 2px;
-}
+    .navbar__logo { font-size: 1.5em; font-weight: 700; color: var(--secondary-color); }
+    
+    /* Desktop Links */
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a { font-weight: 600; color: var(--primary-color); transition: 0.3s; }
+    .nav-links a:hover { color: var(--secondary-color); }
 
-/* ================= Tech Grid ================= */
-.tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-.tech-card {
-  background: linear-gradient(145deg, #ffffff, #e8f0fe);
-  padding: 30px 20px;
-  border-radius: var(--radius);
-  text-align: center;
-  box-shadow: 0 8px 20px var(--shadow-color);
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-}
-.tech-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
-.tech-card__title { color: var(--primary-color); margin-bottom: 12px; font-size: 1.4em; }
-.tech-card__item { color: #34495e; margin-bottom: 6px; font-size: 0.95em; }
+    /* Hamburger Button */
+    .menu-toggle { display: none; background: none; border: none; font-size: 2em; cursor: pointer; color: var(--primary-color); }
 
-/* ================= Skill Bars ================= */
-/* Added relative positioning to parent skill-bar to correctly position the text */
-.skill-bar { margin: 15px 0; background: #e0e0e0; border-radius: var(--radius); overflow: hidden; height: 25px; position: relative; }
+    /* MOBILE DRAWER FIX: Using 'fixed' prevents layout breaking */
+    .nav-drawer {
+      display: none; /* Hidden by default */
+      position: fixed; 
+      top: 70px; /* Below navbar */
+      right: 0;
+      width: 260px;
+      height: auto;
+      background: var(--card-bg);
+      box-shadow: -5px 10px 20px rgba(0,0,0,0.1);
+      padding: 20px;
+      border-radius: 0 0 0 var(--radius);
+      z-index: 999;
+    }
+    
+    .nav-drawer.active { display: block; animation: slideIn 0.3s ease-out; }
+    .nav-drawer a { display: block; padding: 12px 0; border-bottom: 1px solid #f0f0f0; font-weight: 600; color: var(--text-color); }
+    .nav-drawer a:last-child { border-bottom: none; }
 
-/* Modified skill-bar__fill to remove text alignment and rely on inner span */
-.skill-bar__fill {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-  /* Removed flex properties here */
-  /* color: white; <-- Text color now managed by separate element */
-  font-weight: bold;
-  border-radius: var(--radius);
-  transition: width 1.5s ease-in-out;
-}
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-/* New style for the text overlay to ensure visibility */
-.skill-bar__text {
-  position: absolute;
-  top: 0;
-  right: 10px; /* Aligned to the right edge of the parent bar */
-  height: 100%;
-  line-height: 25px; /* Centers text vertically */
-  font-weight: bold;
-  color: var(--text-color); /* Default text color */
-  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); /* Slight shadow for visibility */
-  z-index: 2; /* Ensures text is on top of the fill */
-}
+    @media(max-width: 768px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+    }
 
-/* Style for text that is covered by the fill */
-.skill-bar__fill .skill-bar__text {
-  color: white;
-  text-shadow: none;
-}
+    /* ================= Header (Hero) ================= */
+    header.header { 
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); 
+      color: var(--white-text); 
+      text-align: center; 
+      padding: 80px 20px 60px; 
+      border-radius: 0 0 50% 50% / 15px; /* Subtle curve */
+      margin-bottom: 40px;
+    }
+    .header__title { font-size: 2.8em; margin-bottom: 10px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    .header__subtitle { font-size: 1.1em; opacity: 0.9; max-width: 600px; margin: 0 auto; }
 
+    /* ================= Sections ================= */
+    main section { 
+      max-width: 1100px; 
+      margin: 0 auto 60px; 
+      padding: 30px; 
+      /* Removing card background from section itself for cleaner look on mobile */
+    }
+    .section__title { text-align: center; color: var(--primary-color); font-size: 2em; margin-bottom: 40px; font-weight: 700; }
+    
+    /* ================= Tech Grid (Arsenal) ================= */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+    .tech-card { 
+      background: white; 
+      padding: 25px; 
+      border-radius: var(--radius); 
+      box-shadow: 0 5px 15px var(--shadow-color); 
+      text-align: center; 
+      border-top: 4px solid var(--primary-color);
+    }
+    .tech-card__title { color: var(--secondary-color); margin-bottom: 15px; font-size: 1.3em; }
+    .tech-card__item { color: #555; margin-bottom: 8px; font-size: 0.95em; }
 
-/* ================= Portfolio ================= */
-.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-.portfolio-card {
-  background: var(--card-bg);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 8px 20px var(--shadow-color);
-  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
-  cursor: pointer;
-}
-.portfolio-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(0,0,0,0.12); }
-.portfolio-card img { width: 100%; display: block; }
-.portfolio-card__content { padding: 20px; }
-.portfolio-card__title { font-size: 1.2em; color: var(--primary-color); margin-bottom: 10px; }
-.portfolio-card__desc { font-size: 0.95em; color: #34495e; }
+    /* ================= FIXED Skill Bars (Contrast Issue) ================= */
+    .skill-bar { 
+      margin: 20px 0; 
+      background: #e0e0e0; 
+      border-radius: 20px; 
+      overflow: hidden; 
+      height: 35px; 
+      position: relative; 
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .skill-bar__text-overlay { 
+      position: absolute; 
+      width: 100%; 
+      height: 100%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      padding: 0 20px; 
+      font-weight: 700; 
+      z-index: 2; 
+      /* FIX: White text with shadow for perfect readability */
+      color: var(--white-text); 
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    .skill-bar__fill { 
+      height: 100%; 
+      width: 0; 
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); 
+      border-radius: 20px; 
+      transition: width 1.5s ease-in-out; 
+    }
 
-/* ================= Buttons ================= */
-.btn {
-  display: inline-block;
-  background: var(--primary-color);
-  color: #fff;
-  border: none;
-  padding: 15px 35px;
-  border-radius: 50px;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background var(--transition-speed), transform var(--transition-speed);
-}
-.btn:hover { background: var(--secondary-color); transform: scale(1.05); }
+    /* ================= Portfolio (Beautiful Content) ================= */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+    .portfolio-card { 
+      background: white; 
+      border-radius: var(--radius); 
+      overflow: hidden; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+      transition: transform 0.3s; 
+    }
+    .portfolio-card:hover { transform: translateY(-5px); }
+    .portfolio-card img { width: 100%; height: 220px; object-fit: cover; }
+    .portfolio-card__content { padding: 25px; }
+    .portfolio-card__title { font-size: 1.4em; color: var(--primary-color); margin-bottom: 15px; }
 
-/* ================= Modal ================= */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.6);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-.modal.active { display: flex; }
-.modal-content {
-  background: var(--card-bg);
-  padding: 30px 20px;
-  border-radius: var(--radius);
-  max-width: 500px;
-  width: 90%;
-  text-align: center;
-  position: relative;
-}
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  font-size: 1.5em;
-  font-weight: bold;
-  color: var(--primary-color);
-}
+    /* The "Box Sequence" List Style */
+    .project-box-list { margin-top: 15px; }
+    .project-box-list li {
+      background: #f8f9fa;
+      border-left: 4px solid var(--secondary-color);
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      border-radius: 0 8px 8px 0;
+    }
+    .project-box-list strong { display: block; color: var(--text-color); font-weight: 700; }
 
-/* ================= Footer ================= */
-footer {
-  text-align: center;
-  padding: 30px 20px;
-  font-size: 0.95em;
-  color: #7f8c8d;
-  background: #f1f3f6;
-  border-radius: var(--radius);
-  margin-top: 40px;
-}
+    .portfolio-card__links { margin-top: 20px; display: flex; gap: 15px; }
+    .link-btn { 
+      font-size: 0.9em; font-weight: 600; color: var(--primary-color); border: 1px solid var(--primary-color); padding: 8px 15px; border-radius: 5px; transition: 0.3s; 
+    }
+    .link-btn:hover { background: var(--primary-color); color: white; }
 
-/* ================= Animations ================= */
-.fade-in { opacity: 0; transform: translateY(20px); transition: all 0.8s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+    /* ================= Contact & Footer ================= */
+    .btn-primary { 
+      background: var(--primary-color); color: white; border: none; padding: 15px 40px; 
+      border-radius: 50px; font-size: 1.1em; font-weight: 600; cursor: pointer; 
+      box-shadow: 0 5px 15px rgba(37, 117, 252, 0.3); transition: 0.3s; 
+    }
+    .btn-primary:hover { background: var(--secondary-color); transform: scale(1.05); }
 
-/* ================= Responsive ================= */
-@media(max-width:768px){
-  .header__title { font-size: 2.2em; }
-  .section { padding: 30px 20px; }
-  .navbar { flex-direction: column; gap: 15px; }
-}
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000; }
+    .modal.active { display: flex; }
+    .modal-content { background: white; padding: 40px; border-radius: var(--radius); width: 90%; max-width: 400px; text-align: center; position: relative; }
+    .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5em; cursor: pointer; }
 
+    footer { text-align: center; padding: 40px 20px; color: #888; font-size: 0.9em; background: #f1f3f6; }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: 0.8s; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
   </style>
-  
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Kashif Dawar",
-    "url": "[YOUR_LIVE_URL_HERE]",
-    "email": "kashifdawarkashi@gmail.com",
-    "jobTitle": "Full-Stack Web Developer & SEO Specialist",
-    "description": "Expert in building scalable web applications and mastering technical SEO for higher organic traffic.",
-    "sameAs": [
-      "https://www.linkedin.com/in/kashif-dawar",
-      "https://github.com/kashifdawar"
-    ],
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+92-310-2681613",
-      "contactType": "Personal"
-    }
+    "jobTitle": "Full-Stack Developer",
+    "url": "[YOUR_URL]"
   }
   </script>
 </head>
 <body>
-  
+
   <nav class="navbar">
-    <a href="#about" title="About Kashif Dawar, Full-Stack Developer and SEO Specialist">About</a>
-    <a href="#arsenal" title="Kashif's Full-Stack Arsenal and Tech Stack">Stack</a>
-    <a href="#skills" title="Kashif Dawar's Technical Skills and SEO Expertise">Skills</a>
-    <a href="#portfolio" title="Kashif Dawar's Development Portfolio">Portfolio</a>
-    <a href="#contact" title="Contact Kashif Dawar for web development projects">Contact</a>
+    <div class="navbar__logo">Kashif Dawar</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#arsenal">Stack</a>
+      <a href="#skills">Skills</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">&#9776;</button>
+    
+    <div class="nav-drawer" id="mobile-drawer">
+      <a href="#about" onclick="toggleMenu()">About Me</a>
+      <a href="#arsenal" onclick="toggleMenu()">My Stack</a>
+      <a href="#skills" onclick="toggleMenu()">Expertise</a>
+      <a href="#portfolio" onclick="toggleMenu()">Projects</a>
+      <a href="#contact" onclick="toggleMenu()">Get in Touch</a>
+    </div>
   </nav>
-  
+
   <header class="header">
-    <h1 class="header__title">Kashif Dawar – Full-Stack Web Development & Expert SEO</h1>
-    <p class="header__subtitle">Transforming innovative ideas into responsive, **Mobile-Friendly** web solutions with **Technical SEO** focus.</p>
-    <p class="header__subtitle">Specializing in building **scalable, secure** applications with a **Fast Loading** experience.</p>
+    <h1 class="header__title">Full-Stack Web & SEO</h1>
+    <p class="header__subtitle">I build **mobile-friendly**, **scalable** applications with a focus on **Technical SEO** and **Fast Loading** speeds.</p>
   </header>
   
-  <section class="section fade-in" id="about">
-    <h2 class="section__title">About Me: Your SEO-Conscious Developer</h2>
-    <ul>
-      <li><strong>Experienced Developer:</strong> Hands-on experience building **scalable, secure** web applications with a focus on **Crawlability and Indexability**.</li>
-      <li><strong>Technical Proficiency:</strong> Mastery of frontend and backend technologies for seamless integration and **site speed** optimization.</li>
-      <li><strong>Problem Solver:</strong> Efficient solutions to complex development challenges, leveraging analytics for **improved conversion rate**.</li>
-    </ul>
-    <p style="text-align: center; margin-top: 20px;">
-      Discover the tools I use in my <a href="#arsenal" title="View Kashif's Full-Stack Arsenal">Full-Stack Arsenal</a>.
-    </p>
-  </section>
-  
-  <section class="section fade-in" id="arsenal">
-    <h2 class="section__title">My Full-Stack Arsenal for High-Ranking Websites</h2>
-    <div class="tech-grid">
-      <div class="tech-card">
-        <h3 class="tech-card__title">Frontend & Performance</h3>
-        <p class="tech-card__item">HTML5, CSS3, JavaScript (ES6+)</p>
-        <p class="tech-card__item">React, Angular, Vue.js (Focused on **Fast Loading**)</p>
-        <p class="tech-card__item">Bootstrap, Material-UI (Ensuring **Mobile-Friendliness**)</p>
-      </div>
-      <div class="tech-card">
-        <h3 class="tech-card__title">Backend & Security</h3>
-        <p class="tech-card__item">Node.js, Python (Django/Flask), PHP (Laravel)</p>
-        <p class="tech-card__item">RESTful APIs & Microservices</p>
-        <p class="tech-card__item">Secure Authentication & Authorization (**HTTPS** principles)</p>
-      </div>
-      <div class="tech-card">
-        <h3 class="tech-card__title">Databases & Structured Data</h3>
-        <p class="tech-card__item">SQL: PostgreSQL, MySQL, SQL Server</p>
-        <p class="tech-card__item">NoSQL: MongoDB, Firebase, Cassandra</p>
-        <p class="tech-card__item">Efficient data modeling & **Schema Markup** implementation</p>
-      </div>
-    </div>
-  </section>
-  
-  <section class="section fade-in" id="skills">
-    <h2 class="section__title">Technical Skills & SEO Expertise</h2>
-    <p>Interactive Skill Bars (Including key SEO-related skills)</p>
-    
-    <div class="skill-bar">
-      <div class="skill-bar__fill" style="width: 90%;"><span class="skill-bar__text">HTML/CSS (On-Page SEO) 90%</span></div>
-      <span class="skill-bar__text">HTML/CSS (On-Page SEO) 90%</span>
-    </div>  
-    <div class="skill-bar">
-      <div class="skill-bar__fill" style="width: 85%;"><span class="skill-bar__text">JavaScript (Technical SEO) 85%</span></div>
-      <span class="skill-bar__text">JavaScript (Technical SEO) 85%</span>
-    </div>
-    <div class="skill-bar">
-      <div class="skill-bar__fill" style="width: 80%;"><span class="skill-bar__text">React (SPA Optimization) 80%</span></div>
-      <span class="skill-bar__text">React (SPA Optimization) 80%</span>
-    </div>
-    <div class="skill-bar">
-      <div class="skill-bar__fill" style="width: 75%;"><span class="skill-bar__text">Node.js (Backend & API Speed) 75%</span></div>
-      <span class="skill-bar__text">Node.js (Backend & API Speed) 75%</span>
-    </div>
+  <main>
+    <section class="fade-in" id="about">
+      <h2 class="section__title">About Me</h2>
+      <p style="text-align:center; max-width: 700px; margin: 0 auto; color: #555;">
+        I am an experienced developer specializing in the MERN stack and SEO. I don't just write code; I solve business problems by creating software that ranks high on Google and converts visitors into customers.
+      </p>
+    </section>
 
-    <p style="text-align: center; margin-top: 20px;">
-      Ready to see my work? Check out my <a href="#portfolio" title="View Kashif's Portfolio Projects">Portfolio</a>.
-    </p>
-  </section>
-  
-  <section class="section fade-in" id="portfolio">
-    <h2 class="section__title">Portfolio: Projects Optimized for Organic Traffic</h2>
-    <div class="portfolio-grid">
-      <div class="portfolio-card">
-        <img src="https://via.placeholder.com/400x200" loading="lazy" alt="Mobile-friendly E-commerce platform optimized for SEO and fast loading">
-        <div class="portfolio-card__content">
-          <h3 class="portfolio-card__title">E-commerce Platform (**Improved Conversion Rate**)</h3>
-          <p class="portfolio-card__desc">Secure online store with payment gateways, inventory management, and a seamless, high-performance user experience, designed for maximum **organic traffic**.</p>
+    <section class="fade-in" id="arsenal">
+      <h2 class="section__title">My Tech Arsenal</h2>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3 class="tech-card__title">Frontend</h3>
+          <p class="tech-card__item">React.js / Next.js</p>
+          <p class="tech-card__item">Tailwind CSS</p>
+          <p class="tech-card__item">Redux Toolkit</p>
+        </div>
+        <div class="tech-card">
+          <h3 class="tech-card__title">Backend</h3>
+          <p class="tech-card__item">Node.js / Express</p>
+          <p class="tech-card__item">Python / Django</p>
+          <p class="tech-card__item">RESTful APIs</p>
+        </div>
+        <div class="tech-card">
+          <h3 class="tech-card__title">Database & SEO</h3>
+          <p class="tech-card__item">PostgreSQL / MongoDB</p>
+          <p class="tech-card__item">Technical SEO</p>
+          <p class="tech-card__item">Schema Markup</p>
         </div>
       </div>
-      <div class="portfolio-card">
-        <img src="https://via.placeholder.com/400x200" loading="lazy" alt="SaaS Dashboard built with React, focusing on technical SEO practices and page speed">
-        <div class="portfolio-card__content">
-          <h3 class="portfolio-card__title">SaaS Dashboard (**Real-Time Analytics**)</h3>
-          <p class="portfolio-card__desc">Real-time analytics dashboard for B2B software with customizable widgets, ensuring fast loading and **low bounce rate** through best **technical SEO practices**.</p>
-        </div>
+    </section>
+
+    <section class="fade-in" id="skills">
+      <h2 class="section__title">Technical Expertise</h2>
+      <div id="skill-bars-container"></div>
+    </section>
+
+    <section class="fade-in" id="portfolio">
+      <h2 class="section__title">Featured Projects</h2>
+      <div class="portfolio-grid">
+        
+        <article class="portfolio-card">
+                    <img src="https://via.placeholder.com/400x220/2575fc/ffffff?text=E-Commerce+Store" alt="E-commerce Project">
+          <div class="portfolio-card__content">
+            <h3 class="portfolio-card__title">Fashion Store (E-Commerce)</h3>
+            <ul class="project-box-list">
+              <li><strong>Challenge:</strong> Slow load times causing high bounce rates.</li>
+              <li><strong>Solution:</strong> Implemented Next.js SSR and image optimization.</li>
+              <li><strong>Result:</strong> 95+ Google PageSpeed score and 40% more sales.</li>
+            </ul>
+            <div class="portfolio-card__links">
+              <a href="#" class="link-btn">Live Demo</a>
+              <a href="#" class="link-btn">GitHub Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+                     <img src="https://via.placeholder.com/400x220/6a11cb/ffffff?text=Chat+Application" alt="Chat App Project">
+          <div class="portfolio-card__content">
+            <h3 class="portfolio-card__title">Real-Time Chat App</h3>
+            <ul class="project-box-list">
+              <li><strong>Challenge:</strong> Users needed instant communication features.</li>
+              <li><strong>Solution:</strong> Built using Socket.io and Node.js for low latency.</li>
+              <li><strong>Result:</strong> Seamless messaging with active status indicators.</li>
+            </ul>
+            <div class="portfolio-card__links">
+              <a href="#" class="link-btn">Live Demo</a>
+              <a href="#" class="link-btn">GitHub Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+                     <img src="https://via.placeholder.com/400x220/2c3e50/ffffff?text=SEO+Dashboard" alt="SEO Tool Project">
+          <div class="portfolio-card__content">
+            <h3 class="portfolio-card__title">SEO Analytics Dashboard</h3>
+            <ul class="project-box-list">
+              <li><strong>Challenge:</strong> Clients struggled to visualize SEO data.</li>
+              <li><strong>Solution:</strong> Created a MERN stack dashboard with Chart.js.</li>
+              <li><strong>Result:</strong> Automated reporting saved 10 hours/week.</li>
+            </ul>
+            <div class="portfolio-card__links">
+              <a href="#" class="link-btn">Live Demo</a>
+              <a href="#" class="link-btn">GitHub Code</a>
+            </div>
+          </div>
+        </article>
+
       </div>
-      <div class="portfolio-card">
-        <img src="https://via.placeholder.com/400x200" loading="lazy" alt="Educational Portal with excellent crawlability and SERP optimization">
-        <div class="portfolio-card__content">
-          <h3 class="portfolio-card__title">Educational Portal (**Mobile-Friendly** Design)</h3>
-          <p class="portfolio-card__desc">Interactive learning platform with course tracking and multimedia content, built with excellent **Crawlability and Indexability** for great **SERP optimization**.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <section class="section fade-in" id="contact" style="text-align:center;">
-    <h2 class="section__title">Let's Build Something Amazing and Rank It High</h2>
-    <button class="btn" onclick="openModal()">Contact Me for SEO Consultation</button>
-  </section>
-  
+    </section>
+
+    <section class="fade-in" id="contact" style="text-align:center;">
+      <h2 class="section__title">Ready to Start?</h2>
+      <button class="btn-primary" onclick="openModal()">Contact Me</button>
+    </section>
+  </main>
+
   <div class="modal" id="contactModal">
     <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">&times;</span>
-      <h2>Contact Me</h2>
-      <p>Email: example@gmail.com</p>
-      <p>Phone: 0000</p>
-      <p>Message: Ready to build your project!</p>
+      <span class="close-modal" onclick="closeModal()">&times;</span>
+      <h2>Contact Details</h2>
+      <p style="margin-top:15px;"><strong>Email:</strong> kashifdawarkashi@gmail.com</p>
+      <p><strong>Phone:</strong> +92-310-2681613</p>
     </div>
   </div>
-  
+
   <footer>
-    &copy; 2025 Kashif Dawar – Expert **Full-Stack Development** & **SEO** Services. All rights reserved.
+    &copy; 2025 Kashif Dawar. Built with ❤️ and Code.
   </footer>
-  
+
   <script>
-    // ================= Navbar Active Highlight =================
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.navbar a');
-    
-    window.addEventListener('scroll', () => {
-      let current = '';
-      const offset = 60; // Reduced section offset
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - offset;
-        if (pageYOffset >= sectionTop) current = section.getAttribute('id');
-      });
-    
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').includes(current)) link.classList.add('active');
-      });
-    });
-    
-    // ================= Fade-in Scroll Animation =================
-    const faders = document.querySelectorAll('.fade-in');
-    const appearOptions = { threshold: 0.2 };
-    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    // Mobile Menu Toggle
+    function toggleMenu() {
+      document.getElementById('mobile-drawer').classList.toggle('active');
+    }
+
+    // Modal Logic
+    function openModal() { document.getElementById('contactModal').classList.add('active'); }
+    function closeModal() { document.getElementById('contactModal').classList.remove('active'); }
+
+    // Scroll Animations
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+        if(entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, appearOptions);
-    faders.forEach(fader => appearOnScroll.observe(fader));
-    
-    // ================= Contact Modal =================
-    function openModal(){ document.getElementById('contactModal').classList.add('active'); }
-    function closeModal(){ document.getElementById('contactModal').classList.remove('active'); }
-      
-    // ================= SEO Enhancement: Animate Skill Bars on Load =================
-    document.addEventListener('DOMContentLoaded', () => {
-        const skillBars = document.querySelectorAll('.skill-bar__fill');
-        skillBars.forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = width;
-        });
     });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Skill Bars Logic
+    const skills = [
+      { name: "HTML/CSS (Semantic)", level: 95 },
+      { name: "JavaScript (ES6+)", level: 90 },
+      { name: "React/Next.js", level: 85 },
+      { name: "Node.js/Express", level: 80 },
+      { name: "PostgreSQL/MongoDB", level: 75 },
+      { name: "Git & Deployment", level: 70 }
+    ];
+
+    const container = document.getElementById('skill-bars-container');
+    
+    skills.forEach(skill => {
+      const div = document.createElement('div');
+      div.className = 'skill-bar';
+      div.innerHTML = `
+        <div class="skill-bar__text-overlay">
+          <span>${skill.name}</span>
+          <span>${skill.level}%</span>
+        </div>
+        <div class="skill-bar__fill" data-width="${skill.level}%"></div>
+      `;
+      container.appendChild(div);
+    });
+
+    // Animate Skills on Scroll
+    const skillObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) {
+          entry.target.querySelectorAll('.skill-bar__fill').forEach(fill => {
+            fill.style.width = fill.dataset.width;
+          });
+        }
+      });
+    });
+    document.querySelectorAll('.skill-bar').forEach(bar => skillObserver.observe(bar));
   </script>
+
 </body>
 </html>
