@@ -365,8 +365,8 @@ footer {
     <div class="modal-content">
       <span class="modal-close" onclick="closeModal()">&times;</span>
       <h2>Contact Me</h2>
-      <p>Email: xyz practice portfolio </p>
-      <p>Phone: 🤳 practice portfolio</p>
+      <p>Email: example@gmail.com</p>
+      <p>Phone: 0000</p>
       <p>Message: Ready to build your project!</p>
     </div>
   </div>
