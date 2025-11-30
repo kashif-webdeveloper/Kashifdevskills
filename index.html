@@ -5,11 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Kashif Dawar | Full-Stack Developer & SEO Expert</title>
-  <meta name="description" content="Kashif Dawar is a Full-Stack Developer & Technical SEO Specialist. I build fast, mobile-friendly and Google-optimized websites.">
+  <meta name="description" content="Portfolio of Kashif Dawar, a Full-Stack Developer & Technical SEO Specialist based in Pakistan. Expert in MERN Stack, Next.js, and Google Ranking.">
+  <meta name="keywords" content="Kashif Dawar, Full Stack Developer, SEO Expert, Web Developer Pakistan, MERN Stack">
   <meta name="author" content="Kashif Dawar">
   
+  <link rel="preload" href="Kashifdawar.png" as="image">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" as="style">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kashifdawarkashi.netlify.app/">
+  <meta property="og:title" content="Kashif Dawar | Full-Stack Developer & SEO Expert">
+  <meta property="og:description" content="Building fast, mobile-friendly, and Google-optimized websites. View my projects and tech stack.">
+  <meta property="og:image" content="https://kashifdawarkashi.netlify.app/Kashifdawar.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://kashifdawarkashi.netlify.app/">
+  <meta property="twitter:title" content="Kashif Dawar | Full-Stack Developer & SEO Expert">
+  <meta property="twitter:description" content="Building fast, mobile-friendly, and Google-optimized websites.">
+  <meta property="twitter:image" content="https://kashifdawarkashi.netlify.app/Kashifdawar.png">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <style>
     /* ================= VARIABLES ================= */
@@ -27,6 +45,7 @@
     }
 
     /* ================= GLOBAL ================= */
+    html { scroll-behavior: smooth; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
     img { max-width: 100%; display: block; }
@@ -35,7 +54,8 @@
     /* ================= NAVBAR ================= */
     .navbar {
       position: sticky; top: 0;
-      background: white;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
       padding: 15px 25px;
       box-shadow: 0 4px 15px var(--shadow);
       z-index: 1000;
@@ -44,10 +64,10 @@
     .navbar__logo { font-size: 1.5em; font-weight: 700; color: var(--secondary); }
     
     .nav-links { display: flex; gap: 25px; }
-    .nav-links a { color: var(--primary); font-weight: 600; transition: 0.3s; }
+    .nav-links a { color: var(--primary); font-weight: 600; transition: 0.3s; font-size: 0.95rem; }
     .nav-links a:hover { color: var(--secondary); }
     
-    .menu-toggle { display: none; background: none; border: none; font-size: 1.8em; color: var(--primary); }
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.8em; color: var(--primary); cursor: pointer; }
 
     @media(max-width: 768px) {
       .nav-links { display: none; }
@@ -65,17 +85,16 @@
       z-index: 999;
     }
     .nav-drawer.active { display: block; animation: slideIn .3s ease-out; }
-    .nav-drawer a { display: block; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 600; }
+    .nav-drawer a { display: block; padding: 12px 0; border-bottom: 1px solid #eee; font-weight: 600; color: var(--text); }
     @keyframes slideIn { from { transform: translateX(100%);} to { transform: translateX(0);} }
 
-    /* ================= HEADER (The Colored Area) ================= */
+    /* ================= HEADER ================= */
     header {
       text-align: center;
-      /* I minimized the padding here to make the area smaller */
       padding: 40px 20px 80px; 
       background: linear-gradient(135deg, var(--secondary), var(--primary));
       color: white;
-      border-radius: 0 0 50% 50% / 20%;
+      border-radius: 0 0 50% 50% / 15%;
       margin-bottom: 20px;
     }
 
@@ -87,13 +106,12 @@
       border: 6px solid white;
       margin: 0 auto;
       box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-      /* Pushes image slightly down to overlap the curve */
       transform: translateY(30px); 
       background: #fff;
     }
     .profile-img-container img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* ================= HERO TEXT (New Section Below Header) ================= */
+    /* ================= HERO TEXT ================= */
     .hero-text-section {
       text-align: center;
       padding: 60px 20px 20px;
@@ -101,9 +119,10 @@
     .hero__title { 
       font-size: 2.5em; 
       font-weight: 700; 
-      color: var(--secondary); /* Dark purple color for white background */
+      color: var(--text);
       line-height: 1.2;
     }
+    .hero__title span { color: var(--primary); }
     .hero__subtitle {
       margin-top: 15px;
       max-width: 650px;
@@ -113,15 +132,18 @@
     }
 
     /* ================= SECTIONS ================= */
-    main section { max-width: 1100px; margin: 50px auto; padding: 0 20px; }
+    main section { max-width: 1100px; margin: 60px auto; padding: 0 20px; scroll-margin-top: 100px; }
     .section__title {
       text-align: center;
       color: var(--primary);
       font-size: 2.2em;
       font-weight: 700;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+      width: 100%;
     }
-
+    
     /* Tech Grid */
     .tech-grid {
       display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 25px;
@@ -129,58 +151,90 @@
     .tech-card {
       background: white; padding: 25px; border-radius: var(--radius);
       box-shadow: 0 6px 18px var(--shadow); border-top: 4px solid var(--primary);
+      transition: transform 0.3s;
     }
+    .tech-card:hover { transform: translateY(-5px); }
     .tech-card__title { color: var(--secondary); font-size: 1.3em; margin-bottom: 12px; }
 
     /* Skills */
     .skill-bar {
       background: #e0e0e0; border-radius: 20px; height: 35px;
       position: relative; margin-bottom: 20px; overflow: hidden;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
     }
     .skill-bar__text-overlay {
       position: absolute; width: 100%; height: 100%; color: white;
       font-weight: 700; padding: 0 18px; display: flex; justify-content: space-between; align-items: center;
-      z-index: 2; text-shadow: 1px 1px 2px #000;
+      z-index: 2; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     }
     .skill-bar__fill {
       height: 100%; width: 0; background: linear-gradient(90deg, var(--primary), var(--secondary));
-      transition: width 1.4s ease-in-out;
+      transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Projects */
+    /* ================= PROJECT CARDS ================= */
     .portfolio-grid {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); gap: 30px;
+      display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap: 30px;
     }
     .portfolio-card {
-      background: white; border-radius: var(--radius); box-shadow: 0 8px 25px rgba(0,0,0,0.1); overflow: hidden;
+      background: white; border-radius: var(--radius); 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08); 
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease;
     }
-    .portfolio-card img { height: 200px; width: 100%; object-fit: cover; }
-    .portfolio-card__content { padding: 20px; }
-    .project-box-list li {
-      background: #f8f9fa; padding: 8px; border-left: 4px solid var(--secondary);
-      margin-bottom: 8px; font-size: 0.9em;
-    }
-    .portfolio-card__links { display: flex; gap: 10px; margin-top: 15px; }
-    .link-btn {
-      padding: 6px 12px; font-weight: 600; color: var(--primary); border: 1px solid var(--primary); border-radius: 5px; font-size: 0.9em;
+    .portfolio-card:hover { transform: translateY(-5px); }
+    .portfolio-card img { height: 220px; width: 100%; object-fit: cover; }
+    
+    .portfolio-fallback {
+      height: 220px; width: 100%; 
+      background: linear-gradient(45deg, #eee, #ddd); 
+      display: flex; align-items: center; justify-content: center;
+      color: #999; font-size: 3rem;
     }
 
-    /* ================= CONTACT BUTTONS (New) ================= */
+    .portfolio-card__content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+    .portfolio-card__title { font-size: 1.4em; color: var(--text); margin-bottom: 10px; font-weight: 700; }
+    
+    .project-desc {
+      font-size: 0.95em; color: #555; margin-bottom: 15px; line-height: 1.5;
+    }
+    .tech-stack-row {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px;
+    }
+    .tech-tag {
+      background: #eef2ff; color: var(--primary); padding: 4px 10px;
+      border-radius: 6px; font-size: 0.75em; font-weight: 600;
+      border: 1px solid rgba(37, 117, 252, 0.2);
+    }
+    .project-engine-list {
+      list-style: none; margin-bottom: 20px;
+    }
+    .project-engine-list li {
+      font-size: 0.9em; color: #444; margin-bottom: 8px;
+      display: flex; align-items: flex-start; gap: 8px;
+    }
+    .project-engine-list li i {
+      color: var(--secondary); margin-top: 4px; font-size: 0.9em;
+    }
+
+    .portfolio-card__links { display: flex; gap: 10px; margin-top: auto; }
+    .link-btn {
+      padding: 8px 16px; font-weight: 600; color: var(--primary); 
+      border: 1px solid var(--primary); border-radius: 6px; 
+      font-size: 0.9em; transition: 0.2s;
+    }
+    .link-btn:hover { background: var(--primary); color: white; }
+
+    /* ================= CONTACT BUTTONS ================= */
     .contact-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 15px;
-      margin-top: 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px;
     }
     .btn-contact {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; max-width: 350px;
-      padding: 15px;
-      border-radius: 50px;
+      width: 100%; max-width: 350px; padding: 15px; border-radius: 50px;
       color: white; font-weight: 600; font-size: 1.1em;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.2s;
     }
     .btn-contact:hover { transform: translateY(-3px); }
     
@@ -188,7 +242,7 @@
     .btn-email { background-color: var(--email); }
 
     /* Footer */
-    footer { text-align: center; padding: 40px 20px; background: #f1f3f6; margin-top: 50px;}
+    footer { text-align: center; padding: 40px 20px; background: #f1f3f6; margin-top: 80px;}
     .social-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
     .social-icon {
       font-size: 1.5em; width: 50px; height: 50px; background: white;
@@ -214,7 +268,9 @@
       <a href="#portfolio">Projects</a>
       <a href="#contact">Contact</a>
     </div>
-    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Navigation">
+      <i class="fas fa-bars"></i>
+    </button>
     <div class="nav-drawer" id="drawer">
       <a href="#about" onclick="toggleMenu()">About Me</a>
       <a href="#arsenal" onclick="toggleMenu()">Tech Stack</a>
@@ -226,12 +282,12 @@
 
   <header>
     <div class="profile-img-container">
-      <img src="Kashifdawar.png" alt="Kashif Dawar">
+      <img src="Kashifdawar.png" alt="Kashif Dawar Portrait">
     </div>
   </header>
 
   <section class="hero-text-section fade-in">
-    <h1 class="hero__title">Full-Stack Web & SEO</h1>
+    <h1 class="hero__title">Full-Stack Web & <span>SEO Expert</span></h1>
     <p class="hero__subtitle">
       I build mobile-friendly, scalable applications with a focus on Technical SEO and fast-loading speeds.
     </p>
@@ -241,8 +297,8 @@
 
     <section class="fade-in" id="about">
       <h2 class="section__title">About Me</h2>
-      <p style="max-width:700px;margin:auto;text-align:center;color:#555;">
-        I develop full-stack applications using MERN and SEO techniques to help businesses grow, rank higher, and convert more customers.
+      <p style="max-width:700px;margin:auto;text-align:center;color:#555;font-size:1.05rem;">
+        I develop full-stack applications using MERN and SEO techniques to help businesses grow, rank higher on Google, and convert more customers.
       </p>
     </section>
 
@@ -250,15 +306,15 @@
       <h2 class="section__title">My Tech Arsenal</h2>
       <div class="tech-grid">
         <div class="tech-card">
-          <h3 class="tech-card__title">Frontend</h3>
+          <h3 class="tech-card__title"><i class="fas fa-code"></i> Frontend</h3>
           <p>React.js / Next.js</p><p>Tailwind CSS</p><p>Redux Toolkit</p>
         </div>
         <div class="tech-card">
-          <h3 class="tech-card__title">Backend</h3>
+          <h3 class="tech-card__title"><i class="fas fa-server"></i> Backend</h3>
           <p>Node.js / Express</p><p>Python / Django</p><p>REST APIs</p>
         </div>
         <div class="tech-card">
-          <h3 class="tech-card__title">Database & SEO</h3>
+          <h3 class="tech-card__title"><i class="fas fa-search"></i> Database & SEO</h3>
           <p>PostgreSQL / MongoDB</p><p>Technical SEO</p><p>Schema Markup</p>
         </div>
       </div>
@@ -272,35 +328,75 @@
     <section class="fade-in" id="portfolio">
       <h2 class="section__title">Featured Projects</h2>
       <div class="portfolio-grid">
+        
         <article class="portfolio-card">
-          <img src="Basic calculator.png" alt="Calculator App">
+          <img src="Basic calculator.png" alt="Screenshot of Scientific Calculator Engine Interface" loading="lazy">
           <div class="portfolio-card__content">
-            <h3 class="portfolio-card__title">Basic & Scientific Calculator</h3>
-            <ul class="project-box-list">
-              <li><strong>Challenge:</strong> Complex JS logic implementation.</li>
-              <li><strong>Result:</strong> 100% responsive, bug-free tool.</li>
+            <h3 class="portfolio-card__title">Scientific Calculator Engine</h3>
+            
+            <p class="project-desc">
+              A high-performance progressive web app engineered for speed, featuring a custom-built theme engine and synthetic audio feedback.
+            </p>
+
+            <div class="tech-stack-row">
+              <span class="tech-tag">Web Audio API</span>
+              <span class="tech-tag">Local Storage</span>
+              <span class="tech-tag">CSS Variables</span>
+            </div>
+
+            <ul class="project-engine-list">
+              <li>
+                <i class="fas fa-adjust"></i>
+                <span><strong>Dark/Light Mode:</strong> Dynamic theme switcher.</span>
+              </li>
+              <li>
+                <i class="fas fa-microchip"></i>
+                <span><strong>Performance:</strong> Zero-asset synthetic sound engine.</span>
+              </li>
             </ul>
+
             <div class="portfolio-card__links">
-              <a href="https://basicandscientificcalculator.netlify.app" target="_blank" class="link-btn">Live Demo</a>
-              <a href="https://github.com/kashif-webdeveloper" target="_blank" class="link-btn">GitHub</a>
+              <a href="https://basicandscientificcalculator.netlify.app" target="_blank" rel="noopener noreferrer" class="link-btn">Live Demo</a>
+              <a href="https://github.com/kashif-webdeveloper" target="_blank" rel="noopener noreferrer" class="link-btn">GitHub</a>
             </div>
           </div>
         </article>
 
         <article class="portfolio-card">
-          <img src="https://via.placeholder.com/400x220/2575fc/ffffff?text=Fashion+Store" alt="E-commerce">
+          <div style="background: linear-gradient(120deg, #f6d365 0%, #fda085 100%); height: 220px; display:flex; align-items:center; justify-content:center;" role="img" aria-label="Fashion Store Icon">
+             <i class="fas fa-shopping-bag" style="font-size:3rem; color:white; opacity:0.8;"></i>
+          </div>
           <div class="portfolio-card__content">
             <h3 class="portfolio-card__title">Fashion Store (E-Commerce)</h3>
-            <ul class="project-box-list">
-              <li><strong>Challenge:</strong> Slow load times & SEO.</li>
-              <li><strong>Success:</strong> 40% higher conversions.</li>
+            
+            <p class="project-desc">
+              A full-stack e-commerce platform focused on conversion rate optimization and SEO ranking factors.
+            </p>
+
+            <div class="tech-stack-row">
+              <span class="tech-tag">MERN Stack</span>
+              <span class="tech-tag">Stripe API</span>
+              <span class="tech-tag">Redux</span>
+            </div>
+
+            <ul class="project-engine-list">
+              <li>
+                <i class="fas fa-rocket"></i>
+                <span><strong>Speed:</strong> Optimized for under 1s load time.</span>
+              </li>
+              <li>
+                <i class="fas fa-chart-line"></i>
+                <span><strong>SEO:</strong> Schema Markup implemented.</span>
+              </li>
             </ul>
+
             <div class="portfolio-card__links">
-              <a href="https://kashifdawarkashi.netlify.app" target="_blank" class="link-btn">Live Demo</a>
-              <a href="https://github.com/kashif-webdeveloper" target="_blank" class="link-btn">GitHub</a>
+              <a href="https://kashifdawarkashi.netlify.app" target="_blank" rel="noopener noreferrer" class="link-btn">Live Demo</a>
+              <a href="https://github.com/kashif-webdeveloper" target="_blank" rel="noopener noreferrer" class="link-btn">GitHub</a>
             </div>
           </div>
         </article>
+
       </div>
     </section>
 
@@ -309,7 +405,7 @@
       <p style="text-align:center; margin-bottom:20px;">Click below to chat or email me directly.</p>
       
       <div class="contact-container">
-        <a href="https://wa.me/qr/6XYQWS4TYRXKJ1" target="_blank" class="btn-contact btn-whatsapp">
+        <a href="https://wa.me/qr/6XYQWS4TYRXKJ1" target="_blank" rel="noopener noreferrer" class="btn-contact btn-whatsapp">
           <i class="fab fa-whatsapp"></i> Chat on WhatsApp
         </a>
 
@@ -323,12 +419,12 @@
 
   <footer>
     <div class="social-links">
-      <a href="https://www.linkedin.com/in/kashif-dawar-a2107939b" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.facebook.com/share/1AWbeP2kJP/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://x.com/Kashifdawa45874" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
-      <a href="https://github.com/kashif-webdeveloper" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/kashif-dawar-a2107939b" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-icon"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.instagram.com/kashifdawarkashi" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@kashifdawarkashi" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/share/1AWbeP2kJP/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://x.com/Kashifdawa45874" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/kashif-webdeveloper" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="social-icon"><i class="fab fa-github"></i></a>
     </div>
     <p>© 2025 Kashif Dawar. Built with ❤️ & Code.</p>
   </footer>
@@ -343,7 +439,7 @@
       entries.forEach(e=>{
         if(e.isIntersecting) e.target.classList.add("visible");
       });
-    });
+    }, { threshold: 0.1 });
     document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
 
     // Skills Animation
@@ -364,7 +460,7 @@
         <div class="skill-bar__text-overlay">
           <span>${s.name}</span><span>${s.level}%</span>
         </div>
-        <div class="skill-bar__fill" data-width="${s.level}%"></div>
+        <div class="skill-bar__fill" style="width: 0" data-width="${s.level}%"></div>
       `;
       container.appendChild(bar);
     });
@@ -372,8 +468,8 @@
     const barObs = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
-          e.target.querySelector(".skill-bar__fill").style.width =
-            e.target.querySelector(".skill-bar__fill").dataset.width;
+          const fill = e.target.querySelector(".skill-bar__fill");
+          fill.style.width = fill.getAttribute("data-width");
         }
       });
     });
