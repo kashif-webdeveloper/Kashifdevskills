@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTXNYWJ847"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-PTXNYWJ847');
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5524773081921512" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-5524773081921512">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Kashif's Advanced Percentage Calculator - Calculate percentage changes, differences, and phrases instantly. Includes comprehensive mathematical guides.">
+    
+    <title>Percentage Calculator - Kashif's Pro Tools</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1e293b">
+    
+    <style>
+        /* --- CORE STYLES (MATCHING SUITE) --- */
+        :root {
+            --bg-dark: #0f172a;
+            --calc-body: #1e293b;
+            --screen: #334155;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #06b6d4;
+            --btn-bg: #475569;
+            --sidebar-bg: #1e293b;
+            --modal-bg: #1e293b;
+            --shadow: rgba(0,0,0,0.5);
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        body.light-mode {
+            --bg-dark: #f1f5f9;
+            --calc-body: #ffffff;
+            --screen: #e2e8f0;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --accent: #0891b2;
+            --btn-bg: #cbd5e1;
+            --sidebar-bg: #ffffff;
+            --modal-bg: #ffffff;
+            --shadow: rgba(0,0,0,0.15);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text); height: 100vh; overflow-x: hidden; display: flex; flex-direction: column; transition: 0.3s; }
+
+        /* HEADER */
+        header { height: 60px; background: var(--calc-body); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--screen); z-index: 2000; box-shadow: 0 2px 10px var(--shadow); flex-shrink: 0; }
+        .hamburger { font-size: 24px; cursor: pointer; color: var(--accent); padding: 10px; }
+        .brand { font-size: 18px; font-weight: bold; letter-spacing: 1px; color: var(--text); text-decoration: none; }
+        .brand span { color: var(--accent); }
+
+        /* MAIN CONTENT */
+        .main-content { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 20px 10px; overflow-y: auto; }
+        
+        /* CALCULATOR CARDS */
+        .calc-card { width: 100%; max-width: 600px; background: var(--calc-body); border-radius: 20px; padding: 25px; box-shadow: 0 10px 25px var(--shadow); margin-bottom: 30px; border: 1px solid var(--screen); }
+        .calc-title { color: var(--accent); font-size: 1.2rem; font-weight: bold; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--screen); padding-bottom: 10px; }
+        
+        /* INPUT GROUPS */
+        .row { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
+        .input-wrapper { flex: 1; display: flex; flex-direction: column; min-width: 120px; }
+        .input-wrapper label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; }
+        input[type="number"], select { width: 100%; padding: 12px; background: var(--screen); border: 1px solid var(--text-muted); color: var(--text); border-radius: 8px; font-size: 16px; outline: none; }
+        input:focus, select:focus { border-color: var(--accent); }
+
+        /* BUTTONS */
+        .action-btn { width: 100%; background: var(--accent); color: white; font-weight: bold; font-size: 16px; padding: 12px; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s; margin-top: 5px; }
+        .action-btn:active { transform: translateY(2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-top: 10px; }
+
+        /* RESULT DISPLAY */
+        .result-box { margin-top: 20px; padding: 15px; background: var(--bg-dark); border-radius: 8px; border-left: 4px solid var(--accent); display: none; }
+        .res-main { font-size: 1.4rem; font-weight: bold; color: var(--text); margin-bottom: 5px; }
+        .res-sub { font-size: 0.9rem; color: var(--text-muted); }
+
+        /* SIDEBAR & OVERLAY */
+        .overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 4000; opacity: 0; pointer-events: none; transition: 0.3s; backdrop-filter: blur(2px); }
+        .overlay.active { opacity: 1; pointer-events: all; }
+        
+        .sidebar { position: fixed; top: 0; left: -300px; width: 280px; height: 100%; background: var(--sidebar-bg); z-index: 5000; transition: transform 0.3s ease; box-shadow: 5px 0 20px var(--shadow); padding: 20px; display: flex; flex-direction: column; overflow-y: auto; }
+        .sidebar.open { transform: translateX(300px); }
+        
+        .profile { text-align: center; border-bottom: 1px solid var(--screen); padding-bottom: 20px; margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: linear-gradient(45deg, var(--accent), #3b82f6); border-radius: 50%; margin: 40px auto 15px; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: bold; color: white; }
+        
+        .menu-item { padding: 15px; color: var(--text-muted); border-radius: 8px; margin-bottom: 5px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: 0.2s; text-decoration: none; }
+        .menu-item:hover, .menu-item:active { background: var(--screen); color: var(--accent); }
+        
+        /* Accordion Styles (ADDED FOR GROUPED NAVIGATION) */
+        details.menu-group { width: 100%; margin-bottom: 5px; }
+        details.menu-group summary { padding: 15px; color: var(--text-muted); list-style: none; cursor: pointer; border-radius: 8px; font-weight: 500; display: flex; gap: 10px; align-items: center; }
+        details.menu-group summary:hover { background: var(--screen); color: var(--accent); }
+        details.menu-group[open] summary { color: var(--accent); font-weight: bold; }
+        .submenu { padding-left: 15px; background: rgba(0,0,0,0.1); border-radius: 0 0 8px 8px; }
+        .submenu .menu-item { font-size: 0.9em; padding: 12px; }
+
+        /* MODALS (Settings & Sign In) */
+        .modal { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9); width: 85%; max-width: 320px; background: var(--modal-bg); border: 1px solid var(--screen); border-radius: 16px; padding: 20px; z-index: 6000; opacity: 0; pointer-events: none; transition: 0.2s, background 0.3s; box-shadow: 0 20px 50px rgba(0,0,0,0.6); max-height: 90vh; overflow-y: auto; }
+        .modal.active { opacity: 1; pointer-events: all; transform: translate(-50%, -50%) scale(1); }
+        .modal h3 { margin-bottom: 15px; color: var(--accent); text-align: center; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
+        .input-group input { width: 100%; padding: 10px; background: var(--screen); border: 1px solid var(--text-muted); color: var(--text); border-radius: 6px; }
+        .modal-btn { width: 100%; background: var(--accent); color: white; font-weight: bold; padding: 12px; border-radius: 6px; margin-top: 10px; display: block; text-align: center; text-decoration: none; border: none; cursor: pointer; }
+        .close-modal { position: absolute; top: 10px; right: 15px; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+
+        /* SWITCHES */
+        .switch-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 0 10px; }
+        .switch-label { color: var(--text); font-weight: 500; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--screen); transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #10b981; color: white; padding: 10px 20px; border-radius: 30px; font-size: 14px; opacity: 0; transition: 0.3s; z-index: 7000; pointer-events: none; }
+        .toast.show { opacity: 1; bottom: 50px; }
+
+        /* SEO SECTION */
+        .seo-section { width: 100%; max-width: 800px; padding: 30px; background: var(--calc-body); border-radius: 12px; border: 1px solid var(--screen); color: var(--text); margin-bottom: 20px; margin-top: 20px; }
+        .seo-section h2 { color: var(--accent); font-size: 1.6rem; margin-bottom: 20px; border-bottom: 1px solid var(--screen); padding-bottom: 10px; }
+        .seo-section h3 { color: var(--text); font-size: 1.3rem; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+        .seo-section p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 15px; text-align: justify; }
+        .seo-section ul { padding-left: 20px; color: var(--text-muted); margin-bottom: 15px; }
+        .seo-section li { margin-bottom: 8px; }
+        .equation { background: var(--bg-dark); padding: 10px; border-radius: 5px; text-align: center; font-family: 'Courier New', monospace; margin: 15px 0; color: var(--accent); border: 1px dashed var(--text-muted); }
+
+        .footer-credit { margin-top: auto; text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 20px 0; border-top: 1px solid var(--screen); width: 100%; }
+        .footer-credit span { color: var(--accent); font-weight: 700; }
+        .footer-credit a { color: var(--accent); text-decoration: none; margin: 0 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeAll()"></div>
+    <div class="toast" id="toast">Action Successful</div>
+
+    <div class="sidebar" id="sidebar">
+        <div style="position:absolute; top:15px; right:15px; font-size:24px; padding:10px; color:var(--text-muted); cursor:pointer;" onclick="closeAll()">&times;</div>
+        
+        <div class="profile">
+            <div class="avatar">K</div>
+            <h2 style="color:var(--text);">Kashif</h2>
+            <p style="color: var(--accent); font-weight:bold; margin-bottom: 8px; font-size: 0.9rem;">Elite Full-Stack Architect</p>
+        </div>
+        
+        <a href="index.html" class="menu-item" onclick="closeAll()"><span>&#8962;</span> Home</a>
+        <a href="index.html" class="menu-item" onclick="closeAll()"><span>&#8730;</span> Scientific Mode</a>
+
+        <details class="menu-group">
+            <summary><span>&#128208;</span> Math Tools</summary>
+            <div class="submenu">
+                <a href="standard-deviation.html" class="menu-item" onclick="closeAll()">Standard Deviation</a>
+                <a href="log-calculator.html" class="menu-item" onclick="closeAll()">Log Calculator</a>
+                <a href="exponent.html" class="menu-item" onclick="closeAll()">Exponent Calculator</a>
+                <a href="fraction.html" class="menu-item" onclick="closeAll()">Fraction Calculator</a>
+            </div>
+        </details>
+
+        <details class="menu-group">
+            <summary><span>&#128176;</span> Finance</summary>
+            <div class="submenu">
+                <a href="percentage.html" class="menu-item" style="color:var(--accent); font-weight:bold;" onclick="closeAll()">Percentage Calc</a>
+                <a href="mortgage-calculator.html" class="menu-item" onclick="closeAll()">Mortgage Calc</a>
+            </div>
+        </details>
+
+        <details class="menu-group">
+            <summary><span>&#9878;</span> Health</summary>
+            <div class="submenu">
+                <a href="bmi-calculator.html" class="menu-item" onclick="closeAll()">BMI Calculator</a>
+            </div>
+        </details>
+        
+        <div class="menu-item" onclick="handleNav('settings')"><span>&#9881;</span> Settings</div>
+        <a href="contact.html" class="menu-item" style="text-decoration:none;" onclick="closeAll()"><span>&#128100;</span> Contact Developer</a>
+        
+        <div class="menu-item" onclick="handleNav('signin')" style="margin-top:auto; background:var(--accent); color:white; justify-content: center; font-weight:bold;">Sign In</div>
+    </div>
+
+    <div class="modal" id="modal-signin">
+        <span class="close-modal" onclick="closeAll()">&times;</span>
+        <h3>Sign In</h3>
+        <div class="input-group"><label>Email</label><input type="email" placeholder="Enter email"></div>
+        <div class="input-group"><label>Password</label><input type="password" placeholder="Enter password"></div>
+        <button class="modal-btn" onclick="showToast('Welcome back, Kashif!'); closeAll()">Login</button>
+    </div>
+
+    <div class="modal" id="modal-settings">
+        <span class="close-modal" onclick="closeAll()">&times;</span>
+        <h3>Settings</h3>
+        <div class="switch-container">
+            <span class="switch-label">Light Mode</span>
+            <label class="switch"><input type="checkbox" id="theme-toggle" onchange="toggleTheme()"><span class="slider"></span></label>
+        </div>
+        <div class="switch-container">
+            <span class="switch-label">Button Sounds</span>
+            <label class="switch"><input type="checkbox" id="sound-toggle" onchange="saveSoundPref()"><span class="slider"></span></label>
+        </div>
+        <button class="modal-btn" onclick="showToast('Preferences Saved'); closeAll()">Done</button>
+    </div>
+
+    <header>
+        <div class="hamburger" onclick="openSidebar()">&#9776;</div>
+        <div class="brand">KASHIF <span>PRO</span></div>
+        <div style="width: 24px;"></div>
+    </header>
+
+    <div class="main-content">
+
+        <div class="calc-card">
+            <div class="calc-title"><span>%</span> Common Percentage Phrases</div>
+            <div class="input-wrapper" style="margin-bottom: 15px;">
+                <label>Select Calculation Type</label>
+                <select id="phrase-type" onchange="updatePhraseUI()">
+                    <option value="1">What is X% of Y?</option>
+                    <option value="2">X is what % of Y?</option>
+                    <option value="3">X is Y% of what?</option>
+                </select>
+            </div>
+            
+            <div class="row" id="phrase-inputs">
+                </div>
+
+            <button class="action-btn" onclick="calcPhrase()">Calculate</button>
+            <div class="result-box" id="res-phrase"></div>
+        </div>
+
+        <div class="calc-card">
+            <div class="calc-title"><span>&#8710;</span> Percentage Difference Calculator</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Calculates the % difference between two numbers (V1 and V2).</p>
+            <div class="row">
+                <div class="input-wrapper"><label>Value 1 (V1)</label><input type="number" id="diff-v1" placeholder="e.g. 20"></div>
+                <div class="input-wrapper"><label>Value 2 (V2)</label><input type="number" id="diff-v2" placeholder="e.g. 30"></div>
+            </div>
+            <button class="action-btn" onclick="calcDiff()">Calculate Difference</button>
+            <div class="result-box" id="res-diff"></div>
+        </div>
+
+        <div class="calc-card">
+            <div class="calc-title"><span>&#8599;</span> Percentage Change Calculator</div>
+            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Calculates the % increase or decrease from an old value to a new value.</p>
+            <div class="row">
+                <div class="input-wrapper"><label>Original Value</label><input type="number" id="change-v1" placeholder="Start"></div>
+                <div class="input-wrapper"><label>New Value</label><input type="number" id="change-v2" placeholder="End"></div>
+            </div>
+            <button class="action-btn" onclick="calcChange()">Calculate Change</button>
+            <div class="result-box" id="res-change"></div>
+        </div>
+
+        <div class="seo-section">
+            <h2>The Ultimate Guide to Understanding Percentages</h2>
+            <p>Percentages are one of the most fundamental concepts in mathematics, used globally in finance, science, statistics, and daily life. Whether you are calculating a tip at a restaurant, determining the discount on a sale item, or analyzing stock market trends, understanding how to manipulate percentages is a critical skill. Kashif's Pro Percentage Calculator is designed to simplify these operations, but understanding the theory behind the numbers empowers you to verify results manually.</p>
+
+            <h3>What Exactly is a Percentage?</h3>
+            <p>In mathematics, a percentage is a number or ratio that represents a fraction of 100. The term comes from the Latin <em>per centum</em>, meaning "by the hundred." It is one of several ways to represent a dimensionless relationship between two numbers; other common methods include ratios, fractions, and decimals.</p>
+            <p>Percentages are typically denoted by the symbol "%". For example, 35% is mathematically equivalent to the decimal 0.35, or the fraction $\frac{35}{100}$, which simplifies to $\frac{7}{20}$.</p>
+            
+            [attachment_0](attachment)
+
+            <h3>The Core Percentage Formula</h3>
+            <p>Although percentages can be applied in various contexts, the core logic relies on an algebraic relationship between three variables:</p>
+            <div class="equation">P × V1 = V2</div>
+            <ul>
+                <li><strong>P</strong> is the percentage (in decimal form).</li>
+                <li><strong>V1</strong> is the base value (the "whole").</li>
+                <li><strong>V2</strong> is the result (the "part").</li>
+            </ul>
+            <p>To calculate a percentage manually, you must first divide the percentage value by 100 to convert it to a decimal. For instance, to find 50% of 30:</p>
+            <p>1. Convert 50% to decimal: $50 / 100 = 0.5$</p>
+            <p>2. Multiply by the base: $0.5 \times 30 = 15$</p>
+
+            <h3>Percentage Difference vs. Percentage Change</h3>
+            <p>Many users confuse "Difference" and "Change," but in mathematics and statistics, they have distinct meanings.</p>
+
+            <h4>1. Percentage Difference</h4>
+            <p>This is used when you have two values and you want to compare how different they are relative to their average. There is no clear "old" or "new" number; simply two separate entities (e.g., the height of two different trees).</p>
+            <div class="equation">Diff % = (|V1 - V2| / ((V1 + V2)/2)) × 100</div>
+            <p>Because we take the absolute value, the result is always positive.</p>
+
+            <h4>2. Percentage Change (Increase/Decrease)</h4>
+            <p>This is used when observing a value over time. There is a distinct "Original Value" and a "New Value." Examples include stock price changes, population growth, or weight loss.</p>
+            <div class="equation">Change % = ((New - Old) / Old) × 100</div>
+            <p>If the result is positive, it is a <strong>Percentage Increase</strong>. If negative, it is a <strong>Percentage Decrease</strong>.</p>
+
+            <h3>Real-World Applications</h3>
+            
+            <h4>Financial Interest</h4>
+            <p>Percentages are the backbone of the banking system. Compound interest is calculated using percentage growth over specific time intervals. A savings account with a 5% Annual Percentage Yield (APY) will grow your money exponentially over time.</p>
+
+            <h4>Discounts and Taxation</h4>
+            <p>When shopping, you see "20% Off." If a jacket costs $100, the calculation is $100 \times 0.20 = $20$ discount. The final price is $80$. Conversely, Sales Tax adds a percentage. If tax is 8%, the final cost is $80 \times 1.08 = $86.40$.</p>
+
+            <h3>Why Use Kashif's Calculator?</h3>
+            <p>While the math is straightforward for simple numbers, dealing with decimals (e.g., "What is 4.56% of 9,821?") becomes prone to human error. Our calculator uses high-precision JavaScript floating-point logic to ensure accuracy to the nth decimal place. Furthermore, by separating "Phrases," "Difference," and "Change" into specific tools, we ensure you are using the correct formula for your specific context.</p>
+        </div>
+
+        <div class="footer-credit">
+            Architected & Engineered by <span>Kashif Dawar</span> | <a href="index.html">Home</a> | <a href="contact.html">Contact Us</a> | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Use</a>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIG & STATE ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const soundToggle = document.getElementById('sound-toggle');
+        
+        window.onload = function() {
+            if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); if(themeToggle) themeToggle.checked = true; }
+            if (localStorage.getItem('sound') === 'on') { if(soundToggle) soundToggle.checked = true; }
+            updatePhraseUI();
+        };
+
+        // --- NAVIGATION HANDLERS ---
+        function openSidebar() { document.getElementById('sidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); }
+        
+        function closeAll() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('modal-signin').classList.remove('active');
+            document.getElementById('modal-settings').classList.remove('active');
+        }
+
+        function handleNav(action) {
+            if (action === 'settings') {
+                closeAll();
+                setTimeout(() => { document.getElementById('modal-settings').classList.add('active'); document.getElementById('overlay').classList.add('active'); }, 300);
+            }
+            else if (action === 'signin') {
+                closeAll();
+                setTimeout(() => { document.getElementById('modal-signin').classList.add('active'); document.getElementById('overlay').classList.add('active'); }, 300);
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast'); toast.innerText = msg; toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // --- SETTINGS LOGIC ---
+        function toggleTheme() {
+            if (themeToggle.checked) { document.body.classList.add('light-mode'); localStorage.setItem('theme', 'light'); }
+            else { document.body.classList.remove('light-mode'); localStorage.setItem('theme', 'dark'); }
+        }
+        function saveSoundPref() { localStorage.setItem('sound', soundToggle.checked ? 'on' : 'off'); }
+
+
+        // --- CALCULATOR 1: PHRASES ---
+        function updatePhraseUI() {
+            const type = document.getElementById('phrase-type').value;
+            const container = document.getElementById('phrase-inputs');
+            container.innerHTML = '';
+
+            if (type === '1') {
+                container.innerHTML = `
+                    <div class="input-wrapper"><label>What is</label><div style="position:relative"><input type="number" id="p1_a"><span style="position:absolute;right:10px;top:10px;color:var(--text-muted)">%</span></div></div>
+                    <div class="input-wrapper"><label>of</label><input type="number" id="p1_b"></div>
+                `;
+            } else if (type === '2') {
+                container.innerHTML = `
+                    <div class="input-wrapper"><label>Value A</label><input type="number" id="p1_a"></div>
+                    <div class="input-wrapper"><label>is what % of Value B</label><input type="number" id="p1_b"></div>
+                `;
+            } else if (type === '3') {
+                container.innerHTML = `
+                    <div class="input-wrapper"><label>Value A</label><input type="number" id="p1_a"></div>
+                    <div class="input-wrapper"><label>is</label><div style="position:relative"><input type="number" id="p1_b"><span style="position:absolute;right:10px;top:10px;color:var(--text-muted)">%</span></div></div>
+                    <div class="input-wrapper" style="display:flex; align-items:flex-end; padding-bottom:10px;"><span style="color:var(--text-muted)">of what?</span></div>
+                `;
+            }
+            document.getElementById('res-phrase').style.display = 'none';
+        }
+
+        function calcPhrase() {
+            const type = document.getElementById('phrase-type').value;
+            const a = parseFloat(document.getElementById('p1_a').value);
+            const b = parseFloat(document.getElementById('p1_b').value);
+            const resBox = document.getElementById('res-phrase');
+
+            if (isNaN(a) || isNaN(b)) { showToast("Please enter valid numbers"); return; }
+
+            let result, text;
+
+            if (type === '1') {
+                result = (a / 100) * b;
+                text = `${a}% of ${b} is ${parseFloat(result.toFixed(4))}`;
+            } else if (type === '2') {
+                if (b === 0) { showToast("Cannot divide by zero"); return; }
+                result = (a / b) * 100;
+                text = `${a} is ${parseFloat(result.toFixed(4))}% of ${b}`;
+            } else if (type === '3') {
+                if (b === 0) { showToast("Percentage cannot be zero"); return; }
+                result = a / (b / 100);
+                text = `${a} is ${b}% of ${parseFloat(result.toFixed(4))}`;
+            }
+
+            resBox.innerHTML = `<div class="res-main">${parseFloat(result.toFixed(4))}</div><div class="res-sub">${text}</div>`;
+            resBox.style.display = 'block';
+        }
+
+        // --- CALCULATOR 2: DIFFERENCE ---
+        function calcDiff() {
+            const v1 = parseFloat(document.getElementById('diff-v1').value);
+            const v2 = parseFloat(document.getElementById('diff-v2').value);
+            const resBox = document.getElementById('res-diff');
+
+            if (isNaN(v1) || isNaN(v2)) { showToast("Enter both values"); return; }
+
+            const avg = (v1 + v2) / 2;
+            if (avg === 0) { showToast("Average is zero"); return; }
+            
+            const diff = Math.abs(v1 - v2);
+            const percentage = (diff / avg) * 100;
+
+            resBox.innerHTML = `
+                <div class="res-main">${percentage.toFixed(4)}%</div>
+                <div class="res-sub">Difference between ${v1} and ${v2}</div>
+            `;
+            resBox.style.display = 'block';
+        }
+
+        // --- CALCULATOR 3: CHANGE ---
+        function calcChange() {
+            const v1 = parseFloat(document.getElementById('change-v1').value);
+            const v2 = parseFloat(document.getElementById('change-v2').value);
+            const resBox = document.getElementById('res-change');
+
+            if (isNaN(v1) || isNaN(v2)) { showToast("Enter both values"); return; }
+            if (v1 === 0) { showToast("Original value cannot be zero"); return; }
+
+            const change = v2 - v1;
+            const percentage = (change / v1) * 100;
+            const direction = percentage > 0 ? "Increase" : "Decrease";
+            const color = percentage > 0 ? "var(--success)" : "var(--danger)";
+
+            resBox.innerHTML = `
+                <div class="res-main" style="color:${color}">${Math.abs(percentage).toFixed(4)}%</div>
+                <div class="res-sub">${direction} from ${v1} to ${v2}</div>
+            `;
+            resBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
