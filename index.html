@@ -1,310 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PTXNYWJ847"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-PTXNYWJ847');
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5524773081921512"
-     crossorigin="anonymous"></script>
-    <meta name="google-adsense-account" content="ca-pub-5524773081921512">
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Kashif's Pro Calculator - Free online scientific calculator with Integration and Derivation. Best for FSC, Engineering, and Calculus. Calculate mortgage, BMI, and standard deviation offline.">
-    <meta name="keywords" content="online calculator, scientific calculator, integration calculator, derivation tool, calculus calculator, free math tool, FSC calculator, matric calculator, engineering calculator, mortgage calculator, bmi calculator, kashif dawar">
-    
-    <title>Kashif's Pro Calculator | Free Scientific, Calculus & Financial Tools</title>
-    
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/png" href="icon.png">
-    <link rel="apple-touch-icon" href="icon.png">
-    <meta name="theme-color" content="#1e293b">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C1D3Q3T7YS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-    <link rel="stylesheet" href="style.css">
+    gtag('config', 'G-C1D3Q3T7YS');
+  </script>
+
+  <title>Kashif Dawar | Full-Stack Developer & SEO Expert</title>
+  
+  <meta name="description" content="Portfolio of Kashif Dawar, a Full-Stack Developer & Technical SEO Specialist based in Pakistan. Expert in MERN Stack, Next.js, and Google Ranking.">
+  <meta name="keywords" content="Kashif Dawar, Full Stack Developer, SEO Expert, Web Developer Pakistan, MERN Stack">
+  <meta name="author" content="Kashif Dawar">
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://kashif-webdeveloper.github.io/Kashifdevskills/">
+  <meta property="og:title" content="Kashif Dawar | Full-Stack Developer & SEO Expert">
+  <meta property="og:description" content="Building fast, mobile-friendly, and Google-optimized websites. View my projects.">
+  <meta property="og:image" content="https://kashif-webdeveloper.github.io/Kashifdevskills/Kashifdawar.png">
+  <meta property="og:image:secure_url" content="https://kashif-webdeveloper.github.io/Kashifdevskills/Kashifdawar.png"> 
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://kashif-webdeveloper.github.io/Kashifdevskills/">
+  <meta property="twitter:title" content="Kashif Dawar | Full-Stack Developer & SEO Expert">
+  <meta property="twitter:description" content="Building fast, mobile-friendly, and Google-optimized websites.">
+  <meta property="twitter:image" content="https://kashif-webdeveloper.github.io/Kashifdevskills/Kashifdawar.png">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================= MODERN VARIABLES ================= */
+    :root {
+      /* Shiny, Electric Palette */
+      --primary: #4361ee;
+      --secondary: #7209b7;
+      --accent: #f72585; 
+      
+      --gradient-main: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+      --gradient-text: linear-gradient(to right, #4361ee, #f72585);
+      --gradient-card: linear-gradient(160deg, #ffffff 0%, #f9faff 100%);
+      
+      /* Glassmorphism Variables */
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+      --glass-blur: blur(12px);
+      
+      --text-dark: #1a1a2e;
+      --text-gray: #4a5568;
+      --bg-body: #f0f4f8;
+      
+      --shadow-glow: 0 0 20px rgba(67, 97, 238, 0.3);
+      --shadow-card: 0 10px 30px -5px rgba(0,0,0,0.08);
+      
+      --radius: 24px;
+      --font: "Outfit", sans-serif;
+    }
+
+    /* ================= GLOBAL ================= */
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: var(--font); 
+      background: var(--bg-body);
+      /* Subtle mesh background */
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(67, 97, 238, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(247, 37, 133, 0.1) 0px, transparent 50%);
+      color: var(--text-dark); 
+      line-height: 1.6; 
+      overflow-x: hidden; 
+    }
+    
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+    /* ================= GLASS NAVBAR ================= */
+    .navbar {
+      position: sticky; top: 15px;
+      width: 90%; max-width: 1100px; margin: 0 auto;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      padding: 12px 30px;
+      border-radius: 50px;
+      border: var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    
+    .navbar__logo { 
+      font-size: 1.5em; font-weight: 800; 
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .nav-links { display: flex; gap: 30px; }
+    .nav-links a { 
+      color: var(--text-dark); font-weight: 600; font-size: 0.95rem; position: relative;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a::after {
+      content: ''; position: absolute; width: 0; height: 2px; bottom: -2px; left: 0;
+      background: var(--secondary); transition: 0.3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    
+    .menu-toggle { display: none; background: none; border: none; font-size: 1.6em; color: var(--text-dark); cursor: pointer; }
+
+    @media(max-width: 768px) {
+      .navbar { width: 95%; top: 10px; padding: 12px 20px; }
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+    }
+
+    /* Mobile Drawer */
+    .nav-drawer {
+      display: none; position: fixed; top: 80px; right: 20px;
+      width: 260px; padding: 25px;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      border-radius: 20px; border: 1px solid white;
+      z-index: 999; transform-origin: top right;
+    }
+    .nav-drawer.active { display: block; animation: popIn .3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .nav-drawer a { display: block; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-weight: 600; }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+
+    /* ================= HEADER WITH GLOW ================= */
+    header {
+      text-align: center;
+      padding: 60px 20px 100px; 
+      background: var(--gradient-main);
+      color: white;
+      border-radius: 0 0 50% 50% / 20%;
+      margin-top: -80px; padding-top: 140px; /* Behind navbar */
+      position: relative; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(67, 97, 238, 0.3);
+    }
+
+    /* Rotating Shine Background */
+    header::before {
+      content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: rotate 20s linear infinite;
+    }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    /* Profile Image */
+    .profile-img-container {
+      width: 190px; height: 190px;
+      border-radius: 50%;
+      margin: 0 auto;
+      padding: 6px;
+      background: rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2), 0 0 60px rgba(255,255,255,0.3);
+      transform: translateY(50px); 
+      position: relative; z-index: 2;
+      animation: float 6s ease-in-out infinite;
+    }
+    .profile-img-container img { 
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%; 
+      border: 4px solid white;
+    }
+    @keyframes float { 0%, 100% { transform: translateY(50px); } 50% { transform: translateY(35px); } }
+
+    /* ================= HERO TEXT ================= */
+    .hero-text-section { text-align: center; padding: 80px 20px 30px; }
+    .hero__title { 
+      font-size: 2.8em; font-weight: 800; color: var(--text-dark); line-height: 1.1; letter-spacing: -1px;
+    }
+    .hero__title span { 
+      background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero__subtitle {
+      margin-top: 20px; max-width: 650px; margin-inline: auto; font-size: 1.15em; color: var(--text-gray);
+    }
+
+    /* ================= SECTIONS ================= */
+    main section { max-width: 1100px; margin: 80px auto; padding: 0 20px; scroll-margin-top: 120px; }
+    
+    .section__title {
+      text-align: center; font-size: 2.2em; font-weight: 700; margin-bottom: 50px;
+      color: var(--text-dark); position: relative; display: inline-block; width: 100%;
+    }
+    .section__title::after {
+      content: ''; display: block; width: 60px; height: 5px; border-radius: 5px;
+      background: var(--gradient-main); margin: 15px auto 0;
+    }
+    
+    /* Tech Grid (Glass Cards) */
+    .tech-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 30px; }
+    .tech-card {
+      background: white; padding: 30px; border-radius: var(--radius);
+      box-shadow: var(--shadow-card); border: 1px solid rgba(255,255,255,1);
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .tech-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--primary); }
+    
+    .tech-card__title { 
+      color: var(--secondary); font-size: 1.4em; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;
+    }
+    .tech-card__title i { background: rgba(114, 9, 183, 0.1); padding: 10px; border-radius: 12px; font-size: 0.8em; }
+
+    /* Skills */
+    .skill-bar {
+      background: white; border-radius: 50px; height: 50px;
+      position: relative; margin-bottom: 25px; overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 6px;
+    }
+    .skill-bar__text-overlay {
+      position: absolute; width: 100%; height: 100%; padding: 0 25px; 
+      display: flex; justify-content: space-between; align-items: center;
+      z-index: 2; font-weight: 700; color: #444; mix-blend-mode: multiply;
+    }
+    .skill-bar__fill {
+      height: 100%; width: 0; background: var(--gradient-main); border-radius: 40px;
+      transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* ================= PROJECT CARDS (Restored Content) ================= */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(340px,1fr)); gap: 40px; }
+    
+    .portfolio-card {
+      background: white; border-radius: var(--radius); 
+      box-shadow: var(--shadow-card); overflow: hidden;
+      display: flex; flex-direction: column; transition: all 0.4s ease;
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+    .portfolio-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.12); }
+    .portfolio-card img { height: 240px; width: 100%; object-fit: cover; transition: 0.5s; }
+    .portfolio-card:hover img { transform: scale(1.05); }
+
+    .portfolio-card__content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
+    .portfolio-card__title { font-size: 1.5em; color: var(--text-dark); margin-bottom: 12px; font-weight: 700; }
+    
+    .project-desc { font-size: 1em; color: var(--text-gray); margin-bottom: 15px; line-height: 1.6; }
+    
+    /* Tags */
+    .tech-stack-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .tech-tag {
+      background: rgba(67, 97, 238, 0.1); color: var(--primary); padding: 5px 12px;
+      border-radius: 20px; font-size: 0.85em; font-weight: 600;
+    }
+
+    /* Engine List (Restored) */
+    .project-engine-list { list-style: none; margin-bottom: 25px; }
+    .project-engine-list li {
+      font-size: 0.95em; color: var(--text-dark); margin-bottom: 10px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .project-engine-list li i {
+      color: var(--accent); margin-top: 5px; font-size: 0.9em;
+    }
+    .project-engine-list strong { color: var(--secondary); font-weight: 600; }
+
+    /* Links */
+    .portfolio-card__links { display: flex; gap: 15px; margin-top: auto; }
+    .link-btn {
+      padding: 12px 20px; font-weight: 600; color: var(--primary); 
+      border: 2px solid rgba(67, 97, 238, 0.2); border-radius: 12px; 
+      font-size: 0.95em; transition: 0.3s; flex: 1; text-align: center;
+    }
+    .link-btn:hover { 
+      background: var(--primary); color: white; border-color: var(--primary); 
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+
+    /* ================= SHINY CONTACT BUTTONS ================= */
+    .contact-container {
+      display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 30px;
+    }
+    .btn-contact {
+      display: flex; align-items: center; justify-content: center; gap: 15px;
+      width: 100%; max-width: 380px; padding: 18px; border-radius: 50px;
+      color: white; font-weight: 600; font-size: 1.1em;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative; overflow: hidden;
+    }
+    /* Shine Animation */
+    .btn-contact::after {
+      content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: 0.5s;
+    }
+    .btn-contact:hover::after { left: 100%; }
+    .btn-contact:hover { transform: translateY(-5px) scale(1.02); }
+    
+    .btn-whatsapp { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+    .btn-email { background: linear-gradient(135deg, #EA4335, #B92B1E); box-shadow: 0 8px 25px rgba(234, 67, 53, 0.4); }
+
+    /* Footer */
+    footer { 
+      text-align: center; padding: 60px 20px; background: white; 
+      border-radius: 50px 50px 0 0; box-shadow: 0 -10px 40px rgba(0,0,0,0.03); margin-top: 100px;
+    }
+    .social-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+    .social-icon {
+      font-size: 1.4em; width: 55px; height: 55px; background: #f8f9fa;
+      display: flex; justify-content: center; align-items: center; border-radius: 50%;
+      color: var(--text-dark); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .social-icon:hover { 
+      background: var(--gradient-main); color: white; 
+      transform: translateY(-5px) rotate(10deg); box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+    }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.19, 1, 0.22, 1); }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
+
 <body>
 
-    <div class="overlay" id="overlay" onclick="closeAll()"></div>
-    <div class="toast" id="toast">Action Successful</div>
-
-    <div class="sidebar" id="sidebar">
-        <div class="close-btn" onclick="closeAll()">&times;</div>
-        <div class="profile">
-            <div class="avatar">K</div>
-            <h2 style="color:var(--text);">Kashif</h2>
-            <p style="color: var(--accent); font-weight:bold; margin-bottom: 8px; font-size: 0.9rem;">Elite Full-Stack Architect</p>
-        </div>
-        
-        <div class="menu-item" onclick="handleNav('home')"><span>&#8962;</span> Home</div>
-        <div class="menu-item" onclick="handleNav('sci')"><span>&#8730;</span> Scientific Mode</div>
-
-        <details class="menu-group">
-            <summary><span>&#128208;</span> Math Tools</summary>
-            <div class="submenu">
-                <a href="standard-deviation.html" class="menu-item">Standard Deviation</a>
-                <a href="log-calculator.html" class="menu-item">Log Calculator</a>
-                <a href="exponent.html" class="menu-item">Exponent Calculator</a>
-                <a href="fraction.html" class="menu-item">Fraction Calculator</a>
-            </div>
-        </details>
-
-        <details class="menu-group">
-            <summary><span>&#128176;</span> Finance</summary>
-            <div class="submenu">
-                <a href="percentage.html" class="menu-item">Percentage Calc</a>
-                <a href="mortgage-calculator.html" class="menu-item">Mortgage Calc</a>
-            </div>
-        </details>
-
-        <details class="menu-group">
-            <summary><span>&#9878;</span> Health</summary>
-            <div class="submenu">
-                <a href="bmi-calculator.html" class="menu-item">BMI Calculator</a>
-            </div>
-        </details>
-        
-        <div class="menu-item" onclick="handleNav('settings')"><span>&#9881;</span> Settings</div>
-        <a href="contact.html" class="menu-item"><span>&#128100;</span> Contact Developer</a>
-        
-        <div class="menu-item" onclick="handleNav('signin')" style="margin-top:auto; background:var(--accent); color:white; justify-content: center; font-weight:bold;">Sign In</div>
+  <nav class="navbar">
+    <div class="navbar__logo">Kashif Dawar.</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#arsenal">Stack</a>
+      <a href="#skills">Skills</a>
+      <a href="#portfolio">Projects</a>
+      <a href="#contact">Contact</a>
     </div>
-
-    <div class="modal" id="modal-signin">
-        <span class="close-modal" onclick="closeAll()">&times;</span>
-        <h3>Sign In</h3>
-        <div class="input-group"><label>Email</label><input type="email" placeholder="Enter email"></div>
-        <div class="input-group"><label>Password</label><input type="password" placeholder="Enter password"></div>
-        <button class="modal-btn" onclick="showToast('Welcome back, Kashif!'); closeAll()">Login</button>
-    </div>
-
-    <div class="modal" id="modal-settings">
-        <span class="close-modal" onclick="closeAll()">&times;</span>
-        <h3>Settings</h3>
-        <div class="switch-container">
-            <span class="switch-label">Light Mode</span>
-            <label class="switch"><input type="checkbox" id="theme-toggle" onchange="toggleTheme()"><span class="slider"></span></label>
-        </div>
-        <div class="switch-container">
-            <span class="switch-label">Button Sounds</span>
-            <label class="switch"><input type="checkbox" id="sound-toggle" onchange="saveSoundPref()"><span class="slider"></span></label>
-        </div>
-        <button class="modal-btn" onclick="showToast('Preferences Saved'); closeAll()">Done</button>
-    </div>
-
-    <header>
-        <div class="hamburger" onclick="openSidebar()">&#9776;</div>
-        <div class="brand">KASHIF <span>PRO</span></div>
-        <div style="width: 24px;"></div>
-    </header>
-
-    <div class="main-content">
-        <div class="calc-body">
-            <div class="tabs">
-                <div class="tab active" id="tab-basic" onclick="switchTab('basic')">Basic</div>
-                <div class="tab" id="tab-sci" onclick="switchTab('sci')">Scientific</div>
-            </div>
-
-            <div class="display">
-                <div class="history" id="history"></div>
-                <div class="result" id="result">0</div>
-            </div>
-
-            <div class="keypad active" id="basic-keys">
-                <button class="btn-ac" onclick="clearCalc()">AC</button>
-                <button class="btn-op" onclick="del()">DEL</button>
-                <button class="btn-op" onclick="appendOp('%')">%</button>
-                <button class="btn-op" onclick="appendOp('/')">&divide;</button>
-                
-                <button onclick="appendNum('7')">7</button>
-                <button onclick="appendNum('8')">8</button>
-                <button onclick="appendNum('9')">9</button>
-                <button class="btn-op" onclick="appendOp('*')">&times;</button>
-                
-                <button onclick="appendNum('4')">4</button>
-                <button onclick="appendNum('5')">5</button>
-                <button onclick="appendNum('6')">6</button>
-                <button class="btn-op" onclick="appendOp('-')">&minus;</button>
-                
-                <button onclick="appendNum('1')">1</button>
-                <button onclick="appendNum('2')">2</button>
-                <button onclick="appendNum('3')">3</button>
-                <button class="btn-op" onclick="appendOp('+')">+</button>
-                
-                <button onclick="appendNum('0')">0</button>
-                <button onclick="appendNum('.')">.</button>
-                <button onclick="appendNum('00')">00</button>
-                <button class="btn-eq" onclick="calculate()">=</button>
-            </div>
-
-            <div class="keypad" id="sci-keys">
-                <div class="rad-deg-toggle">
-                    <label><input type="radio" name="angle" value="deg" checked onclick="setAngleMode('deg')"> Deg</label>
-                    <label><input type="radio" name="angle" value="rad" onclick="setAngleMode('rad')"> Rad</label>
-                </div>
-                
-                <button class="btn-sci" onclick="appendFunc('sin(')">sin</button>
-                <button class="btn-sci" onclick="appendFunc('cos(')">cos</button>
-                <button class="btn-sci" onclick="appendFunc('tan(')">tan</button>
-                <button class="btn-sci" onclick="append('Math.PI')">&pi;</button>
-                <button class="btn-sci" onclick="append('Math.E')">e</button>
-
-                <button class="btn-sci" onclick="appendFunc('asin(')">sin⁻¹</button>
-                <button class="btn-sci" onclick="appendFunc('acos(')">cos⁻¹</button>
-                <button class="btn-sci" onclick="appendFunc('atan(')">tan⁻¹</button>
-                <button class="btn-sci" style="color:#fbbf24;" onclick="appendFunc('integral(')">&#8747;</button> 
-                <button class="btn-sci" style="color:#fbbf24;" onclick="appendFunc('deriv(')">d/dx</button>
-
-                <button class="btn-sci" onclick="appendOp('^')">xʸ</button>
-                <button class="btn-sci" onclick="appendOp('^3')">x³</button>
-                <button class="btn-sci" onclick="appendOp('^2')">x²</button>
-                <button class="btn-sci" onclick="appendFunc('exp(')">eˣ</button>
-                <button class="btn-sci" onclick="appendFunc('pow10(')">10ˣ</button>
-
-                <button class="btn-sci" onclick="appendOp('^(1/')">ʸ&radic;x</button>
-                <button class="btn-sci" onclick="appendFunc('cbrt(')">³&radic;x</button>
-                <button class="btn-sci" onclick="appendFunc('sqrt(')">&radic;x</button>
-                <button class="btn-sci" onclick="appendFunc('ln(')">ln</button>
-                <button class="btn-sci" onclick="appendFunc('log(')">log</button>
-
-                <button class="btn-sci" onclick="appendNum('(')">(</button>
-                <button class="btn-sci" onclick="appendNum(')')">)</button>
-                <button class="btn-sci" onclick="appendOp('^(-1)')">1/x</button>
-                <button class="btn-sci" onclick="appendOp('%')">%</button>
-                <button class="btn-sci" onclick="append('!')">n!</button>
-
-                <button onclick="appendNum('7')">7</button>
-                <button onclick="appendNum('8')">8</button>
-                <button onclick="appendNum('9')">9</button>
-                <button class="btn-op" onclick="appendOp('+')">+</button>
-                <button class="btn-op" onclick="del()">&#9003;</button>
-
-                <button onclick="appendNum('4')">4</button>
-                <button onclick="appendNum('5')">5</button>
-                <button onclick="appendNum('6')">6</button>
-                <button class="btn-op" onclick="appendOp('-')">&minus;</button>
-                <button class="btn-mem" onclick="useAns()">Ans</button>
-
-                <button onclick="appendNum('1')">1</button>
-                <button onclick="appendNum('2')">2</button>
-                <button onclick="appendNum('3')">3</button>
-                <button class="btn-op" onclick="appendOp('*')">&times;</button>
-                <button class="btn-mem" onclick="memAdd()">M+</button>
-
-                <button onclick="appendNum('0')">0</button>
-                <button onclick="appendNum('.')">.</button>
-                <button class="btn-sci" onclick="append('E')">EXP</button>
-                <button class="btn-op" onclick="appendOp('/')">&divide;</button>
-                <button class="btn-mem" onclick="memSub()">M-</button>
-
-                <button class="btn-sci" onclick="toggleSign()">+/-</button>
-                <button class="btn-sci" onclick="appendFunc('rand(')">RND</button>
-                <button class="btn-ac" onclick="clearCalc()">AC</button>
-                <button class="btn-eq" onclick="calculate()">=</button>
-                <button class="btn-mem" onclick="memRecall()">MR</button>
-            </div>
-        </div>
-
-        <div class="seo-section" id="guide-section">
-            <h1>Kashif's Pro Calculator: Free Online Scientific, Financial & Health Tools</h1>
-            <p>Welcome to <strong>Kashif's Pro Calculator</strong>, the ultimate <em>free online calculator</em> designed for students, engineers, business owners, and anyone who needs accurate calculations instantly. This <strong>offline calculator</strong> works on mobile, tablet, and desktop, providing precision tools for math, finance, and health calculations without sending your data to the cloud.</p>
-            <p style="border-left: 3px solid var(--accent); padding-left: 10px; background: rgba(0,0,0,0.1);"><strong>🚀 New Update:</strong> We have upgraded to a full <em>Calculus Calculator</em>! You can now perform numerical <strong>Integration (∫)</strong> and <strong>Derivation (d/dx)</strong> directly in your browser.</p>
-
-            <h2>1. Why Choose Kashif's Pro Calculator?</h2>
-            <p>Unlike traditional online calculators that lag or show too many pop-ups, our <strong>scientific calculator PWA</strong> runs entirely on your device using Client-Side JavaScript. This ensures <strong>zero latency</strong> and <strong>100% privacy</strong>. Whether you’re solving complex trigonometry for an exam, calculating a mortgage repayment, or checking your BMI, all calculations happen locally in your browser.</p>
-
-            <h2>2. Core Features of Our Calculator</h2>
-            <ul>
-                <li><strong>Dual Mode Interface:</strong> Switch effortlessly between <em>Basic</em> (for retail/shopping) and <em>Scientific</em> (for STEM) calculators.</li>
-                <li><strong>Math Tools Suite:</strong> Solve standard deviation, fractions, logarithms, and exponents with ease.</li>
-                <li><strong>Financial Intelligence:</strong> Calculate mortgage EMIs, percentages, and profit margins accurately.</li>
-                <li><strong>Health Monitoring:</strong> Track health trends with our private BMI calculator.</li>
-                <li><strong>Offline & PWA Ready:</strong> Install on your device and use without internet—perfect for students with limited data.</li>
-            </ul>
-
-            <h2>3. Scientific & Calculus Mode User Guide</h2>
-            <p>Our updated scientific mode mimics the layout of physical calculators (like Casio) and advanced online tools (like Calculator.net) to make your workflow seamless. Here is how to use the advanced features:</p>
-            <h3>3.1 Integration Calculator (∫)</h3>
-            <p>Calculus students can now find the area under a curve numerically. <br><strong>Usage:</strong> Click the <span style="color:var(--accent)">∫</span> button. The syntax is `integral('formula', start_limit, end_limit)`.<br><strong>Example:</strong> To integrate `x²` from 0 to 5, type: <code>integral('x^2', 0, 5)</code>. This uses Simpson's Rule for high accuracy.</p>
-            <h3>3.2 Derivation Calculator (d/dx)</h3>
-            <p>Find the rate of change or slope of a function at a specific point.<br><strong>Usage:</strong> Click the <span style="color:var(--accent)">d/dx</span> button. The syntax is `deriv('formula', point)`.<br><strong>Example:</strong> To find the slope of `x³` at `x=2`, type: <code>deriv('x^3', 2)</code>.</p>
-            <h3>3.3 Trigonometry & Angle Modes</h3>
-            <p>Toggle between <strong>DEG</strong> (Degrees) and <strong>RAD</strong> (Radians) using the switch at the top of the keypad. We support `sin`, `cos`, `tan` and their inverse functions.</p>
-
-            <h2>4. Target Audience</h2>
-            <ul>
-                <li><strong>FSC/Matric Students:</strong> Solve physics, math, and trigonometry problems quickly using Radians and degrees.</li>
-                <li><strong>Engineers & College Students:</strong> Use exponents (`x^y`), natural logs (`ln`), and constants like `π` and `e` for high-precision structural calculations.</li>
-                <li><strong>Business Owners:</strong> Quickly calculate VAT, GST, discounts, and reverse percentages.</li>
-                <li><strong>Homeowners:</strong> Plan mortgages and family budgets efficiently without sharing data with banks.</li>
-            </ul>
-
-            <h2>5. Specialized Calculator Tools</h2>
-            <p>Explore our dedicated tools accessible via the sidebar menu:</p>
-            <h3><a href="sci">Scientific Calculator</a></h3>
-            <p>Supports trigonometry (sin, cos, tan), logarithms (ln, log), exponents, square roots, and constants. We use high-precision floating-point arithmetic (IEEE 754) to ensure accuracy for exams and engineering projects.</p>
-            <h3><a href="mortgage-calculator.html">Mortgage Calculator</a></h3>
-            <p>Plan your home purchases with ease. Input loan amount, interest rate (APR), and tenure to calculate monthly payments.</p>
-            <h3><a href="percentage.html">Percentage Calculator</a></h3>
-            <p>Calculate percentages, tax-inclusive prices, or reverse percentages quickly. Ideal for students solving algebra problems and shopkeepers calculating profit margins.</p>
-            <h3><a href="standard-deviation.html">Standard Deviation & Statistics</a></h3>
-            <p>Quickly calculate Population (σ) and Sample (s) deviations. This is essential for statistics homework, data analysis, and quality control in manufacturing.</p>
-            <h3><a href="fraction.html">Fraction Calculator</a></h3>
-            <p>Combine fractions directly (e.g., `1/2 + 3/8`) without converting to decimals.</p>
-            <h3><a href="bmi-calculator.html">BMI Calculator</a></h3>
-            <p>Monitor your health using the World Health Organization standard. Input weight and height to receive instant feedback on Underweight, Normal, Overweight, and Obese categories.</p>
-
-            <h2>6. Frequently Asked Questions (FAQ)</h2>
-            <h3>Q1. Is this calculator free?</h3>
-            <p>Yes! <strong>Kashif's Pro Calculator</strong> is free for students, teachers, businesses, and personal use. We support the platform with unobtrusive AdSense ads, keeping it completely free for everyone.</p>
-            <h3>Q2. Does it work offline?</h3>
-            <p>Absolutely. As a Progressive Web App (PWA) with Service Worker (`sw.js`) support, the calculator works perfectly without Wi-Fi or mobile data once loaded.</p>
-            <h3>Q3. Is it accurate for exams?</h3>
-            <p>Yes. We use standard JavaScript double-precision arithmetic, which is suitable for Matric/FSC students, college, and university-level calculations.</p>
-            <h3>Q4. How do I install it on my device?</h3>
-            <p>For Android, tap Chrome’s menu > "Add to Home Screen". On iOS Safari, tap Share > "Add to Home Screen". This installs it as a native app on your phone.</p>
-            <h3>Q5. How is my data kept private?</h3>
-            <p>All calculations happen locally on your device (Client-Side). We never store your personal data, finance inputs, or calculation history on our servers.</p>
-
-            <h2>7. Final Notes</h2>
-            <p><strong>Kashif's Pro Calculator</strong> is optimized for performance and accuracy. With keywords like "free online calculator," "scientific calculator PWA," "offline calculator," and "FSC math tool," we aim to be the #1 choice for Pakistani and global students. Bookmark this tool today and access all your calculation needs in one place—fast, precise, and secure.</p>
-        </div>
-        
-        <div class="footer-credit">
-            Architected & Engineered by <span>Kashif Dawar</span> | <a href="index.html">Home</a> | <a href="contact.html">Contact Us</a> | <a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a>
-            <br><br>
-            &copy; 2025 Kashif Dawar. All Rights Reserved.
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('SW registered'))
-                    .catch(err => console.log('SW failed', err));
-            });
-        }
-    </script>
-    
-    <button id="install-btn" style="display: none; position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: white; padding: 15px 25px; border-radius: 50px; font-weight: bold; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 9999; cursor: pointer;">
-        ⬇ Install App
+    <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Navigation">
+      <i class="fas fa-bars"></i>
     </button>
-    <script>
-        let deferredPrompt;
-        const installBtn = document.getElementById('install-btn');
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault(); deferredPrompt = e; installBtn.style.display = 'block';
-            installBtn.addEventListener('click', (e) => {
-                installBtn.style.display = 'none'; deferredPrompt.prompt();
-                deferredPrompt.userChoice.then((choiceResult) => { deferredPrompt = null; });
-            });
-        });
-    </script>
+    <div class="nav-drawer" id="drawer">
+      <a href="#about" onclick="toggleMenu()">About Me</a>
+      <a href="#arsenal" onclick="toggleMenu()">Tech Stack</a>
+      <a href="#skills" onclick="toggleMenu()">Expertise</a>
+      <a href="#portfolio" onclick="toggleMenu()">Projects</a>
+      <a href="#contact" onclick="toggleMenu()">Contact</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="profile-img-container">
+      <img src="Kashifdawar.png" alt="Kashif Dawar Portrait">
+    </div>
+  </header>
+
+  <section class="hero-text-section fade-in">
+    <h1 class="hero__title">Full-Stack Web &<br><span>SEO Expert</span></h1>
+    <p class="hero__subtitle">
+      I build mobile-friendly, scalable applications with a focus on Technical SEO and fast-loading speeds.
+    </p>
+  </section>
+
+  <main>
+
+    <section class="fade-in" id="about">
+      <h2 class="section__title">About Me</h2>
+      <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: center; max-width: 800px; margin: auto;">
+        <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8;">
+          I am a passionate Full-Stack Developer on an active journey toward becoming a world-class Software Engineer. While I am currently building my foundations, I specialize in the MERN stack and Technical SEO, focusing on creating fast, efficient websites that help businesses succeed while I continue to master my craft.
+        </p>
+      </div>
+    </section>
+
+    <section class="fade-in" id="arsenal">
+      <h2 class="section__title">My Tech Arsenal</h2>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h3 class="tech-card__title"><i class="fas fa-code"></i> Frontend</h3>
+          <p>React.js / Next.js</p><p>Tailwind CSS</p><p>Redux Toolkit</p>
+        </div>
+        <div class="tech-card">
+          <h3 class="tech-card__title"><i class="fas fa-server"></i> Backend</h3>
+          <p>Node.js / Express</p><p>Python / Django</p><p>REST APIs</p>
+        </div>
+        <div class="tech-card">
+          <h3 class="tech-card__title"><i class="fas fa-search"></i> Database & SEO</h3>
+          <p>PostgreSQL / MongoDB</p><p>Technical SEO</p><p>Schema Markup</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="fade-in" id="skills">
+      <h2 class="section__title">Technical Expertise</h2>
+      <div id="skill-bars-container"></div>
+    </section>
+
+    <section class="fade-in" id="portfolio">
+      <h2 class="section__title">Featured Projects</h2>
+      <div class="portfolio-grid">
+        
+        <article class="portfolio-card">
+          <img src="Basic calculator.png" alt="Scientific Calculator Interface" loading="lazy">
+          <div class="portfolio-card__content">
+            <h3 class="portfolio-card__title">Scientific Calculator Engine</h3>
+            
+            <p class="project-desc">
+              A high-performance progressive web app engineered for speed, featuring a custom-built theme engine and synthetic audio feedback.
+            </p>
+
+            <div class="tech-stack-row">
+              <span class="tech-tag">Web Audio API</span>
+              <span class="tech-tag">Local Storage</span>
+              <span class="tech-tag">CSS Variables</span>
+            </div>
+
+            <ul class="project-engine-list">
+              <li>
+                <i class="fas fa-adjust"></i>
+                <span><strong>Dark/Light Mode:</strong> Dynamic theme switcher.</span>
+              </li>
+              <li>
+                <i class="fas fa-microchip"></i>
+                <span><strong>Performance:</strong> Zero-asset synthetic sound engine.</span>
+              </li>
+            </ul>
+
+            <div class="portfolio-card__links">
+              <a href="https://kashif-webdeveloper.github.io" target="_blank" class="link-btn"><i class="fas fa-eye"></i> Live Demo</a>
+              <a href="https://github.com/kashif-webdeveloper" target="_blank" class="link-btn"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); height: 240px; display:flex; align-items:center; justify-content:center;">
+             <i class="fas fa-shopping-bag" style="font-size:4rem; color:white; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.2));"></i>
+          </div>
+          <div class="portfolio-card__content">
+            <h3 class="portfolio-card__title">Fashion Store (E-Commerce)</h3>
+            
+            <p class="project-desc">
+              A full-stack e-commerce platform focused on conversion rate optimization and SEO ranking factors.
+            </p>
+
+            <div class="tech-stack-row">
+              <span class="tech-tag">MERN Stack</span>
+              <span class="tech-tag">Stripe API</span>
+              <span class="tech-tag">Redux</span>
+            </div>
+
+            <ul class="project-engine-list">
+              <li>
+                <i class="fas fa-rocket"></i>
+                <span><strong>Speed:</strong> Optimized for under 1s load time.</span>
+              </li>
+              <li>
+                <i class="fas fa-chart-line"></i>
+                <span><strong>SEO:</strong> Schema Markup implemented.</span>
+              </li>
+            </ul>
+
+            <div class="portfolio-card__links">
+              <a href="https://kashifdawarkashi.netlify.app" target="_blank" class="link-btn"><i class="fas fa-eye"></i> Live Demo</a>
+              <a href="https://github.com/kashif-webdeveloper" target="_blank" class="link-btn"><i class="fab fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="fade-in" id="contact">
+      <h2 class="section__title">Ready to Start?</h2>
+      <p style="text-align:center; margin-bottom:30px; font-size:1.1em; color:var(--text-gray);">Click below to chat or email me directly.</p>
+      
+      <div class="contact-container">
+        <a href="https://wa.me/qr/6XYQWS4TYRXKJ1" target="_blank" class="btn-contact btn-whatsapp">
+          <i class="fab fa-whatsapp" style="font-size:1.4em;"></i> Chat on WhatsApp
+        </a>
+
+        <a href="mailto:kashifdawarkashi508@gmail.com" class="btn-contact btn-email">
+          <i class="fas fa-envelope" style="font-size:1.3em;"></i> Send Email
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/kashif-dawar-a2107939b" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/share/1AWbeP2kJP/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://x.com/Kashifdawa45874" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/kashif-webdeveloper" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+    </div>
+    <p>© 2025 Kashif Dawar. Built with ❤️ & Code.</p>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("drawer").classList.toggle("active");
+    }
+
+    // Smooth Fade-in
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add("visible");
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".fade-in").forEach(el=>observer.observe(el));
+
+    // Skills Animation
+    const skills = [
+      { name: "HTML/CSS (Semantic)", level: 95 },
+      { name: "JavaScript (ES6+)", level: 90 },
+      { name: "React/Next.js", level: 88 },
+      { name: "Node.js / Express", level: 82 },
+      { name: "PostgreSQL / MongoDB", level: 78 },
+      { name: "Technical SEO", level: 92 }
+    ];
+    const container = document.getElementById("skill-bars-container");
+
+    skills.forEach(s=>{
+      const bar = document.createElement("div");
+      bar.className = "skill-bar";
+      bar.innerHTML = `
+        <div class="skill-bar__text-overlay">
+          <span>${s.name}</span><span>${s.level}%</span>
+        </div>
+        <div class="skill-bar__fill" style="width: 0" data-width="${s.level}%"></div>
+      `;
+      container.appendChild(bar);
+    });
+
+    const barObs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const fill = e.target.querySelector(".skill-bar__fill");
+          fill.style.width = fill.getAttribute("data-width");
+        }
+      });
+    });
+    document.querySelectorAll(".skill-bar").forEach(bar=>barObs.observe(bar));
+  </script>
+
 </body>
 </html>
