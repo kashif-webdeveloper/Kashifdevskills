@@ -9,6 +9,7 @@
   <link rel="apple-touch-icon" href="Kashifdawar.png">
   
   <link rel="manifest" href="data:application/manifest+json,{}">
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-C1D3Q3T7YS"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -334,6 +335,23 @@
 
 <body>
 
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+          registration.unregister().then(function(boolean) {
+            console.log('Zombie Service Worker Killed:', boolean);
+          });
+        } 
+      });
+      
+      // Forces a one-time reload to ensure the new image loads
+      if (!sessionStorage.getItem('force_reload')) {
+        sessionStorage.setItem('force_reload', 'true');
+        window.location.reload();
+      }
+    }
+  </script>
   <nav class="navbar">
     <div class="navbar__logo">Kashif Dawar.</div>
     <div class="nav-links">
