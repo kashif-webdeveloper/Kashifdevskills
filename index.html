@@ -287,6 +287,48 @@
       box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
     }
 
+    /* ================= NEW CERTIFICATE GRID ================= */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .cert-card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      border: 4px solid white; /* Frame effect */
+      transition: 0.4s ease;
+    }
+    .cert-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      border-color: #F0B90B; /* Binance Yellow */
+    }
+    .cert-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .cert-caption {
+      padding: 15px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--text-dark);
+      background: #fafafa;
+      font-size: 0.9rem;
+      border-top: 1px solid #eee;
+    }
+    .cert-issuer {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-gray);
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
     /* ================= SHINY CONTACT BUTTONS ================= */
     .contact-container {
       display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 30px;
@@ -326,6 +368,11 @@
       background: var(--gradient-main); color: white; 
       transform: translateY(-5px) rotate(10deg); box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
     }
+    /* Binance Gold Hover */
+    .social-icon.binance-icon:hover {
+      background: #F0B90B; color: black;
+      box-shadow: 0 10px 20px rgba(240, 185, 11, 0.4);
+    }
 
     /* Animations */
     .fade-in { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.19, 1, 0.22, 1); }
@@ -359,6 +406,7 @@
       <a href="#arsenal">Stack</a>
       <a href="#skills">Skills</a>
       <a href="#portfolio">Projects</a>
+      <a href="#certificates">Certs</a> 
       <a href="#contact">Contact</a>
     </div>
     <button class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle Navigation">
@@ -369,6 +417,7 @@
       <a href="#arsenal" onclick="toggleMenu()">Tech Stack</a>
       <a href="#skills" onclick="toggleMenu()">Expertise</a>
       <a href="#portfolio" onclick="toggleMenu()">Projects</a>
+      <a href="#certificates" onclick="toggleMenu()">Certificates</a>
       <a href="#contact" onclick="toggleMenu()">Contact</a>
     </div>
   </nav>
@@ -392,7 +441,9 @@
       <h2 class="section__title">About Me</h2>
       <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: center; max-width: 800px; margin: auto;">
         <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8;">
-          I am a passionate Full-Stack Developer on an active journey toward becoming a world-class Software Engineer. While I am currently building my foundations, I specialize in the MERN stack and Technical SEO, focusing on creating fast, efficient websites that help businesses succeed while I continue to master my craft.
+          I am a passionate Full-Stack Developer and <strong style="color:var(--secondary)">Crypto Enthusiast</strong> on an active journey toward becoming a world-class Software Engineer. 
+          While mastering the <strong>MERN stack</strong> and <strong>Technical SEO</strong>, I am also deeply exploring <strong>Blockchain technology</strong> and Web3 development. 
+          I focus on creating fast, efficient, and future-ready web applications that help businesses succeed in the modern digital economy.
         </p>
       </div>
     </section>
@@ -495,6 +546,55 @@
       </div>
     </section>
 
+    <section class="fade-in" id="certificates">
+      <h2 class="section__title">Certifications & Achievements</h2>
+      
+      <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: center; max-width: 800px; margin: 0 auto 30px auto;">
+        <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
+          I have rigorously upskilled in the Web3 domain, earning recognized certifications from <strong>Binance Academy</strong> in partnership with top global institutions. These credentials validate my expertise in Blockchain Architecture, Regulatory Frameworks, and Sustainable Fintech solutions.
+        </p>
+        <a href="https://app.binance.com/uni-qr/cpro/Square-Creator-59ce146ffe55?l=en&r=R8ZWV16Q&uc=app_square_share_link&us=copylink" target="_blank" style="display:inline-block; margin-top:15px; color:var(--primary); font-weight:bold; border-bottom:2px solid var(--primary);">
+          Verify on My Binance Profile &rarr;
+        </a>
+      </div>
+
+      <div class="cert-grid">
+        
+        <div class="cert-card">
+          <img src="cert-aws.png" alt="AWS Blockchain Node Runners" loading="lazy">
+          <div class="cert-caption">
+            AWS Blockchain Node Runners
+            <span class="cert-issuer">Issued by Binance & AWS</span>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert-regulatory.png" alt="Introduction to Regulatory Risks" loading="lazy">
+          <div class="cert-caption">
+            Regulatory Risks & Frameworks
+            <span class="cert-issuer">Global Fintech Institute</span>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert-sustainability.png" alt="Blockchain for Business Sustainability" loading="lazy">
+          <div class="cert-caption">
+            Blockchain for Sustainability
+            <span class="cert-issuer">University of Oulu</span>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <img src="cert-injective.png" alt="Injective Blockchain" loading="lazy">
+          <div class="cert-caption">
+            Injective: Finance Blockchain
+            <span class="cert-issuer">Issued by Binance Academy</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <section class="fade-in" id="contact">
       <h2 class="section__title">Ready to Start?</h2>
       <p style="text-align:center; margin-bottom:30px; font-size:1.1em; color:var(--text-gray);">Click below to chat or email me directly.</p>
@@ -520,6 +620,8 @@
       <a href="https://www.facebook.com/share/1AWbeP2kJP/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
       <a href="https://x.com/Kashifdawa45874" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
       <a href="https://github.com/kashif-webdeveloper" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+      
+      <a href="https://app.binance.com/uni-qr/cpro/Square-Creator-59ce146ffe55?l=en&r=R8ZWV16Q&uc=app_square_share_link&us=copylink" target="_blank" class="social-icon binance-icon"><i class="fas fa-coins"></i></a>
     </div>
     <p>© 2025 Kashif Dawar. Built with ❤️ & Code.</p>
   </footer>
