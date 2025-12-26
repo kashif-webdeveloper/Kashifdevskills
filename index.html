@@ -186,8 +186,9 @@
       position: relative;
       transition: max-height 0.8s ease-in-out;
     }
+    /* UPDATED MAX HEIGHT FOR LONG TEXT */
     .about-text-container.expanded {
-      max-height: 5000px; 
+      max-height: 30000px; 
     }
     /* Fade Out Effect */
     .about-text-container::after {
@@ -370,29 +371,50 @@
   <main>
     <section class="fade-in" id="about">
       <h2 class="section__title">About Me</h2>
-      <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: center; max-width: 900px; margin: auto;">
+      <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: left; max-width: 900px; margin: auto;">
         
         <div class="about-text-container" id="about-content">
-          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-            <strong>I am a dedicated undergraduate student of Software Engineering</strong>, currently architecting my path toward becoming a world-class Full-Stack Developer. My academic journey provides the theoretical foundation, but my real passion lies in the practical application of building scalable, high-performance web solutions. I don't just write code; I engineer digital experiences that are fast, secure, and visually stunning.
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>INTRODUCTION: THE GENESIS OF A DEVELOPER</strong><br>
+            My name is <strong>Kashif Dawar</strong>, and I am a software engineer driven by an obsession with how digital systems shape our reality. My journey began not just with lines of code, but with a deep curiosity about the mechanics of the internet. As an undergraduate student of Software Engineering, I made a conscious decision early on: I would not settle for mediocrity. I adopted a <strong>"Zero-to-Hero" philosophy</strong>, a mindset that treats every gap in knowledge as a challenge to be conquered. This drive has propelled me from understanding basic HTML to architecting complex, data-driven applications using the MERN stack. I don't just build websites; I construct digital assets that are robust, secure, and engineered for growth.
           </p>
 
-          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-            As a <strong>Full-Stack Web Developer & SEO Expert</strong>, I specialize in the <strong>MERN stack (MongoDB, Express, React, Node.js)</strong> and Next.js. I understand that a beautiful website is useless if no one sees it, which is why I integrate <strong>Technical SEO</strong> into every line of code I write. From structured data (Schema Markup) to optimizing Core Web Vitals, I ensure that my applications rank high on Google and perform flawlessly across all devices.
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>TECHNICAL MASTERY: THE FULL-STACK ARCHITECT</strong><br>
+            In the realm of development, I specialize in the <strong>MERN Stack (MongoDB, Express.js, React, Node.js)</strong>. This JavaScript-centric architecture allows me to maintain a unified logic from the database to the client interface. My approach to frontend development goes beyond aesthetics; I utilize <strong>React.js and Next.js</strong> to create user interfaces that are reactive and lightning-fast. I believe that a user’s time is precious, and every millisecond of latency is a friction point I aim to eliminate. On the backend, I leverage the asynchronous power of <strong>Node.js</strong> to build scalable APIs that can handle high traffic without buckling under pressure. Whether it’s integrating <strong>Stripe for payments</strong>, managing state with <strong>Redux Toolkit</strong>, or designing schema-less databases with MongoDB, I ensure every component interacts seamlessly.
           </p>
 
-          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-            Beyond the world of syntax and servers, I possess a unique edge: <strong>active experience in Crypto Trading</strong>. This isn't just a hobby; it is a discipline that has taught me risk management, market psychology, and the intricate mechanics of Decentralized Finance (DeFi). This financial acumen allows me to understand Fintech projects at a deeper level than most developers. I bridge the gap between complex blockchain logic and user-friendly interfaces.
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+             <strong>THE SEO PHILOSOPHY: VISIBILITY IS VITAL</strong><br>
+             A beautiful application that no one visits is a ghost town. This realization led me to master <strong>Technical SEO</strong>. Unlike many developers who treat SEO as an afterthought, I bake it into the architecture of my code. I understand the nuances of <strong>Core Web Vitals</strong>, the importance of Semantic HTML, and the power of <strong>Schema Markup (JSON-LD)</strong> in helping search engines understand context. I optimize for the Google bot as much as I optimize for the human user. From Server-Side Rendering (SSR) in Next.js to optimizing asset delivery pipelines, my goal is to ensure that the applications I build dominate the search engine results pages (SERPs).
           </p>
 
-          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px;">
-            I am a firm believer in evidence-based skills. I have already secured over <strong>12 professional certifications</strong>, expanding beyond technical code into <strong>Business Strategy</strong>. I hold university-accredited credentials from <strong>VŠE (Prague University of Economics)</strong> and <strong>ESCP Business School</strong>, validating my expertise in Digital Asset Economics alongside my technical skills in Blockchain Architecture and Cloud Computing (AWS). I am a lifelong learner, currently preparing to expand my credentials with advanced specializations from top-tier platforms. My goal is simple: to build the future of the web, one block at a time.
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>FINTECH FUSION: THE TRADER'S EDGE</strong><br>
+            What sets me apart from the typical developer is my active involvement in the financial markets. I am an experienced <strong>Crypto Trader</strong>. This isn't a passive interest; it is a discipline that has forged my understanding of risk management, market psychology, and economic cycles. I analyze charts, understand liquidity flows, and make decisions based on data, not emotion. This background gives me a unique advantage in the <strong>Fintech sector</strong>. I don't just understand how to code a trading bot or a dashboard; I understand the financial logic <em>behind</em> it. I know what a user looks for in an exchange interface, how critical slippage is in a decentralized exchange (DEX), and why security is paramount when handling digital assets.
+          </p>
+
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>BLOCKCHAIN & WEB3: BUILDING THE FUTURE</strong><br>
+            Recognizing that the future of finance is decentralized, I pivoted hard into <strong>Blockchain Technology</strong>. I realized that to be a true "Hero" in this narrative, I needed to understand the immutable ledger. I dove deep into the mechanics of <strong>Smart Contracts, DApps (Decentralized Applications), and Consensus Mechanisms</strong>. I studied how Automated Market Makers (AMMs) like Uniswap revolutionize liquidity provision and how Layer-2 solutions are solving the scalability trilemma. My expertise covers the full spectrum of Web3, from the theoretical economics of Tokenomics to the practical deployment of nodes on cloud infrastructure.
+          </p>
+
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>CERTIFIED EXPERTISE: PROOF OF WORK</strong><br>
+            I believe in evidence-based competence. My portfolio is backed by a rigorous academic and professional track record. I have secured over <strong>13 verified certifications</strong> from global institutions. I hold credentials from <strong>ESCP Business School</strong> in Blockchain Mastery, validating my ability to implement corporate-grade solutions. I have studied <strong>Digital Assets</strong> at <strong>VŠE (Prague University of Economics)</strong>, bridging the gap between tech and business strategy. I am a certified <strong>AWS Blockchain Node Runner</strong>, proving my capability to manage infrastructure on the cloud. From <strong>Regulatory Compliance</strong> with the Global Fintech Institute to Sustainability studies with the University of Oulu, I have ensured my knowledge is holistic, compliant, and future-proof.
+          </p>
+
+          <p style="color: var(--text-gray); font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px;">
+            <strong>THE "ZERO-TO-HERO" MENTALITY</strong><br>
+            This journey is far from over. "Zero-to-Hero" is not a destination; it is a continuous process of evolution. I am constantly upskilling, currently exploring advanced Python integration with AI models to create smarter financial tools. I am Kashif Dawar—a builder, a trader, and a relentless learner. I am ready to deploy my arsenal of skills to build the next generation of web and blockchain solutions.
           </p>
         </div>
 
-        <button class="read-more-btn" onclick="toggleAbout()" id="about-btn">
-          Read More <i class="fas fa-chevron-down"></i>
-        </button>
+        <div style="text-align: center;">
+          <button class="read-more-btn" onclick="toggleAbout()" id="about-btn">
+            Read More <i class="fas fa-chevron-down"></i>
+          </button>
+        </div>
 
       </div>
     </section>
@@ -448,27 +470,27 @@
       
       <div style="background: white; padding: 25px; border-radius: 20px; box-shadow: var(--shadow-card); text-align: center; max-width: 800px; margin: 0 auto 30px auto;">
         <p style="color: var(--text-gray); font-size: 1.05rem; line-height: 1.7;">
-          I have rigorously upskilled in the Web3 domain, earning recognized certifications from <strong>Binance Academy</strong> in partnership with top global institutions. Below are a few highlights of my credentials demonstrating my expertise in Blockchain Architecture and Fintech.
+          I have rigorously upskilled in the Web3 domain, earning recognized certifications from <strong>Binance Academy</strong> in partnership with top global institutions. Below are my most prestigious credentials demonstrating expertise in Corporate Blockchain, Digital Assets, and Cloud Infrastructure.
         </p>
       </div>
 
       <div class="cert-grid">
         <div class="cert-card">
+          <img src="1000081919.jpg" alt="Blockchain Mastery ESCP">
+          <div class="cert-caption">Blockchain Mastery (ESCP Business School)</div>
+        </div>
+        <div class="cert-card">
           <img src="cert-vse.png" alt="VSE Digital Assets">
           <div class="cert-caption">Digital Assets & Industry (VŠE)</div>
         </div>
         <div class="cert-card">
-          <img src="cert-regulatory.png" alt="Regulatory Risks">
-          <div class="cert-caption">Regulatory Risks & Frameworks</div>
-        </div>
-        <div class="cert-card">
-          <img src="1000081919.jpg" alt="Blockchain Mastery">
-          <div class="cert-caption">Binance Academy & ESCP Mastery</div>
+          <img src="cert-aws.png" alt="AWS Blockchain Node Runners">
+          <div class="cert-caption">AWS Blockchain Node Runners</div>
         </div>
       </div>
       
       <a href="certificates.html" class="view-all-btn">
-        View All 12 Certifications &rarr;
+        View All 13 Certifications &rarr;
       </a>
     </section>
 
