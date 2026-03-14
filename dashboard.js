@@ -347,3 +347,87 @@ onValue(ref(db, 'fiverr/available'), (snapshot) => {
   fetchCommit();
   setInterval(fetchCommit, 5 * 60 * 1000);
 })();
+
+
+// ============================================================
+// 5. LIVE LOCAL CLOCK (Visitor's Timezone)
+// ============================================================
+(function initLiveClock() {
+  // Add clock CSS
+  const clockCSS = document.createElement('style');
+  clockCSS.textContent = `
+    .clock-time {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      letter-spacing: 0.04em;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      background: linear-gradient(135deg, #4361ee, #7209b7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .clock-date {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-top: 6px;
+    }
+  `;
+  document.head.appendChild(clockCSS);
+
+  // Add clock card to dashboard grid BEFORE github card
+  const githubCard = document.querySelector('.dash-card--wide');
+  if (!githubCard) return;
+
+  const clockCard = document.createElement('div');
+  clockCard.className = 'dash-card';
+  clockCard.innerHTML = `
+    <div class="dash-card__header">
+      <span class="dash-icon">🕐</span>
+      <span class="dash-label">Your Local Time</span>
+    </div>
+    <div class="dash-card__body">
+      <div class="clock-time" id="clock-time">--:--:--</div>
+      <div class="clock-date" id="clock-date">Loading...</div>
+      <div class="status-sub" id="clock-tz">Detecting timezone...</div>
+    </div>
+  `;
+  githubCard.parentNode.insertBefore(clockCard, githubCard);
+
+  function updateClock() {
+    const now = new Date();
+
+    // Format time HH:MM:SS with leading zeros
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    const timeStr = `${hh}:${mm}:${ss}`;
+
+    // Format date — e.g. "Saturday, March 14, 2026"
+    const dateStr = now.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year:    'numeric',
+      month:   'long',
+      day:     'numeric'
+    });
+
+    // Get timezone name — e.g. "PKT", "EST", "GMT+5"
+    const tzName = Intl.DateTimeFormat('en-US', { timeZoneName: 'short' })
+      .formatToParts(now)
+      .find(p => p.type === 'timeZoneName')?.value || 'Local';
+
+    const timeEl = document.getElementById('clock-time');
+    const dateEl = document.getElementById('clock-date');
+    const tzEl   = document.getElementById('clock-tz');
+
+    if (timeEl) timeEl.textContent = timeStr;
+    if (dateEl) dateEl.textContent = dateStr;
+    if (tzEl)   tzEl.textContent   = `📍 ${tzName} — ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  }
+
+  // Run immediately then every second
+  updateClock();
+  setInterval(updateClock, 1000);
+})();
