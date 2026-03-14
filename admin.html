@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel | Kashif Dawar</title>
-  <!-- No index in search engines — this page is secret -->
   <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
@@ -23,7 +22,6 @@
       color: white;
     }
 
-    /* ── LOGIN SCREEN ── */
     #login-screen {
       width: 100%;
       max-width: 380px;
@@ -35,11 +33,7 @@
       text-align: center;
     }
 
-    .lock-icon {
-      font-size: 3rem;
-      margin-bottom: 16px;
-      display: block;
-    }
+    .lock-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
 
     #login-screen h1 {
       font-size: 1.6rem;
@@ -50,11 +44,7 @@
       margin-bottom: 8px;
     }
 
-    #login-screen p {
-      color: #666;
-      font-size: 0.9rem;
-      margin-bottom: 28px;
-    }
+    #login-screen p { color: #666; font-size: 0.9rem; margin-bottom: 28px; }
 
     .secret-input {
       width: 100%;
@@ -66,10 +56,8 @@
       font-size: 1rem;
       font-family: "Outfit", sans-serif;
       outline: none;
-      text-align: center;
-      letter-spacing: 0.2em;
+      margin-bottom: 12px;
       transition: border-color 0.3s;
-      margin-bottom: 16px;
     }
 
     .secret-input:focus { border-color: #4361ee; }
@@ -88,29 +76,19 @@
       transition: 0.3s;
     }
 
-    .login-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(67,97,238,0.4);
-    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(67,97,238,0.4); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    .login-error {
-      color: #fc8181;
-      font-size: 0.85rem;
-      margin-top: 12px;
-      display: none;
-    }
+    .login-error { color: #fc8181; font-size: 0.85rem; margin-top: 12px; display: none; }
 
-    /* ── ADMIN PANEL ── */
+    /* ADMIN PANEL */
     #admin-panel {
       display: none;
       width: 100%;
       max-width: 500px;
     }
 
-    .admin-header {
-      text-align: center;
-      margin-bottom: 35px;
-    }
+    .admin-header { text-align: center; margin-bottom: 35px; }
 
     .admin-header h1 {
       font-size: 1.8rem;
@@ -144,7 +122,6 @@
       gap: 10px;
     }
 
-    /* CURRENT STATUS DISPLAY */
     .current-status {
       display: flex;
       align-items: center;
@@ -156,31 +133,21 @@
     }
 
     .current-dot {
-      width: 12px;
-      height: 12px;
+      width: 12px; height: 12px;
       border-radius: 50%;
       background: #333;
       flex-shrink: 0;
       transition: background 0.4s;
     }
 
-    .current-dot.online  { background: #48bb78; box-shadow: 0 0 0 4px rgba(72,187,120,0.2); }
-    .current-dot.offline { background: #fc8181; }
+    .current-dot.online   { background: #48bb78; box-shadow: 0 0 0 4px rgba(72,187,120,0.2); }
+    .current-dot.offline  { background: #fc8181; }
     .current-dot.available { background: #1dbf73; box-shadow: 0 0 0 4px rgba(29,191,115,0.2); }
-    .current-dot.busy    { background: #fc8181; }
+    .current-dot.busy     { background: #fc8181; }
 
-    .current-label {
-      font-size: 1rem;
-      font-weight: 700;
-      color: #ccc;
-    }
+    .current-label { font-size: 1rem; font-weight: 700; color: #ccc; }
 
-    /* TOGGLE BUTTONS */
-    .btn-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .toggle-btn {
       padding: 16px 10px;
@@ -200,59 +167,18 @@
     .toggle-btn span.btn-icon { font-size: 1.6rem; }
     .toggle-btn span.btn-text { font-size: 0.85rem; }
 
-    .btn-online {
-      background: rgba(72,187,120,0.1);
-      border-color: rgba(72,187,120,0.3);
-      color: #48bb78;
-    }
-    .btn-online:hover, .btn-online.active {
-      background: #48bb78;
-      border-color: #48bb78;
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(72,187,120,0.35);
-    }
+    .btn-online  { background: rgba(72,187,120,0.1); border-color: rgba(72,187,120,0.3); color: #48bb78; }
+    .btn-online:hover  { background: #48bb78; border-color: #48bb78; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(72,187,120,0.35); }
 
-    .btn-offline {
-      background: rgba(252,129,129,0.1);
-      border-color: rgba(252,129,129,0.3);
-      color: #fc8181;
-    }
-    .btn-offline:hover, .btn-offline.active {
-      background: #fc8181;
-      border-color: #fc8181;
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(252,129,129,0.35);
-    }
+    .btn-offline { background: rgba(252,129,129,0.1); border-color: rgba(252,129,129,0.3); color: #fc8181; }
+    .btn-offline:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(252,129,129,0.35); }
 
-    .btn-available {
-      background: rgba(29,191,115,0.1);
-      border-color: rgba(29,191,115,0.3);
-      color: #1dbf73;
-    }
-    .btn-available:hover, .btn-available.active {
-      background: #1dbf73;
-      border-color: #1dbf73;
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(29,191,115,0.35);
-    }
+    .btn-available { background: rgba(29,191,115,0.1); border-color: rgba(29,191,115,0.3); color: #1dbf73; }
+    .btn-available:hover { background: #1dbf73; border-color: #1dbf73; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(29,191,115,0.35); }
 
-    .btn-busy {
-      background: rgba(252,129,129,0.1);
-      border-color: rgba(252,129,129,0.3);
-      color: #fc8181;
-    }
-    .btn-busy:hover, .btn-busy.active {
-      background: #fc8181;
-      border-color: #fc8181;
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(252,129,129,0.35);
-    }
+    .btn-busy { background: rgba(252,129,129,0.1); border-color: rgba(252,129,129,0.3); color: #fc8181; }
+    .btn-busy:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(252,129,129,0.35); }
 
-    /* TOAST NOTIFICATION */
     #toast {
       position: fixed;
       bottom: 30px;
@@ -273,7 +199,6 @@
 
     #toast.show { transform: translateX(-50%) translateY(0); }
 
-    /* LOGOUT */
     .logout-btn {
       width: 100%;
       padding: 14px;
@@ -287,9 +212,9 @@
       transition: 0.3s;
       margin-top: 8px;
     }
+
     .logout-btn:hover { border-color: #fc8181; color: #fc8181; }
 
-    /* LINK TO PORTFOLIO */
     .portfolio-link {
       display: block;
       text-align: center;
@@ -300,7 +225,22 @@
       margin-top: 20px;
       transition: 0.3s;
     }
+
     .portfolio-link:hover { color: #f72585; }
+
+    .auth-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(72,187,120,0.1);
+      border: 1px solid rgba(72,187,120,0.3);
+      color: #48bb78;
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -309,27 +249,21 @@
   <div id="login-screen">
     <span class="lock-icon">🔐</span>
     <h1>Admin Access</h1>
-    <p>Enter your secret password to continue</p>
-    <input
-      type="password"
-      class="secret-input"
-      id="secret-input"
-      placeholder="••••••••"
-      autocomplete="off"
-    >
-    <button class="login-btn" onclick="checkPassword()">Unlock Panel</button>
-    <p class="login-error" id="login-error">❌ Wrong password. Try again.</p>
+    <p>Sign in with your Firebase credentials</p>
+    <input type="email"    class="secret-input" id="email-input"    placeholder="Email address" autocomplete="email">
+    <input type="password" class="secret-input" id="password-input" placeholder="Password"      autocomplete="current-password">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In Securely</button>
+    <p class="login-error" id="login-error">❌ Invalid credentials. Try again.</p>
   </div>
 
   <!-- ADMIN PANEL -->
   <div id="admin-panel">
-
     <div class="admin-header">
+      <div class="auth-badge">🔒 Firebase Authenticated</div>
       <h1>🛡️ Command Center</h1>
       <p>Control your live portfolio status</p>
     </div>
 
-    <!-- ONLINE STATUS CARD -->
     <div class="control-card">
       <h2>👤 Developer Status</h2>
       <div class="current-status">
@@ -337,7 +271,7 @@
         <span class="current-label" id="admin-status-label">Loading...</span>
       </div>
       <div class="btn-row">
-        <button class="toggle-btn btn-online" onclick="setStatus('online')">
+        <button class="toggle-btn btn-online"  onclick="setStatus('online')">
           <span class="btn-icon">🟢</span>
           <span class="btn-text">Go Online</span>
         </button>
@@ -348,7 +282,6 @@
       </div>
     </div>
 
-    <!-- FIVERR AVAILABILITY CARD -->
     <div class="control-card">
       <h2>⚡ Fiverr Availability</h2>
       <div class="current-status">
@@ -367,17 +300,17 @@
       </div>
     </div>
 
-    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    <button class="logout-btn" onclick="doLogout()">🚪 Sign Out</button>
     <a href="index.html" class="portfolio-link">← Back to Portfolio</a>
-
   </div>
 
-  <!-- TOAST -->
   <div id="toast"></div>
 
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { initializeApp }                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, onValue }               from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+                                                            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey:            "AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc",
@@ -389,65 +322,91 @@
       appId:             "1:581904807005:web:5817faf37fddb0a8e909b4",
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getDatabase(app);
+    const app  = initializeApp(firebaseConfig);
+    const db   = getDatabase(app);
+    const auth = getAuth(app);
 
-    // Secret password — change this to whatever you want
-    const ADMIN_PASSWORD = "kashif@786";
-
-    // ── LOGIN ──
-    window.checkPassword = function() {
-      const input = document.getElementById('secret-input').value;
-      if (input === ADMIN_PASSWORD) {
-        sessionStorage.setItem('kd_admin', 'true');
+    // ── AUTO LOGIN CHECK ──
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
         showPanel();
       } else {
-        document.getElementById('login-error').style.display = 'block';
-        document.getElementById('secret-input').value = '';
-        document.getElementById('secret-input').focus();
+        showLogin();
+      }
+    });
+
+    // ── LOGIN ──
+    window.doLogin = async function() {
+      const email    = document.getElementById('email-input').value.trim();
+      const password = document.getElementById('password-input').value;
+      const btn      = document.getElementById('login-btn');
+      const errEl    = document.getElementById('login-error');
+
+      if (!email || !password) {
+        errEl.textContent = '❌ Please enter email and password.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled     = true;
+      btn.textContent  = 'Signing in...';
+      errEl.style.display = 'none';
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        // onAuthStateChanged will handle showing the panel
+      } catch(e) {
+        errEl.textContent   = '❌ Wrong email or password.';
+        errEl.style.display = 'block';
+        btn.disabled        = false;
+        btn.textContent     = 'Sign In Securely';
       }
     };
 
     // Enter key support
-    document.getElementById('secret-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') window.checkPassword();
+    document.getElementById('password-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') window.doLogin();
     });
 
-    // Auto-login if already authenticated this session
-    if (sessionStorage.getItem('kd_admin') === 'true') showPanel();
+    // ── LOGOUT ──
+    window.doLogout = async function() {
+      await signOut(auth);
+      showToast('👋 Signed out successfully');
+    };
 
+    // ── SHOW/HIDE ──
     function showPanel() {
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-panel').style.display  = 'block';
       initListeners();
     }
 
-    window.logout = function() {
-      sessionStorage.removeItem('kd_admin');
-      document.getElementById('login-screen').style.display = 'flex';
+    function showLogin() {
+      document.getElementById('login-screen').style.display = 'block';
       document.getElementById('admin-panel').style.display  = 'none';
-    };
+      const btn = document.getElementById('login-btn');
+      btn.disabled    = false;
+      btn.textContent = 'Sign In Securely';
+    }
 
     // ── FIREBASE LISTENERS ──
     function initListeners() {
-      // Status listener
       onValue(ref(db, 'presence/status'), snap => {
         const isOnline = snap.val() === 'online';
         const dot   = document.getElementById('admin-status-dot');
         const label = document.getElementById('admin-status-label');
         if (!dot || !label) return;
-        dot.className    = 'current-dot ' + (isOnline ? 'online' : 'offline');
+        dot.className     = 'current-dot ' + (isOnline ? 'online' : 'offline');
         label.textContent = isOnline ? '🟢 Currently Online' : '⚫ Currently Away';
       });
 
-      // Fiverr listener
       onValue(ref(db, 'fiverr/available'), snap => {
         const available = snap.val() !== false;
         const dot   = document.getElementById('admin-fiverr-dot');
         const label = document.getElementById('admin-fiverr-label');
         if (!dot || !label) return;
         dot.className     = 'current-dot ' + (available ? 'available' : 'busy');
-        label.textContent  = available ? '✅ Available for Orders' : '🔴 Currently Busy';
+        label.textContent = available ? '✅ Available for Orders' : '🔴 Currently Busy';
       });
     }
 
@@ -457,16 +416,16 @@
         await set(ref(db, 'presence/status'), status);
         showToast(status === 'online' ? '🟢 You are now Online!' : '⚫ Status set to Away');
       } catch(e) {
-        showToast('❌ Failed to update. Check connection.');
+        showToast('❌ Failed — are you signed in?');
       }
     };
 
     window.setFiverr = async function(available) {
       try {
         await set(ref(db, 'fiverr/available'), available);
-        showToast(available ? '✅ Fiverr: Available for Orders!' : '🔴 Fiverr: Set to Busy');
+        showToast(available ? '✅ Fiverr: Available!' : '🔴 Fiverr: Set to Busy');
       } catch(e) {
-        showToast('❌ Failed to update. Check connection.');
+        showToast('❌ Failed — are you signed in?');
       }
     };
 
