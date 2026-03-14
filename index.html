@@ -8,7 +8,7 @@
   <link rel="shortcut icon" href="Kashifdawar.jpg">
   <link rel="apple-touch-icon" href="Kashifdawar.jpg">
   
-  <link rel="manifest" href="/Kashifdevskills/manifest.json">
+  <link rel="manifest" href="manifest.json">
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3CNYV1PF1F"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-3CNYV1PF1F'); </script>
 
@@ -35,7 +35,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/Kashifdevskills/sw.js')
+        navigator.serviceWorker.register('sw.js')
           .then(reg => console.log('[SW] Registered:', reg.scope))
           .catch(err => console.log('[SW] Error:', err));
       });
