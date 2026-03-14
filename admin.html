@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | Kashif Dawar</title>
+  <!-- No index in search engines — this page is secret -->
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      background: #0f0f1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+
+    /* ── LOGIN SCREEN ── */
+    #login-screen {
+      width: 100%;
+      max-width: 380px;
+      background: #1a1a2e;
+      border-radius: 28px;
+      padding: 40px 35px;
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    .lock-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    #login-screen h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #4361ee, #f72585);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    #login-screen p {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 28px;
+    }
+
+    .secret-input {
+      width: 100%;
+      padding: 14px 20px;
+      background: #0f0f1a;
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      color: white;
+      font-size: 1rem;
+      font-family: "Outfit", sans-serif;
+      outline: none;
+      text-align: center;
+      letter-spacing: 0.2em;
+      transition: border-color 0.3s;
+      margin-bottom: 16px;
+    }
+
+    .secret-input:focus { border-color: #4361ee; }
+
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #4361ee, #7209b7);
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: "Outfit", sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(67,97,238,0.4);
+    }
+
+    .login-error {
+      color: #fc8181;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      display: none;
+    }
+
+    /* ── ADMIN PANEL ── */
+    #admin-panel {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .admin-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .admin-header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #4361ee, #f72585);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .admin-header p { color: #555; font-size: 0.9rem; }
+
+    .control-card {
+      background: #1a1a2e;
+      border-radius: 24px;
+      padding: 28px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .control-card h2 {
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #555;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* CURRENT STATUS DISPLAY */
+    .current-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: #0f0f1a;
+      border-radius: 14px;
+      margin-bottom: 18px;
+    }
+
+    .current-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #333;
+      flex-shrink: 0;
+      transition: background 0.4s;
+    }
+
+    .current-dot.online  { background: #48bb78; box-shadow: 0 0 0 4px rgba(72,187,120,0.2); }
+    .current-dot.offline { background: #fc8181; }
+    .current-dot.available { background: #1dbf73; box-shadow: 0 0 0 4px rgba(29,191,115,0.2); }
+    .current-dot.busy    { background: #fc8181; }
+
+    .current-label {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ccc;
+    }
+
+    /* TOGGLE BUTTONS */
+    .btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .toggle-btn {
+      padding: 16px 10px;
+      border: 2px solid transparent;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: "Outfit", sans-serif;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-btn span.btn-icon { font-size: 1.6rem; }
+    .toggle-btn span.btn-text { font-size: 0.85rem; }
+
+    .btn-online {
+      background: rgba(72,187,120,0.1);
+      border-color: rgba(72,187,120,0.3);
+      color: #48bb78;
+    }
+    .btn-online:hover, .btn-online.active {
+      background: #48bb78;
+      border-color: #48bb78;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(72,187,120,0.35);
+    }
+
+    .btn-offline {
+      background: rgba(252,129,129,0.1);
+      border-color: rgba(252,129,129,0.3);
+      color: #fc8181;
+    }
+    .btn-offline:hover, .btn-offline.active {
+      background: #fc8181;
+      border-color: #fc8181;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(252,129,129,0.35);
+    }
+
+    .btn-available {
+      background: rgba(29,191,115,0.1);
+      border-color: rgba(29,191,115,0.3);
+      color: #1dbf73;
+    }
+    .btn-available:hover, .btn-available.active {
+      background: #1dbf73;
+      border-color: #1dbf73;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(29,191,115,0.35);
+    }
+
+    .btn-busy {
+      background: rgba(252,129,129,0.1);
+      border-color: rgba(252,129,129,0.3);
+      color: #fc8181;
+    }
+    .btn-busy:hover, .btn-busy.active {
+      background: #fc8181;
+      border-color: #fc8181;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(252,129,129,0.35);
+    }
+
+    /* TOAST NOTIFICATION */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #1a1a2e;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* LOGOUT */
+    .logout-btn {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      color: #555;
+      font-size: 0.9rem;
+      font-family: "Outfit", sans-serif;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 8px;
+    }
+    .logout-btn:hover { border-color: #fc8181; color: #fc8181; }
+
+    /* LINK TO PORTFOLIO */
+    .portfolio-link {
+      display: block;
+      text-align: center;
+      color: #4361ee;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    .portfolio-link:hover { color: #f72585; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <span class="lock-icon">🔐</span>
+    <h1>Admin Access</h1>
+    <p>Enter your secret password to continue</p>
+    <input
+      type="password"
+      class="secret-input"
+      id="secret-input"
+      placeholder="••••••••"
+      autocomplete="off"
+    >
+    <button class="login-btn" onclick="checkPassword()">Unlock Panel</button>
+    <p class="login-error" id="login-error">❌ Wrong password. Try again.</p>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div id="admin-panel">
+
+    <div class="admin-header">
+      <h1>🛡️ Command Center</h1>
+      <p>Control your live portfolio status</p>
+    </div>
+
+    <!-- ONLINE STATUS CARD -->
+    <div class="control-card">
+      <h2>👤 Developer Status</h2>
+      <div class="current-status">
+        <div class="current-dot" id="admin-status-dot"></div>
+        <span class="current-label" id="admin-status-label">Loading...</span>
+      </div>
+      <div class="btn-row">
+        <button class="toggle-btn btn-online" onclick="setStatus('online')">
+          <span class="btn-icon">🟢</span>
+          <span class="btn-text">Go Online</span>
+        </button>
+        <button class="toggle-btn btn-offline" onclick="setStatus('offline')">
+          <span class="btn-icon">⚫</span>
+          <span class="btn-text">Go Offline</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- FIVERR AVAILABILITY CARD -->
+    <div class="control-card">
+      <h2>⚡ Fiverr Availability</h2>
+      <div class="current-status">
+        <div class="current-dot" id="admin-fiverr-dot"></div>
+        <span class="current-label" id="admin-fiverr-label">Loading...</span>
+      </div>
+      <div class="btn-row">
+        <button class="toggle-btn btn-available" onclick="setFiverr(true)">
+          <span class="btn-icon">✅</span>
+          <span class="btn-text">Available</span>
+        </button>
+        <button class="toggle-btn btn-busy" onclick="setFiverr(false)">
+          <span class="btn-icon">🔴</span>
+          <span class="btn-text">Busy</span>
+        </button>
+      </div>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    <a href="index.html" class="portfolio-link">← Back to Portfolio</a>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey:            "AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc",
+      authDomain:        "kashif-portfolio-17481.firebaseapp.com",
+      databaseURL:       "https://kashif-portfolio-17481-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId:         "kashif-portfolio-17481",
+      storageBucket:     "kashif-portfolio-17481.firebasestorage.app",
+      messagingSenderId: "581904807005",
+      appId:             "1:581904807005:web:5817faf37fddb0a8e909b4",
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db  = getDatabase(app);
+
+    // Secret password — change this to whatever you want
+    const ADMIN_PASSWORD = "kashif@786";
+
+    // ── LOGIN ──
+    window.checkPassword = function() {
+      const input = document.getElementById('secret-input').value;
+      if (input === ADMIN_PASSWORD) {
+        sessionStorage.setItem('kd_admin', 'true');
+        showPanel();
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+        document.getElementById('secret-input').value = '';
+        document.getElementById('secret-input').focus();
+      }
+    };
+
+    // Enter key support
+    document.getElementById('secret-input').addEventListener('keydown', e => {
+      if (e.key === 'Enter') window.checkPassword();
+    });
+
+    // Auto-login if already authenticated this session
+    if (sessionStorage.getItem('kd_admin') === 'true') showPanel();
+
+    function showPanel() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-panel').style.display  = 'block';
+      initListeners();
+    }
+
+    window.logout = function() {
+      sessionStorage.removeItem('kd_admin');
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('admin-panel').style.display  = 'none';
+    };
+
+    // ── FIREBASE LISTENERS ──
+    function initListeners() {
+      // Status listener
+      onValue(ref(db, 'presence/status'), snap => {
+        const isOnline = snap.val() === 'online';
+        const dot   = document.getElementById('admin-status-dot');
+        const label = document.getElementById('admin-status-label');
+        if (!dot || !label) return;
+        dot.className    = 'current-dot ' + (isOnline ? 'online' : 'offline');
+        label.textContent = isOnline ? '🟢 Currently Online' : '⚫ Currently Away';
+      });
+
+      // Fiverr listener
+      onValue(ref(db, 'fiverr/available'), snap => {
+        const available = snap.val() !== false;
+        const dot   = document.getElementById('admin-fiverr-dot');
+        const label = document.getElementById('admin-fiverr-label');
+        if (!dot || !label) return;
+        dot.className     = 'current-dot ' + (available ? 'available' : 'busy');
+        label.textContent  = available ? '✅ Available for Orders' : '🔴 Currently Busy';
+      });
+    }
+
+    // ── WRITE TO FIREBASE ──
+    window.setStatus = async function(status) {
+      try {
+        await set(ref(db, 'presence/status'), status);
+        showToast(status === 'online' ? '🟢 You are now Online!' : '⚫ Status set to Away');
+      } catch(e) {
+        showToast('❌ Failed to update. Check connection.');
+      }
+    };
+
+    window.setFiverr = async function(available) {
+      try {
+        await set(ref(db, 'fiverr/available'), available);
+        showToast(available ? '✅ Fiverr: Available for Orders!' : '🔴 Fiverr: Set to Busy');
+      } catch(e) {
+        showToast('❌ Failed to update. Check connection.');
+      }
+    };
+
+    // ── TOAST ──
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+
+</body>
+</html>
