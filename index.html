@@ -491,15 +491,21 @@
           const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
           const db  = getDatabase(app);
 
-          // ── Check whitelist first ──
-          const wlKey      = email.replace(/[.@]/g, '_');
-          const wlSnap     = await get(ref(db, 'whitelist/' + wlKey));
-          const isWhitelisted = wlSnap.exists();
+          // ── Check whitelist first (public visitors can't auth so handle gracefully) ──
+          let isWhitelisted = false;
+          try {
+            const wlKey  = email.replace(/[.@]/g, '_');
+            const wlSnap = await get(ref(db, 'whitelist/' + wlKey));
+            isWhitelisted = wlSnap.exists();
+          } catch(wlErr) { isWhitelisted = false; }
 
           if (!isWhitelisted) {
-            // ── Fetch rate limit settings from Firebase ──
-            const rlSnap   = await get(ref(db, 'settings/rateLimit'));
-            const rl       = rlSnap.val() || { hourly: 3, daily: 5, minchars: 10 };
+            // ── Fetch rate limit settings (fallback to defaults if permission denied) ──
+            let rl = { hourly: 3, daily: 5, minchars: 10 };
+            try {
+              const rlSnap = await get(ref(db, 'settings/rateLimit'));
+              if (rlSnap.val()) rl = { ...rl, ...rlSnap.val() };
+            } catch(rlErr) { /* use defaults */ }
 
             // Min chars check from Firebase settings
             if (message.length < rl.minchars) {

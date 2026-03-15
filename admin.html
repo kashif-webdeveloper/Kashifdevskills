@@ -6,351 +6,335 @@
   <title>Admin Panel | Kashif Dawar</title>
   <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
       font-family: "Outfit", sans-serif;
-      background: #0f0f1a;
+      background: #0a0a14;
+      min-height: 100vh;
+      color: white;
+      padding: 20px;
+    }
+
+    /* LOGIN */
+    #login-screen {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-      color: white;
     }
-
-    #login-screen {
-      width: 100%;
-      max-width: 380px;
-      background: #1a1a2e;
-      border-radius: 28px;
-      padding: 40px 35px;
-      border: 1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      text-align: center;
+    .login-box {
+      width: 100%; max-width: 380px;
+      background: #13131f; border-radius: 24px;
+      padding: 40px 32px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
     }
-
-    .lock-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
-
-    #login-screen h1 {
-      font-size: 1.6rem;
-      font-weight: 800;
+    .login-box .lock { font-size: 2.8rem; margin-bottom: 14px; display: block; }
+    .login-box h1 {
+      font-size: 1.5rem; font-weight: 800;
       background: linear-gradient(to right, #4361ee, #f72585);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-
-    #login-screen p { color: #666; font-size: 0.9rem; margin-bottom: 28px; }
-
-    .secret-input {
-      width: 100%;
-      padding: 14px 20px;
-      background: #0f0f1a;
-      border: 2px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      color: white;
-      font-size: 1rem;
-      font-family: "Outfit", sans-serif;
-      outline: none;
-      margin-bottom: 12px;
-      transition: border-color 0.3s;
-    }
-
-    .secret-input:focus { border-color: #4361ee; }
-
-    .login-btn {
-      width: 100%;
-      padding: 14px;
-      background: linear-gradient(135deg, #4361ee, #7209b7);
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: "Outfit", sans-serif;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(67,97,238,0.4); }
-    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-
-    .login-error { color: #fc8181; font-size: 0.85rem; margin-top: 12px; display: none; }
-
-    /* ADMIN PANEL */
-    #admin-panel {
-      display: none;
-      width: 100%;
-      max-width: 500px;
-    }
-
-    .admin-header { text-align: center; margin-bottom: 35px; }
-
-    .admin-header h1 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      background: linear-gradient(to right, #4361ee, #f72585);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
     }
+    .login-box p { color: #555; font-size: 0.85rem; margin-bottom: 28px; }
+    .inp {
+      width: 100%; padding: 13px 18px;
+      background: #0a0a14; border: 2px solid rgba(255,255,255,0.07);
+      border-radius: 12px; color: white; font-size: 0.95rem;
+      font-family: "Outfit", sans-serif; outline: none;
+      margin-bottom: 10px; transition: border-color 0.3s;
+    }
+    .inp:focus { border-color: #4361ee; }
+    .login-btn {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #4361ee, #7209b7);
+      border: none; border-radius: 12px; color: white;
+      font-size: 1rem; font-weight: 700; font-family: "Outfit", sans-serif;
+      cursor: pointer; transition: 0.3s; margin-top: 4px;
+    }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(67,97,238,0.4); }
+    .login-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .login-err { color: #fc8181; font-size: 0.82rem; margin-top: 10px; display: none; }
 
-    .admin-header p { color: #555; font-size: 0.9rem; }
+    /* ADMIN PANEL */
+    #admin-panel { display: none; max-width: 620px; margin: 0 auto; padding: 30px 0 60px; }
 
-    .control-card {
-      background: #1a1a2e;
-      border-radius: 24px;
-      padding: 28px;
-      margin-bottom: 20px;
-      border: 1px solid rgba(255,255,255,0.07);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    .panel-header { text-align: center; margin-bottom: 32px; }
+    .panel-header .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(72,187,120,0.1); border: 1px solid rgba(72,187,120,0.25);
+      color: #48bb78; padding: 5px 14px; border-radius: 50px;
+      font-size: 0.75rem; font-weight: 700; margin-bottom: 14px;
+    }
+    .panel-header h1 {
+      font-size: 1.7rem; font-weight: 800;
+      background: linear-gradient(to right, #4361ee, #f72585);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 4px;
+    }
+    .panel-header p { color: #444; font-size: 0.85rem; }
+
+    /* CARD */
+    .card {
+      background: #13131f; border-radius: 20px;
+      padding: 24px; margin-bottom: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .card-title {
+      font-size: 0.78rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: #444; margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
     }
 
-    .control-card h2 {
-      font-size: 1rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #555;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* STATUS */
+    .status-row {
+      display: flex; align-items: center; gap: 12px;
+      background: #0a0a14; border-radius: 12px;
+      padding: 12px 16px; margin-bottom: 14px;
     }
-
-    .current-status {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 18px;
-      background: #0f0f1a;
-      border-radius: 14px;
-      margin-bottom: 18px;
+    .dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #333; flex-shrink: 0; transition: 0.4s;
     }
+    .dot.online   { background: #48bb78; box-shadow: 0 0 0 3px rgba(72,187,120,0.2); }
+    .dot.offline  { background: #fc8181; }
+    .dot.available { background: #1dbf73; box-shadow: 0 0 0 3px rgba(29,191,115,0.2); }
+    .dot.busy     { background: #fc8181; }
+    .status-label { font-size: 0.9rem; font-weight: 700; color: #bbb; }
 
-    .current-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      background: #333;
-      flex-shrink: 0;
-      transition: background 0.4s;
+    /* TOGGLE BUTTONS */
+    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .tgl-btn {
+      padding: 14px 10px; border: 2px solid transparent;
+      border-radius: 14px; font-size: 0.9rem; font-weight: 700;
+      font-family: "Outfit", sans-serif; cursor: pointer;
+      transition: all 0.3s; display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
     }
+    .tgl-btn .ico { font-size: 1.4rem; }
+    .tgl-btn .lbl { font-size: 0.78rem; }
+    .btn-on  { background: rgba(72,187,120,0.08); border-color: rgba(72,187,120,0.25); color: #48bb78; }
+    .btn-on:hover  { background: #48bb78; border-color: #48bb78; color: white; transform: translateY(-2px); }
+    .btn-off { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.25); color: #fc8181; }
+    .btn-off:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-2px); }
+    .btn-av  { background: rgba(29,191,115,0.08); border-color: rgba(29,191,115,0.25); color: #1dbf73; }
+    .btn-av:hover  { background: #1dbf73; border-color: #1dbf73; color: white; transform: translateY(-2px); }
+    .btn-bz  { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.25); color: #fc8181; }
+    .btn-bz:hover  { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-2px); }
 
-    .current-dot.online   { background: #48bb78; box-shadow: 0 0 0 4px rgba(72,187,120,0.2); }
-    .current-dot.offline  { background: #fc8181; }
-    .current-dot.available { background: #1dbf73; box-shadow: 0 0 0 4px rgba(29,191,115,0.2); }
-    .current-dot.busy     { background: #fc8181; }
-
-    .current-label { font-size: 1rem; font-weight: 700; color: #ccc; }
-
-    .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-    .toggle-btn {
-      padding: 16px 10px;
-      border: 2px solid transparent;
-      border-radius: 16px;
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: "Outfit", sans-serif;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
+    /* RATE LIMIT */
+    .rl-row {
+      display: flex; align-items: center; gap: 10px;
+      background: #0a0a14; border-radius: 12px;
+      padding: 12px 16px; margin-bottom: 8px;
     }
-
-    .toggle-btn span.btn-icon { font-size: 1.6rem; }
-    .toggle-btn span.btn-text { font-size: 0.85rem; }
-
-    .btn-online  { background: rgba(72,187,120,0.1); border-color: rgba(72,187,120,0.3); color: #48bb78; }
-    .btn-online:hover  { background: #48bb78; border-color: #48bb78; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(72,187,120,0.35); }
-
-    .btn-offline { background: rgba(252,129,129,0.1); border-color: rgba(252,129,129,0.3); color: #fc8181; }
-    .btn-offline:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(252,129,129,0.35); }
-
-    .btn-available { background: rgba(29,191,115,0.1); border-color: rgba(29,191,115,0.3); color: #1dbf73; }
-    .btn-available:hover { background: #1dbf73; border-color: #1dbf73; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(29,191,115,0.35); }
-
-    .btn-busy { background: rgba(252,129,129,0.1); border-color: rgba(252,129,129,0.3); color: #fc8181; }
-    .btn-busy:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(252,129,129,0.35); }
-
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: #1a1a2e;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-      z-index: 9999;
-      white-space: nowrap;
+    .rl-label { flex: 1; color: #999; font-size: 0.82rem; font-weight: 600; }
+    .rl-val { color: #4361ee; font-weight: 800; font-size: 0.95rem; min-width: 32px; text-align: center; }
+    .rl-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: none; font-size: 1rem; font-weight: 800;
+      cursor: pointer; transition: 0.2s; font-family: "Outfit", sans-serif;
+      display: flex; align-items: center; justify-content: center;
     }
+    .rl-minus { background: rgba(252,129,129,0.15); color: #fc8181; }
+    .rl-minus:hover { background: #fc8181; color: white; }
+    .rl-plus  { background: rgba(72,187,120,0.15); color: #48bb78; }
+    .rl-plus:hover  { background: #48bb78; color: white; }
+    .rl-hint { color: #333; font-size: 0.75rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
 
-    #toast.show { transform: translateX(-50%) translateY(0); }
+    /* INBOX */
+    .inbox-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 16px;
+    }
+    .unread-badge {
+      background: #f72585; color: white;
+      border-radius: 50px; padding: 2px 10px;
+      font-size: 0.7rem; font-weight: 800; display: none;
+    }
+    .msg-card {
+      background: #0a0a14; border-radius: 14px;
+      padding: 16px; margin-bottom: 10px;
+      border-left: 3px solid #4361ee; transition: 0.3s;
+    }
+    .msg-card.unread { border-left-color: #f72585; }
+    .msg-card.read   { border-left-color: #2a2a3a; opacity: 0.65; }
+    .msg-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 10px; margin-bottom: 10px;
+    }
+    .msg-name  { font-weight: 800; color: #eee; font-size: 0.9rem; }
+    .msg-email { color: #4361ee; font-size: 0.78rem; margin-top: 2px; }
+    .msg-time  { color: #444; font-size: 0.72rem; text-align: right; white-space: nowrap; }
+    .msg-dev {
+      display: inline-block; background: rgba(67,97,238,0.12);
+      color: #4361ee; padding: 2px 8px; border-radius: 20px;
+      font-size: 0.68rem; font-weight: 700; margin-top: 4px;
+    }
+    .msg-body {
+      color: #bbb; font-size: 0.85rem; line-height: 1.6;
+      margin-bottom: 12px; padding: 10px 12px;
+      background: rgba(255,255,255,0.02); border-radius: 8px;
+    }
+    .msg-geo {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+      gap: 8px; margin-bottom: 12px;
+    }
+    .geo-item { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 8px 10px; }
+    .geo-label { color: #444; font-size: 0.68rem; margin-bottom: 2px; }
+    .geo-val   { color: #ccc; font-size: 0.78rem; font-weight: 700; }
+    .geo-sub   { color: #555; font-size: 0.68rem; margin-top: 1px; }
+    .msg-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .act-btn {
+      padding: 6px 14px; border-radius: 50px; border: none;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      font-family: "Outfit", sans-serif; transition: 0.2s;
+    }
+    .act-read { background: rgba(72,187,120,0.12); color: #48bb78; }
+    .act-read:hover { background: #48bb78; color: white; }
+    .act-vip  { background: rgba(240,185,11,0.12); color: #f0b90b; }
+    .act-vip:hover  { background: #f0b90b; color: #000; }
+    .act-del  { background: rgba(252,129,129,0.12); color: #fc8181; }
+    .act-del:hover  { background: #fc8181; color: white; }
+    .inbox-empty { text-align:center; color:#333; padding:30px; font-size:0.85rem; }
 
+    /* BOTTOM */
     .logout-btn {
-      width: 100%;
-      padding: 14px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 14px;
-      color: #555;
-      font-size: 0.9rem;
-      font-family: "Outfit", sans-serif;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 8px;
+      width: 100%; padding: 13px;
+      background: transparent; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; color: #444; font-size: 0.9rem;
+      font-family: "Outfit", sans-serif; cursor: pointer;
+      transition: 0.3s; margin-top: 6px;
     }
-
     .logout-btn:hover { border-color: #fc8181; color: #fc8181; }
-
-    .portfolio-link {
-      display: block;
-      text-align: center;
-      color: #4361ee;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 20px;
-      transition: 0.3s;
+    .back-link {
+      display: block; text-align: center; color: #4361ee;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none;
+      margin-top: 18px; transition: 0.3s;
     }
+    .back-link:hover { color: #f72585; }
 
-    .portfolio-link:hover { color: #f72585; }
-
-    .auth-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(72,187,120,0.1);
-      border: 1px solid rgba(72,187,120,0.3);
-      color: #48bb78;
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      margin-bottom: 20px;
+    /* TOAST */
+    #toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #13131f; color: white;
+      padding: 12px 26px; border-radius: 50px;
+      font-weight: 700; font-size: 0.85rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+      transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+      z-index: 9999; white-space: nowrap;
     }
+    #toast.show { transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN SCREEN -->
+  <!-- LOGIN -->
   <div id="login-screen">
-    <span class="lock-icon">🔐</span>
-    <h1>Admin Access</h1>
-    <p>Sign in with your Firebase credentials</p>
-    <input type="email"    class="secret-input" id="email-input"    placeholder="Email address" autocomplete="email">
-    <input type="password" class="secret-input" id="password-input" placeholder="Password"      autocomplete="current-password">
-    <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In Securely</button>
-    <p class="login-error" id="login-error">❌ Invalid credentials. Try again.</p>
+    <div class="login-box">
+      <span class="lock">🔐</span>
+      <h1>Admin Access</h1>
+      <p>Sign in with your Firebase credentials</p>
+      <input type="email"    class="inp" id="email-input"    placeholder="Email address"  autocomplete="email">
+      <input type="password" class="inp" id="password-input" placeholder="Password"       autocomplete="current-password">
+      <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In Securely</button>
+      <p class="login-err" id="login-error"></p>
+    </div>
   </div>
 
   <!-- ADMIN PANEL -->
   <div id="admin-panel">
-    <div class="admin-header">
-      <div class="auth-badge">🔒 Firebase Authenticated</div>
+    <div class="panel-header">
+      <div class="badge">🔒 Firebase Authenticated</div>
       <h1>🛡️ Command Center</h1>
-      <p>Control your live portfolio status</p>
+      <p>Kashif Dawar — Portfolio Admin</p>
     </div>
 
-    <div class="control-card">
-      <h2>👤 Developer Status</h2>
-      <div class="current-status">
-        <div class="current-dot" id="admin-status-dot"></div>
-        <span class="current-label" id="admin-status-label">Loading...</span>
+    <div class="card">
+      <div class="card-title">👤 Developer Status</div>
+      <div class="status-row">
+        <div class="dot" id="admin-status-dot"></div>
+        <span class="status-label" id="admin-status-label">Loading...</span>
       </div>
-      <div class="btn-row">
-        <button class="toggle-btn btn-online"  onclick="setStatus('online')">
-          <span class="btn-icon">🟢</span>
-          <span class="btn-text">Go Online</span>
+      <div class="btn-grid">
+        <button class="tgl-btn btn-on"  onclick="setStatus('online')">
+          <span class="ico">🟢</span><span class="lbl">Go Online</span>
         </button>
-        <button class="toggle-btn btn-offline" onclick="setStatus('offline')">
-          <span class="btn-icon">⚫</span>
-          <span class="btn-text">Go Offline</span>
-        </button>
-      </div>
-    </div>
-
-    <div class="control-card">
-      <h2>⚡ Fiverr Availability</h2>
-      <div class="current-status">
-        <div class="current-dot" id="admin-fiverr-dot"></div>
-        <span class="current-label" id="admin-fiverr-label">Loading...</span>
-      </div>
-      <div class="btn-row">
-        <button class="toggle-btn btn-available" onclick="setFiverr(true)">
-          <span class="btn-icon">✅</span>
-          <span class="btn-text">Available</span>
-        </button>
-        <button class="toggle-btn btn-busy" onclick="setFiverr(false)">
-          <span class="btn-icon">🔴</span>
-          <span class="btn-text">Busy</span>
+        <button class="tgl-btn btn-off" onclick="setStatus('offline')">
+          <span class="ico">⚫</span><span class="lbl">Go Offline</span>
         </button>
       </div>
     </div>
 
-    <!-- RATE LIMIT CONTROL -->
-    <div class="inbox-card">
-      <h2>⚙️ Spam Protection Settings</h2>
+    <div class="card">
+      <div class="card-title">⚡ Fiverr Availability</div>
+      <div class="status-row">
+        <div class="dot" id="admin-fiverr-dot"></div>
+        <span class="status-label" id="admin-fiverr-label">Loading...</span>
+      </div>
+      <div class="btn-grid">
+        <button class="tgl-btn btn-av" onclick="setFiverr(true)">
+          <span class="ico">✅</span><span class="lbl">Available</span>
+        </button>
+        <button class="tgl-btn btn-bz" onclick="setFiverr(false)">
+          <span class="ico">🔴</span><span class="lbl">Busy</span>
+        </button>
+      </div>
+    </div>
 
+    <div class="card">
+      <div class="card-title">⚙️ Spam Protection</div>
       <div class="rl-row">
-        <span class="rl-label">Max messages per visitor (per hour)</span>
-        <button class="rl-btn rl-btn-minus" onclick="adjustLimit('hourly', -1)">−</button>
-        <span class="rl-value" id="rl-hourly">3</span>
-        <button class="rl-btn rl-btn-plus"  onclick="adjustLimit('hourly', +1)">+</button>
+        <span class="rl-label">Max messages / hour per visitor</span>
+        <button class="rl-btn rl-minus" onclick="adjustLimit('hourly',-1)">−</button>
+        <span class="rl-val" id="rl-hourly">3</span>
+        <button class="rl-btn rl-plus"  onclick="adjustLimit('hourly',+1)">+</button>
       </div>
-
       <div class="rl-row">
-        <span class="rl-label">Max messages per visitor (per day)</span>
-        <button class="rl-btn rl-btn-minus" onclick="adjustLimit('daily', -1)">−</button>
-        <span class="rl-value" id="rl-daily">5</span>
-        <button class="rl-btn rl-btn-plus"  onclick="adjustLimit('daily', +1)">+</button>
+        <span class="rl-label">Max messages / day per visitor</span>
+        <button class="rl-btn rl-minus" onclick="adjustLimit('daily',-1)">−</button>
+        <span class="rl-val" id="rl-daily">5</span>
+        <button class="rl-btn rl-plus"  onclick="adjustLimit('daily',+1)">+</button>
       </div>
-
       <div class="rl-row">
-        <span class="rl-label">Min characters required in message</span>
-        <button class="rl-btn rl-btn-minus" onclick="adjustLimit('minchars', -5)">−</button>
-        <span class="rl-value" id="rl-minchars">10</span>
-        <button class="rl-btn rl-btn-plus"  onclick="adjustLimit('minchars', +5)">+</button>
+        <span class="rl-label">Min characters in message</span>
+        <button class="rl-btn rl-minus" onclick="adjustLimit('minchars',-5)">−</button>
+        <span class="rl-val" id="rl-minchars">10</span>
+        <button class="rl-btn rl-plus"  onclick="adjustLimit('minchars',+5)">+</button>
       </div>
-
-      <p style="color:#555;font-size:0.8rem;margin-top:14px;">
-        💡 Whitelisted visitors bypass all limits. Whitelist from inbox below.
-      </p>
+      <p class="rl-hint">💡 Whitelisted visitors bypass all limits. Use ⭐ in the inbox below.</p>
     </div>
 
-    <!-- MESSAGES INBOX -->
-    <div class="inbox-card">
-      <h2>📩 Messages Inbox <span class="msg-unread-badge" id="unread-count" style="display:none;">0</span></h2>
+    <div class="card">
+      <div class="inbox-header">
+        <div class="card-title" style="margin-bottom:0;">📩 Messages Inbox</div>
+        <span class="unread-badge" id="unread-count">0</span>
+      </div>
       <div id="messages-container">
         <div class="inbox-empty">Loading messages...</div>
       </div>
     </div>
 
     <button class="logout-btn" onclick="doLogout()">🚪 Sign Out</button>
-    <a href="index.html" class="portfolio-link">← Back to Portfolio</a>
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
   </div>
 
   <div id="toast"></div>
 
   <script type="module">
-    import { initializeApp }                                from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, set, get, remove, onValue }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { initializeApp }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getDatabase, ref, set, remove, onValue }
+                                 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
-                                                            from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+                                 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    const firebaseConfig = {
+    const cfg = {
       apiKey:            "AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc",
       authDomain:        "kashif-portfolio-17481.firebaseapp.com",
       databaseURL:       "https://kashif-portfolio-17481-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -360,262 +344,183 @@
       appId:             "1:581904807005:web:5817faf37fddb0a8e909b4",
     };
 
-    const app  = initializeApp(firebaseConfig);
+    const app  = initializeApp(cfg);
     const db   = getDatabase(app);
     const auth = getAuth(app);
 
-    // ── AUTO LOGIN CHECK ──
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        showPanel();
-      } else {
-        showLogin();
-      }
-    });
+    onAuthStateChanged(auth, u => u ? showPanel() : showLogin());
 
-    // ── LOGIN ──
     window.doLogin = async function() {
-      const email    = document.getElementById('email-input').value.trim();
-      const password = document.getElementById('password-input').value;
-      const btn      = document.getElementById('login-btn');
-      const errEl    = document.getElementById('login-error');
+      const email = document.getElementById('email-input').value.trim();
+      const pass  = document.getElementById('password-input').value;
+      const btn   = document.getElementById('login-btn');
+      const err   = document.getElementById('login-error');
 
-      if (!email || !password) {
-        errEl.textContent = '❌ Please enter email and password.';
-        errEl.style.display = 'block';
-        return;
-      }
+      if (!email || !pass) { err.textContent='❌ Enter email and password.'; err.style.display='block'; return; }
 
-      btn.disabled     = true;
-      btn.textContent  = 'Signing in...';
-      errEl.style.display = 'none';
+      btn.disabled=true; btn.textContent='Signing in...'; err.style.display='none';
 
       try {
-        await signInWithEmailAndPassword(auth, email, password);
-        // onAuthStateChanged will handle showing the panel
+        await signInWithEmailAndPassword(auth, email, pass);
       } catch(e) {
-        errEl.textContent   = '❌ Wrong email or password.';
-        errEl.style.display = 'block';
-        btn.disabled        = false;
-        btn.textContent     = 'Sign In Securely';
+        err.textContent='❌ Wrong email or password.'; err.style.display='block';
+        btn.disabled=false; btn.textContent='Sign In Securely';
       }
     };
 
-    // Enter key support
-    document.getElementById('password-input').addEventListener('keydown', e => {
-      if (e.key === 'Enter') window.doLogin();
-    });
+    document.getElementById('password-input').addEventListener('keydown', e => { if(e.key==='Enter') window.doLogin(); });
 
-    // ── LOGOUT ──
-    window.doLogout = async function() {
-      await signOut(auth);
-      showToast('👋 Signed out successfully');
-    };
+    window.doLogout = async function() { await signOut(auth); showToast('👋 Signed out'); };
 
-    // ── SHOW/HIDE ──
     function showPanel() {
-      document.getElementById('login-screen').style.display = 'none';
-      document.getElementById('admin-panel').style.display  = 'block';
-      initListeners();
-      loadMessages();
-      loadRLSettings();
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('admin-panel').style.display='block';
+      initListeners(); loadRLSettings(); loadMessages();
     }
 
     function showLogin() {
-      document.getElementById('login-screen').style.display = 'block';
-      document.getElementById('admin-panel').style.display  = 'none';
-      const btn = document.getElementById('login-btn');
-      btn.disabled    = false;
-      btn.textContent = 'Sign In Securely';
+      document.getElementById('login-screen').style.display='flex';
+      document.getElementById('admin-panel').style.display='none';
+      const b=document.getElementById('login-btn'); b.disabled=false; b.textContent='Sign In Securely';
     }
 
-    // ── FIREBASE LISTENERS ──
     function initListeners() {
-      onValue(ref(db, 'presence/status'), snap => {
-        const isOnline = snap.val() === 'online';
-        const dot   = document.getElementById('admin-status-dot');
-        const label = document.getElementById('admin-status-label');
-        if (!dot || !label) return;
-        dot.className     = 'current-dot ' + (isOnline ? 'online' : 'offline');
-        label.textContent = isOnline ? '🟢 Currently Online' : '⚫ Currently Away';
+      onValue(ref(db,'presence/status'), s => {
+        const on=s.val()==='online';
+        const d=document.getElementById('admin-status-dot');
+        const l=document.getElementById('admin-status-label');
+        if(!d||!l) return;
+        d.className='dot '+(on?'online':'offline');
+        l.textContent=on?'🟢 Currently Online':'⚫ Currently Away';
       });
-
-      onValue(ref(db, 'fiverr/available'), snap => {
-        const available = snap.val() !== false;
-        const dot   = document.getElementById('admin-fiverr-dot');
-        const label = document.getElementById('admin-fiverr-label');
-        if (!dot || !label) return;
-        dot.className     = 'current-dot ' + (available ? 'available' : 'busy');
-        label.textContent = available ? '✅ Available for Orders' : '🔴 Currently Busy';
+      onValue(ref(db,'fiverr/available'), s => {
+        const av=s.val()!==false;
+        const d=document.getElementById('admin-fiverr-dot');
+        const l=document.getElementById('admin-fiverr-label');
+        if(!d||!l) return;
+        d.className='dot '+(av?'available':'busy');
+        l.textContent=av?'✅ Available for Orders':'🔴 Currently Busy';
       });
     }
 
-    // ── WRITE TO FIREBASE ──
-    window.setStatus = async function(status) {
-      try {
-        await set(ref(db, 'presence/status'), status);
-        showToast(status === 'online' ? '🟢 You are now Online!' : '⚫ Status set to Away');
-      } catch(e) {
-        showToast('❌ Failed — are you signed in?');
-      }
+    window.setStatus = async s => {
+      try { await set(ref(db,'presence/status'),s); showToast(s==='online'?'🟢 Online!':'⚫ Away'); }
+      catch(e) { showToast('❌ Failed'); }
+    };
+    window.setFiverr = async av => {
+      try { await set(ref(db,'fiverr/available'),av); showToast(av?'✅ Available!':'🔴 Busy'); }
+      catch(e) { showToast('❌ Failed'); }
     };
 
-    window.setFiverr = async function(available) {
-      try {
-        await set(ref(db, 'fiverr/available'), available);
-        showToast(available ? '✅ Fiverr: Available!' : '🔴 Fiverr: Set to Busy');
-      } catch(e) {
-        showToast('❌ Failed — are you signed in?');
-      }
-    };
-
-    // ── TOAST ──
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-
-    // ── RATE LIMIT SETTINGS (stored in Firebase) ──
-    const RL_DEFAULTS = { hourly: 3, daily: 5, minchars: 10 };
-    let rlSettings = { ...RL_DEFAULTS };
+    const RL_DEF={hourly:3,daily:5,minchars:10};
+    let rl={...RL_DEF};
 
     function loadRLSettings() {
-      onValue(ref(db, 'settings/rateLimit'), snap => {
-        if (snap.val()) {
-          rlSettings = { ...RL_DEFAULTS, ...snap.val() };
-          document.getElementById('rl-hourly').textContent  = rlSettings.hourly;
-          document.getElementById('rl-daily').textContent   = rlSettings.daily;
-          document.getElementById('rl-minchars').textContent = rlSettings.minchars;
+      onValue(ref(db,'settings/rateLimit'), s => {
+        if(s.val()) {
+          rl={...RL_DEF,...s.val()};
+          document.getElementById('rl-hourly').textContent=rl.hourly;
+          document.getElementById('rl-daily').textContent=rl.daily;
+          document.getElementById('rl-minchars').textContent=rl.minchars;
         }
       });
     }
 
-    window.adjustLimit = async function(key, delta) {
-      const el = document.getElementById('rl-' + key);
-      let val  = parseInt(el.textContent) + delta;
-      const mins = { hourly: 1, daily: 1, minchars: 5 };
-      const maxs = { hourly: 20, daily: 50, minchars: 50 };
-      val = Math.max(mins[key], Math.min(maxs[key], val));
-      el.textContent = val;
-      rlSettings[key] = val;
-      await set(ref(db, 'settings/rateLimit'), rlSettings);
-      showToast('✅ Limit updated!');
+    window.adjustLimit = async function(key,delta) {
+      const el=document.getElementById('rl-'+key);
+      const mins={hourly:1,daily:1,minchars:5}, maxs={hourly:20,daily:50,minchars:50};
+      const val=Math.max(mins[key],Math.min(maxs[key],parseInt(el.textContent)+delta));
+      el.textContent=val; rl[key]=val;
+      await set(ref(db,'settings/rateLimit'),rl);
+      showToast('✅ Saved!');
     };
 
-    // ── MESSAGES INBOX ──
     function loadMessages() {
-      onValue(ref(db, 'messages'), snap => {
-        const container = document.getElementById('messages-container');
-        const data = snap.val();
-
-        if (!data) {
-          container.innerHTML = '<div class="inbox-empty">📭 No messages yet.</div>';
-          document.getElementById('unread-count').style.display = 'none';
-          return;
+      onValue(ref(db,'messages'), s => {
+        const box=document.getElementById('messages-container');
+        const data=s.val();
+        if(!data) {
+          box.innerHTML='<div class="inbox-empty">📭 No messages yet.</div>';
+          document.getElementById('unread-count').style.display='none'; return;
         }
+        const msgs=Object.entries(data).map(([id,m])=>({id,...m})).sort((a,b)=>b.time-a.time);
+        const unread=msgs.filter(m=>m.status==='unread').length;
+        const badge=document.getElementById('unread-count');
+        badge.textContent=unread; badge.style.display=unread>0?'inline-block':'none';
 
-        const msgs = Object.entries(data)
-          .map(([id, m]) => ({ id, ...m }))
-          .sort((a, b) => b.time - a.time);
-
-        const unread = msgs.filter(m => m.status === 'unread').length;
-        const badge  = document.getElementById('unread-count');
-        if (unread > 0) {
-          badge.textContent     = unread;
-          badge.style.display   = 'inline-block';
-        } else {
-          badge.style.display   = 'none';
-        }
-
-        container.innerHTML = msgs.map(m => `
-          <div class="msg-item ${m.status || 'unread'}" id="msg-${m.id}">
-
-            <!-- ROW 1: Name + Email + Time -->
-            <div class="msg-meta">
+        box.innerHTML=msgs.map(m=>`
+          <div class="msg-card ${m.status||'unread'}" id="msg-${m.id}">
+            <div class="msg-top">
               <div>
                 <div class="msg-name">
-                  ${m.flag ? m.flag + ' ' : ''}${escHtml(m.name || 'Unknown')}
-                  ${m.whitelisted ? '<span style="color:#f0b90b;font-size:0.7rem;margin-left:6px;">⭐ VIP</span>' : ''}
+                  ${m.flag?'<span style="margin-right:4px;">'+flag(m.flag)+'</span>':''}
+                  ${x(m.name||'Unknown')}
+                  ${m.whitelisted?'<span style="color:#f0b90b;font-size:0.68rem;margin-left:6px;">⭐ VIP</span>':''}
                 </div>
-                <div class="msg-email">${escHtml(m.email || '')}</div>
+                <div class="msg-email">${x(m.email||'')}</div>
+                <span class="msg-dev">${m.device||'unknown'}</span>
               </div>
-              <div style="text-align:right;">
-                <div class="msg-time">${formatTime(m.time)}</div>
-                <span class="msg-device">${m.device || 'unknown'}</span>
+              <div class="msg-time">${fmt(m.time)}</div>
+            </div>
+            <div class="msg-body">${x(m.message||'')}</div>
+            <div class="msg-geo">
+              <div class="geo-item">
+                <div class="geo-label">📍 Location</div>
+                <div class="geo-val">${x(m.city||'?')}, ${x(m.region||'?')}</div>
+                <div class="geo-sub">${x(m.country||'Unknown')}</div>
+              </div>
+              <div class="geo-item">
+                <div class="geo-label">🌐 IP</div>
+                <div class="geo-val">${x(m.ip||'Unknown')}</div>
+                <div class="geo-sub">${x(m.isp||'')}</div>
+              </div>
+              <div class="geo-item">
+                <div class="geo-label">💻 Device</div>
+                <div class="geo-val">${x(m.os||'?')} · ${x(m.browser||'?')}</div>
+                <div class="geo-sub">${x(m.screen_size||'')} · ${x(m.language||'')}</div>
+              </div>
+              <div class="geo-item">
+                <div class="geo-label">🕐 Timezone</div>
+                <div class="geo-val">${x(m.timezone||'Unknown')}</div>
               </div>
             </div>
-
-            <!-- ROW 2: Message -->
-            <div class="msg-text">${escHtml(m.message || '')}</div>
-
-            <!-- ROW 3: Geo + Device Info Grid -->
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin:10px 0;padding:10px;background:rgba(255,255,255,0.03);border-radius:10px;">
-              <div style="font-size:0.75rem;">
-                <span style="color:#555;">📍 Location</span><br>
-                <span style="color:#ccc;font-weight:600;">${escHtml(m.city || '?')}, ${escHtml(m.region || '?')}</span><br>
-                <span style="color:#4361ee;font-size:0.7rem;">${escHtml(m.country || 'Unknown')}</span>
-              </div>
-              <div style="font-size:0.75rem;">
-                <span style="color:#555;">🌐 IP / ISP</span><br>
-                <span style="color:#ccc;font-weight:600;">${escHtml(m.ip || 'Unknown')}</span><br>
-                <span style="color:#555;font-size:0.7rem;">${escHtml(m.isp || '')}</span>
-              </div>
-              <div style="font-size:0.75rem;">
-                <span style="color:#555;">💻 Device</span><br>
-                <span style="color:#ccc;font-weight:600;">${escHtml(m.os || '?')} · ${escHtml(m.browser || '?')}</span><br>
-                <span style="color:#555;font-size:0.7rem;">${escHtml(m.screen_size || '')} · ${escHtml(m.language || '')}</span>
-              </div>
-              <div style="font-size:0.75rem;">
-                <span style="color:#555;">🕐 Timezone</span><br>
-                <span style="color:#ccc;font-weight:600;">${escHtml(m.timezone || 'Unknown')}</span>
-              </div>
-            </div>
-
-            <!-- ROW 4: Actions -->
             <div class="msg-actions">
-              ${m.status === 'unread'
-                ? `<button class="msg-btn msg-btn-read" onclick="markRead('${m.id}')">✅ Mark Read</button>`
-                : `<span style="color:#555;font-size:0.75rem;">✓ Read</span>`}
-              <button class="msg-btn msg-btn-whitelist" onclick="whitelistEmail('${escHtml(m.email || '')}')">⭐ Whitelist</button>
-              <button class="msg-btn msg-btn-delete"   onclick="deleteMsg('${m.id}')">🗑️ Delete</button>
+              ${m.status==='unread'
+                ?`<button class="act-btn act-read" onclick="markRead('${m.id}')">✅ Mark Read</button>`
+                :`<span style="color:#333;font-size:0.72rem;">✓ Read</span>`}
+              <button class="act-btn act-vip" onclick="vipEmail('${x(m.email||'')}')">⭐ Whitelist</button>
+              <button class="act-btn act-del" onclick="delMsg('${m.id}')">🗑 Delete</button>
             </div>
-
           </div>
         `).join('');
       });
     }
 
-    window.markRead = async function(id) {
-      await set(ref(db, 'messages/' + id + '/status'), 'read');
-      showToast('✅ Marked as read');
+    window.markRead = async id => { await set(ref(db,'messages/'+id+'/status'),'read'); showToast('✅ Marked read'); };
+    window.delMsg   = async id => { await remove(ref(db,'messages/'+id)); showToast('🗑 Deleted'); };
+    window.vipEmail = async email => {
+      if(!email) return;
+      const k=email.replace(/[.@]/g,'_');
+      await set(ref(db,'whitelist/'+k),{email,addedAt:Date.now()});
+      showToast('⭐ '+email+' whitelisted!');
     };
 
-    window.deleteMsg = async function(id) {
-      await remove(ref(db, 'messages/' + id));
-      showToast('🗑️ Message deleted');
-    };
-
-    window.whitelistEmail = async function(email) {
-      if (!email) return;
-      const key = email.replace(/[.@]/g, '_');
-      await set(ref(db, 'whitelist/' + key), { email, addedAt: Date.now() });
-      showToast('⭐ ' + email + ' whitelisted — bypass limits enabled');
-    };
-
-    function escHtml(s) {
-      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    function flag(code) {
+      if(!code||code.length!==2) return '';
+      return String.fromCodePoint(...[...code.toUpperCase()].map(c=>0x1F1E0-65+c.charCodeAt(0)));
+    }
+    function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function fmt(ts) {
+      if(!ts) return '';
+      const d=new Date(ts);
+      return d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
     }
 
-    function formatTime(ts) {
-      if (!ts) return '';
-      const d = new Date(ts);
-      return d.toLocaleDateString('en-GB') + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    function showToast(msg) {
+      const t=document.getElementById('toast');
+      t.textContent=msg; t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),3000);
     }
-
-
   </script>
-
 </body>
 </html>
