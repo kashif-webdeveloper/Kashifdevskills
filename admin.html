@@ -417,6 +417,8 @@
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('admin-panel').style.display  = 'block';
       initListeners();
+      loadMessages();
+      loadRLSettings();
     }
 
     function showLogin() {
@@ -612,13 +614,7 @@
       return d.toLocaleDateString('en-GB') + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
     }
 
-    // ── HOOK INTO showPanel ──
-    const _origShowPanel = showPanel;
-    function showPanel() {
-      _origShowPanel();
-      loadMessages();
-      loadRLSettings();
-    }
+
   </script>
 
 </body>
