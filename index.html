@@ -527,7 +527,7 @@
               btn.textContent = 'Send Message →'; btn.disabled = false; return;
             }
 
-            // ── Safe localStorage — no btoa, handles strict browsers ──
+            // ── Safe localStorage — no btoa, handles strict/private browsers ──
             try {
               const lsKey  = 'kd_msg_' + email.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 12);
               const stored = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
@@ -537,12 +537,12 @@
               stored.hourly = (stored.hourly || []).filter(t => now - t < oneHour);
               stored.daily  = (stored.daily  || []).filter(t => now - t < oneDay);
               if (stored.hourly.length >= rl.hourly) {
-                errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour.`;
+                errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour. Please try later.`;
                 errEl.style.display = 'block';
                 btn.textContent = 'Send Message →'; btn.disabled = false; return;
               }
               if (stored.daily.length >= rl.daily) {
-                errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Contact via Fiverr.`;
+                errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Please contact via Fiverr.`;
                 errEl.style.display = 'block';
                 btn.textContent = 'Send Message →'; btn.disabled = false; return;
               }
@@ -554,7 +554,7 @@
             }
           }
 
-          // ── Collect device + geo info ──
+          // ── Collect device info ──
           const ua       = navigator.userAgent;
           const isMobile = /Mobi|Android/i.test(ua);
           const browser  = ua.includes('Firefox') ? 'Firefox'
@@ -571,42 +571,30 @@
           const screen_size = window.screen.width + 'x' + window.screen.height;
           const language    = navigator.language || 'unknown';
 
-          // ── Geo from IP — HTTPS only APIs (no mixed content blocking) ──
+          // ── NEW: RAM, CPU cores, Network speed ──
+          const ram          = navigator.deviceMemory        ? navigator.deviceMemory + ' GB'        : 'Unknown';
+          const cpu_cores    = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : 'Unknown';
+          const network_speed = (navigator.connection && navigator.connection.effectiveType) ? navigator.connection.effectiveType : 'Unknown';
+
+          // ── Geo from IP — HTTPS only, 3 APIs in order ──
           let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown', flag: '' };
 
           async function tryGeo() {
-            // API 1: ipwho.is — HTTPS, free, no key, very reliable
+            // API 1: ipwho.is — HTTPS, free, no key needed
             try {
               const r = await fetch('https://ipwho.is/', { signal: AbortSignal.timeout(5000) });
               const d = await r.json();
               if(d.success !== false && d.ip) {
-                return {
-                  ip:       d.ip                    || 'Unknown',
-                  city:     d.city                  || 'Unknown',
-                  region:   d.region                || 'Unknown',
-                  country:  d.country               || 'Unknown',
-                  isp:      d.connection?.isp        || d.connection?.org || 'Unknown',
-                  timezone: d.timezone?.id           || 'Unknown',
-                  flag:     d.country_code           || ''
-                };
+                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country||'Unknown', isp: (d.connection&&d.connection.isp)||'Unknown', timezone: (d.timezone&&d.timezone.id)||'Unknown', flag: d.country_code||'' };
               }
             } catch(e) {}
 
-            // API 2: ipinfo.io — HTTPS, free tier, very stable
+            // API 2: ipinfo.io — HTTPS, very stable
             try {
               const r = await fetch('https://ipinfo.io/json', { signal: AbortSignal.timeout(5000) });
               const d = await r.json();
               if(d.ip) {
-                const parts = (d.loc||'').split(',');
-                return {
-                  ip:       d.ip       || 'Unknown',
-                  city:     d.city     || 'Unknown',
-                  region:   d.region   || 'Unknown',
-                  country:  d.country  || 'Unknown',
-                  isp:      d.org      || 'Unknown',
-                  timezone: d.timezone || 'Unknown',
-                  flag:     d.country  || ''
-                };
+                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country||'Unknown', isp: d.org||'Unknown', timezone: d.timezone||'Unknown', flag: d.country||'' };
               }
             } catch(e) {}
 
@@ -615,15 +603,7 @@
               const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
               const d = await r.json();
               if(d.ip) {
-                return {
-                  ip:       d.ip            || 'Unknown',
-                  city:     d.city          || 'Unknown',
-                  region:   d.region        || 'Unknown',
-                  country:  d.country_name  || 'Unknown',
-                  isp:      d.org           || 'Unknown',
-                  timezone: d.timezone      || 'Unknown',
-                  flag:     d.country       || ''
-                };
+                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country_name||'Unknown', isp: d.org||'Unknown', timezone: d.timezone||'Unknown', flag: d.country||'' };
               }
             } catch(e) {}
 
@@ -634,25 +614,29 @@
           if(geoResult) geo = geoResult;
 
           // ── Step 1: Save to Firebase ──
+          // ── Step 1: Save to Firebase ──
           await push(ref(db, 'messages'), {
             name,
             email,
             message,
-            device:      isMobile ? 'mobile' : 'desktop',
+            device:        isMobile ? 'mobile' : 'desktop',
             browser,
             os,
             screen_size,
             language,
-            ip:          geo.ip,
-            city:        geo.city,
-            region:      geo.region,
-            country:     geo.country,
-            isp:         geo.isp,
-            timezone:    geo.timezone,
-            flag:        geo.flag,
-            status:      'unread',
-            whitelisted: isWhitelisted,
-            time:        Date.now()
+            ram,
+            cpu_cores,
+            network_speed,
+            ip:            geo.ip,
+            city:          geo.city,
+            region:        geo.region,
+            country:       geo.country,
+            isp:           geo.isp,
+            timezone:      geo.timezone,
+            flag:          geo.flag,
+            status:        'unread',
+            whitelisted:   isWhitelisted,
+            time:          Date.now()
           });
 
           // ── Step 2: Send auto-reply via EmailJS ──
@@ -660,17 +644,11 @@
             await emailjs.send(
               EJS_SERVICE_ID,
               EJS_TEMPLATE_ID,
-              {
-                to_name:  name,
-                to_email: email,
-                reply_to: email,
-                message:  message
-              },
+              { to_name: name, to_email: email, reply_to: email, message: message },
               { publicKey: EJS_PUBLIC_KEY }
             );
           } catch(ejErr) {
-            // Auto-reply failed silently — message still saved in Firebase
-            console.warn('EmailJS failed:', ejErr);
+            console.warn('EmailJS failed (message still saved):', ejErr);
           }
 
           // ── Step 3: Show success ──
@@ -690,8 +668,8 @@
         document.getElementById('cf-name').value    = '';
         document.getElementById('cf-email').value   = '';
         document.getElementById('cf-message').value = '';
-        document.getElementById('cf-error').style.display           = 'none';
-        document.getElementById('form-success').style.display       = 'none';
+        document.getElementById('cf-error').style.display            = 'none';
+        document.getElementById('form-success').style.display        = 'none';
         document.getElementById('contact-form-fields').style.display = 'block';
         const btn = document.getElementById('cf-submit-btn');
         btn.textContent = 'Send Message →';

@@ -895,7 +895,7 @@
             <div class="msg-card-email">${x(m.email||'')}</div>
             <div class="msg-card-preview">${x(m.message||'').substring(0,60)}${(m.message||'').length>60?'...':''}</div>
             <div class="msg-card-chips">
-              <span class="chip chip-device">${x(m.os||'?')} · ${x(m.browser||'?')}</span>
+              <span class="chip chip-device">${x(m.os||'?')} · ${x(m.browser||'?')} · ${x(m.network_speed||'?')}</span>
               ${m.whitelisted ? '<span class="chip chip-vip">⭐ VIP</span>' : ''}
               ${(m.status||'unread')==='unread' ? '<span class="chip chip-unread">NEW</span>' : ''}
             </div>
@@ -954,6 +954,7 @@
           <div class="meta-label">💻 Device</div>
           <div class="meta-val">${x(m.os||'?')} · ${x(m.browser||'?')}</div>
           <div class="meta-sub">${x(m.device||'')} · ${x(m.screen_size||'')} · ${x(m.language||'')}</div>
+          <div class="meta-sub">RAM: ${x(m.ram||'Unknown')} · CPU: ${x(m.cpu_cores||'Unknown')} · Net: ${x(m.network_speed||'Unknown')}</div>
         </div>
         <div class="meta-chip">
           <div class="meta-label">🕐 Timezone</div>
