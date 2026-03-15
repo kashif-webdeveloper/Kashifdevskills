@@ -3,7 +3,7 @@
 // Version: 6.0.0
 // ============================================
 
-const CACHE_NAME = "kashif-portfolio-v8";
+const CACHE_NAME = "kashif-portfolio-v9";
 
 // Files to cache for offline use
 const ASSETS_TO_CACHE = [

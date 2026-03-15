@@ -1011,8 +1011,9 @@
     window.replyEmail = function(email, name) {
       if(!email) return;
       const subject = encodeURIComponent('Re: Your message to Kashif Dawar');
-      const body    = encodeURIComponent(`Hi ${name},\n\nThank you for reaching out!\n\nBest regards,\nKashif Dawar`);
-      window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+      const body    = encodeURIComponent(`Hi ${name},\n\nThank you for reaching out! I have reviewed your message and would love to help.\n\nBest regards,\nKashif Dawar\nFull-Stack Developer & SEO Expert`);
+      // Opens Gmail compose directly in browser — works on all devices without needing email app
+      window.open(`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(email)}&su=${subject}&body=${body}`, '_blank');
     };
 
     window.copyEmail = function() {
