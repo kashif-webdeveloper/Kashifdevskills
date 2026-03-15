@@ -527,24 +527,22 @@
               btn.textContent = 'Send Message →'; btn.disabled = false; return;
             }
 
-            // ── Safe localStorage — no btoa crash, handles private/strict browsers ──
+            // ── Safe localStorage — no btoa, handles strict browsers ──
             try {
               const lsKey  = 'kd_msg_' + email.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 12);
               const stored = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
               const now    = Date.now();
               const oneHour = 60 * 60 * 1000;
               const oneDay  = 24 * oneHour;
-
               stored.hourly = (stored.hourly || []).filter(t => now - t < oneHour);
               stored.daily  = (stored.daily  || []).filter(t => now - t < oneDay);
-
               if (stored.hourly.length >= rl.hourly) {
-                errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour. Please try later.`;
+                errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour.`;
                 errEl.style.display = 'block';
                 btn.textContent = 'Send Message →'; btn.disabled = false; return;
               }
               if (stored.daily.length >= rl.daily) {
-                errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Please contact via Fiverr.`;
+                errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Contact via Fiverr.`;
                 errEl.style.display = 'block';
                 btn.textContent = 'Send Message →'; btn.disabled = false; return;
               }
@@ -573,38 +571,63 @@
           const screen_size = window.screen.width + 'x' + window.screen.height;
           const language    = navigator.language || 'unknown';
 
-          // ── Geo from IP — tries 3 APIs in order until one works ──
+          // ── Geo from IP — HTTPS only APIs (no mixed content blocking) ──
           let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown', flag: '' };
 
           async function tryGeo() {
-            // API 1: ip-api.com — most reliable, works great on mobile
+            // API 1: ipwho.is — HTTPS, free, no key, very reliable
             try {
-              const r = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,isp,timezone,query', { signal: AbortSignal.timeout(4000) });
+              const r = await fetch('https://ipwho.is/', { signal: AbortSignal.timeout(5000) });
               const d = await r.json();
-              if(d.status === 'success') {
-                return { ip: d.query||'Unknown', city: d.city||'Unknown', region: d.regionName||'Unknown', country: d.country||'Unknown', isp: d.isp||'Unknown', timezone: d.timezone||'Unknown', flag: d.countryCode||'' };
+              if(d.success !== false && d.ip) {
+                return {
+                  ip:       d.ip                    || 'Unknown',
+                  city:     d.city                  || 'Unknown',
+                  region:   d.region                || 'Unknown',
+                  country:  d.country               || 'Unknown',
+                  isp:      d.connection?.isp        || d.connection?.org || 'Unknown',
+                  timezone: d.timezone?.id           || 'Unknown',
+                  flag:     d.country_code           || ''
+                };
               }
             } catch(e) {}
 
-            // API 2: ipwho.is — free backup, no key needed
+            // API 2: ipinfo.io — HTTPS, free tier, very stable
             try {
-              const r = await fetch('https://ipwho.is/', { signal: AbortSignal.timeout(4000) });
-              const d = await r.json();
-              if(d.success) {
-                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country||'Unknown', isp: d.connection?.isp||'Unknown', timezone: d.timezone?.id||'Unknown', flag: d.country_code||'' };
-              }
-            } catch(e) {}
-
-            // API 3: ipapi.co — original fallback
-            try {
-              const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+              const r = await fetch('https://ipinfo.io/json', { signal: AbortSignal.timeout(5000) });
               const d = await r.json();
               if(d.ip) {
-                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country_name||'Unknown', isp: d.org||'Unknown', timezone: d.timezone||'Unknown', flag: d.country||'' };
+                const parts = (d.loc||'').split(',');
+                return {
+                  ip:       d.ip       || 'Unknown',
+                  city:     d.city     || 'Unknown',
+                  region:   d.region   || 'Unknown',
+                  country:  d.country  || 'Unknown',
+                  isp:      d.org      || 'Unknown',
+                  timezone: d.timezone || 'Unknown',
+                  flag:     d.country  || ''
+                };
               }
             } catch(e) {}
 
-            return null; // all failed
+            // API 3: ipapi.co — HTTPS fallback
+            try {
+              const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(5000) });
+              const d = await r.json();
+              if(d.ip) {
+                return {
+                  ip:       d.ip            || 'Unknown',
+                  city:     d.city          || 'Unknown',
+                  region:   d.region        || 'Unknown',
+                  country:  d.country_name  || 'Unknown',
+                  isp:      d.org           || 'Unknown',
+                  timezone: d.timezone      || 'Unknown',
+                  flag:     d.country       || ''
+                };
+              }
+            } catch(e) {}
+
+            return null;
           }
 
           const geoResult = await tryGeo();
@@ -663,13 +686,12 @@
         }
       }
 
-      // ── RESET FORM ──
       function resetContactForm() {
         document.getElementById('cf-name').value    = '';
         document.getElementById('cf-email').value   = '';
         document.getElementById('cf-message').value = '';
-        document.getElementById('cf-error').style.display        = 'none';
-        document.getElementById('form-success').style.display    = 'none';
+        document.getElementById('cf-error').style.display           = 'none';
+        document.getElementById('form-success').style.display       = 'none';
         document.getElementById('contact-form-fields').style.display = 'block';
         const btn = document.getElementById('cf-submit-btn');
         btn.textContent = 'Send Message →';
