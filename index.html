@@ -311,13 +311,294 @@
     </section>
 
     <section class="fade-in" id="contact">
-      <h2 class="section__title">Ready to Start?</h2>
-      <div class="contact-container">
-        <a href="https://wa.me/qr/6XYQWS4TYRXKJ1" target="_blank" class="btn-contact btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
-        <a href="/cdn-cgi/l/email-protection#f19a908299989795908690839a90829998c4c1c9b1969c90989ddf929e9c" class="btn-contact btn-email"><i class="fas fa-envelope"></i> Send Email</a>
-        <a href="https://www.fiverr.com/s/WEW18rx" target="_blank" class="btn-contact btn-fiverr"><i class="fas fa-star"></i> Hire Me on Fiverr</a>
+      <h2 class="section__title">Let's Build Something</h2>
+      <p style="text-align:center;color:var(--text-gray);margin-top:-10px;margin-bottom:35px;font-size:1rem;">Select what you need — I'll point you to the right option</p>
+
+      <!-- FUNNEL SELECTOR -->
+      <div style="max-width:700px;margin:0 auto 40px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px;" id="service-selector">
+
+          <button onclick="selectService('bug')" class="service-btn" id="btn-bug"
+            style="background:white;border:2px solid #e2e8f0;border-radius:16px;padding:20px 12px;cursor:pointer;transition:all 0.3s;font-family:inherit;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🐛</div>
+            <div style="font-weight:800;font-size:0.85rem;color:#1a1a2e;">Bug Fix</div>
+            <div style="font-size:0.75rem;color:#4361ee;font-weight:700;margin-top:4px;">From $5</div>
+          </button>
+
+          <button onclick="selectService('react')" class="service-btn" id="btn-react"
+            style="background:white;border:2px solid #e2e8f0;border-radius:16px;padding:20px 12px;cursor:pointer;transition:all 0.3s;font-family:inherit;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">⚛️</div>
+            <div style="font-weight:800;font-size:0.85rem;color:#1a1a2e;">React/MERN Site</div>
+            <div style="font-size:0.75rem;color:#4361ee;font-weight:700;margin-top:4px;">From $15</div>
+          </button>
+
+          <button onclick="selectService('css')" class="service-btn" id="btn-css"
+            style="background:white;border:2px solid #e2e8f0;border-radius:16px;padding:20px 12px;cursor:pointer;transition:all 0.3s;font-family:inherit;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🎨</div>
+            <div style="font-weight:800;font-size:0.85rem;color:#1a1a2e;">CSS/UI Fix</div>
+            <div style="font-size:0.75rem;color:#4361ee;font-weight:700;margin-top:4px;">From $5</div>
+          </button>
+
+          <button onclick="selectService('custom')" class="service-btn" id="btn-custom"
+            style="background:white;border:2px solid #e2e8f0;border-radius:16px;padding:20px 12px;cursor:pointer;transition:all 0.3s;font-family:inherit;text-align:center;">
+            <div style="font-size:1.8rem;margin-bottom:8px;">🔧</div>
+            <div style="font-weight:800;font-size:0.85rem;color:#1a1a2e;">Custom Project</div>
+            <div style="font-size:0.75rem;color:#7209b7;font-weight:700;margin-top:4px;">Let's Talk</div>
+          </button>
+
+        </div>
+
+        <!-- RESULT BOX -->
+        <div id="service-result" style="display:none;background:white;border-radius:20px;padding:28px;box-shadow:var(--shadow-card);border-left:4px solid #4361ee;text-align:center;">
+          <div id="result-icon" style="font-size:2rem;margin-bottom:10px;"></div>
+          <div id="result-title" style="font-weight:800;font-size:1.2rem;color:#1a1a2e;margin-bottom:6px;"></div>
+          <div id="result-desc" style="color:var(--text-gray);font-size:0.9rem;margin-bottom:20px;"></div>
+          <a id="result-fiverr-btn" href="https://www.fiverr.com/s/WEW18rx" target="_blank"
+            style="display:inline-block;background:linear-gradient(135deg,#4361ee,#7209b7);color:white;padding:14px 32px;border-radius:50px;font-weight:800;font-size:1rem;text-decoration:none;transition:0.3s;box-shadow:0 8px 25px rgba(67,97,238,0.35);">
+            🚀 Hire Me on Fiverr →
+          </a>
+        </div>
       </div>
+
+      <!-- CONTACT FORM -->
+      <div style="max-width:600px;margin:0 auto;">
+        <p style="text-align:center;color:var(--text-gray);font-size:0.9rem;margin-bottom:20px;">
+          Have a complex project? Describe it below — I'll get back to you.
+        </p>
+        <div style="background:white;border-radius:20px;padding:30px;box-shadow:var(--shadow-card);">
+          <div id="form-success" style="display:none;text-align:center;padding:20px;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">✅</div>
+            <div style="font-weight:800;font-size:1.1rem;color:#1a1a2e;margin-bottom:8px;">Message Received!</div>
+            <p style="color:var(--text-gray);font-size:0.9rem;margin-bottom:16px;">I'll respond within 24 hours. For faster service:</p>
+            <a href="https://www.fiverr.com/s/WEW18rx" target="_blank"
+              style="display:inline-block;background:#1dbf73;color:white;padding:12px 28px;border-radius:50px;font-weight:700;text-decoration:none;font-size:0.9rem;">
+              View Fiverr Profile →
+            </a>
+          </div>
+          <div id="contact-form-fields">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+              <input type="text" id="cf-name" placeholder="Your Name"
+                style="padding:12px 16px;border:2px solid #f0f4f8;border-radius:12px;font-family:inherit;font-size:0.9rem;outline:none;transition:0.3s;width:100%;box-sizing:border-box;"
+                onfocus="this.style.borderColor='#4361ee'" onblur="this.style.borderColor='#f0f4f8'">
+              <input type="email" id="cf-email" placeholder="Your Email"
+                style="padding:12px 16px;border:2px solid #f0f4f8;border-radius:12px;font-family:inherit;font-size:0.9rem;outline:none;transition:0.3s;width:100%;box-sizing:border-box;"
+                onfocus="this.style.borderColor='#4361ee'" onblur="this.style.borderColor='#f0f4f8'">
+            </div>
+            <textarea id="cf-message" placeholder="Describe your project..." rows="4"
+              style="width:100%;padding:12px 16px;border:2px solid #f0f4f8;border-radius:12px;font-family:inherit;font-size:0.9rem;outline:none;transition:0.3s;resize:vertical;box-sizing:border-box;margin-bottom:14px;"
+              onfocus="this.style.borderColor='#4361ee'" onblur="this.style.borderColor='#f0f4f8'"></textarea>
+            <button onclick="submitContactForm()" id="cf-submit-btn"
+              style="width:100%;padding:14px;background:linear-gradient(135deg,#4361ee,#7209b7);border:none;border-radius:14px;color:white;font-size:1rem;font-weight:700;font-family:inherit;cursor:pointer;transition:0.3s;">
+              Send Message →
+            </button>
+            <p id="cf-error" style="color:#fc8181;font-size:0.82rem;margin-top:8px;display:none;text-align:center;"></p>
+          </div>
+        </div>
+      </div>
+
     </section>
+
+    <style>
+      .service-btn:hover {
+        border-color: #4361ee !important;
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(67,97,238,0.15);
+      }
+      .service-btn.active {
+        border-color: #4361ee !important;
+        background: linear-gradient(135deg, #4361ee08, #7209b708) !important;
+      }
+    </style>
+
+    <script>
+      // ── SERVICE SELECTOR ──
+      const serviceData = {
+        bug: {
+          icon: '🐛',
+          title: 'Bug Fix — From $5 · 24hr Delivery',
+          desc: 'React.js errors, CSS issues, JavaScript bugs, API problems. Fast root-cause fix — not just a patch.',
+          fiverr: 'https://www.fiverr.com/s/WEW18rx'
+        },
+        react: {
+          icon: '⚛️',
+          title: 'React/MERN Website — From $15',
+          desc: 'Hand-coded, SEO-optimized, 90+ Lighthouse score. MongoDB, Express, React, Node.js — full stack from scratch.',
+          fiverr: 'https://www.fiverr.com/s/WEW18rx'
+        },
+        css: {
+          icon: '🎨',
+          title: 'CSS/UI Fix — From $5 · 24hr Delivery',
+          desc: 'Responsive layout fixes, Tailwind & Bootstrap issues, mobile UI problems. Pixel-perfect results.',
+          fiverr: 'https://www.fiverr.com/s/WEW18rx'
+        },
+        custom: {
+          icon: '🔧',
+          title: 'Custom Project — Let's Discuss',
+          desc: 'Have something unique in mind? Describe it in the form below and I'll get back to you within 24 hours.',
+          fiverr: 'https://www.fiverr.com/s/WEW18rx'
+        }
+      };
+
+      function selectService(type) {
+        // Reset all buttons
+        document.querySelectorAll('.service-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('btn-' + type).classList.add('active');
+
+        const d = serviceData[type];
+        document.getElementById('result-icon').textContent  = d.icon;
+        document.getElementById('result-title').textContent = d.title;
+        document.getElementById('result-desc').textContent  = d.desc;
+        document.getElementById('result-fiverr-btn').href   = d.fiverr;
+
+        const resultBox = document.getElementById('service-result');
+        resultBox.style.display = 'block';
+        resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        // Hide fiverr button for custom, show form instead
+        document.getElementById('result-fiverr-btn').style.display =
+          type === 'custom' ? 'none' : 'inline-block';
+      }
+
+      // ── CONTACT FORM SUBMIT ──
+      async function submitContactForm() {
+        const name    = document.getElementById('cf-name').value.trim();
+        const email   = document.getElementById('cf-email').value.trim();
+        const message = document.getElementById('cf-message').value.trim();
+        const errEl   = document.getElementById('cf-error');
+        const btn     = document.getElementById('cf-submit-btn');
+
+        errEl.style.display = 'none';
+
+        if (!name)                         { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; return; }
+        if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email.'; errEl.style.display = 'block'; return; }
+        if (message.length < 10)           { errEl.textContent = 'Message too short — please describe your project.'; errEl.style.display = 'block'; return; }
+        if (message.length > 1000)         { errEl.textContent = 'Message too long (max 1000 chars).'; errEl.style.display = 'block'; return; }
+
+        btn.textContent = 'Sending...';
+        btn.disabled    = true;
+
+        try {
+          const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+          const { getDatabase, ref, push, get, query, orderByChild, equalTo } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
+
+          const firebaseConfig = {
+            apiKey:      'AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc',
+            authDomain:  'kashif-portfolio-17481.firebaseapp.com',
+            databaseURL: 'https://kashif-portfolio-17481-default-rtdb.asia-southeast1.firebasedatabase.app',
+            projectId:   'kashif-portfolio-17481',
+          };
+
+          const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+          const db  = getDatabase(app);
+
+          // ── Check whitelist first ──
+          const wlKey      = email.replace(/[.@]/g, '_');
+          const wlSnap     = await get(ref(db, 'whitelist/' + wlKey));
+          const isWhitelisted = wlSnap.exists();
+
+          if (!isWhitelisted) {
+            // ── Fetch rate limit settings from Firebase ──
+            const rlSnap   = await get(ref(db, 'settings/rateLimit'));
+            const rl       = rlSnap.val() || { hourly: 3, daily: 5, minchars: 10 };
+
+            // Min chars check from Firebase settings
+            if (message.length < rl.minchars) {
+              errEl.textContent = `Message too short (min ${rl.minchars} chars).`;
+              errEl.style.display = 'block';
+              btn.textContent = 'Send Message →'; btn.disabled = false; return;
+            }
+
+            // ── localStorage rate limit check ──
+            const lsKey    = 'kd_msg_' + btoa(email).slice(0,12);
+            const stored   = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
+            const now      = Date.now();
+            const oneHour  = 60 * 60 * 1000;
+            const oneDay   = 24 * oneHour;
+
+            stored.hourly  = (stored.hourly || []).filter(t => now - t < oneHour);
+            stored.daily   = (stored.daily  || []).filter(t => now - t < oneDay);
+
+            if (stored.hourly.length >= rl.hourly) {
+              errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour. Please try later.`;
+              errEl.style.display = 'block';
+              btn.textContent = 'Send Message →'; btn.disabled = false; return;
+            }
+            if (stored.daily.length >= rl.daily) {
+              errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Please contact via Fiverr.`;
+              errEl.style.display = 'block';
+              btn.textContent = 'Send Message →'; btn.disabled = false; return;
+            }
+
+            stored.hourly.push(now);
+            stored.daily.push(now);
+            localStorage.setItem(lsKey, JSON.stringify(stored));
+          }
+
+          // ── Collect device + geo info ──
+          const ua       = navigator.userAgent;
+          const isMobile = /Mobi|Android/i.test(ua);
+          const browser  = ua.includes('Firefox') ? 'Firefox'
+                         : ua.includes('Edg')     ? 'Edge'
+                         : ua.includes('Chrome')  ? 'Chrome'
+                         : ua.includes('Safari')  ? 'Safari'
+                         : 'Other';
+          const os       = ua.includes('Windows') ? 'Windows'
+                         : ua.includes('Android') ? 'Android'
+                         : ua.includes('iPhone') || ua.includes('iPad') ? 'iOS'
+                         : ua.includes('Mac')     ? 'macOS'
+                         : ua.includes('Linux')   ? 'Linux'
+                         : 'Unknown';
+          const screen_size = window.screen.width + 'x' + window.screen.height;
+          const language    = navigator.language || 'unknown';
+
+          // ── Geo from IP (no permission needed) ──
+          let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown' };
+          try {
+            const geoRes = await fetch('https://ipapi.co/json/');
+            const geoData = await geoRes.json();
+            geo = {
+              ip:       geoData.ip       || 'Unknown',
+              city:     geoData.city     || 'Unknown',
+              region:   geoData.region   || 'Unknown',
+              country:  geoData.country_name || 'Unknown',
+              isp:      geoData.org      || 'Unknown',
+              timezone: geoData.timezone || 'Unknown',
+              flag:     geoData.country  || ''
+            };
+          } catch(geoErr) {}
+
+          await push(ref(db, 'messages'), {
+            name,
+            email,
+            message,
+            device:      isMobile ? 'mobile' : 'desktop',
+            browser,
+            os,
+            screen_size,
+            language,
+            ip:          geo.ip,
+            city:        geo.city,
+            region:      geo.region,
+            country:     geo.country,
+            isp:         geo.isp,
+            timezone:    geo.timezone,
+            flag:        geo.flag,
+            status:      'unread',
+            whitelisted: isWhitelisted,
+            time:        Date.now()
+          });
+
+          document.getElementById('contact-form-fields').style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+
+        } catch(e) {
+          btn.textContent = 'Send Message →';
+          btn.disabled    = false;
+          errEl.textContent = 'Failed to send. Please try Fiverr directly.';
+          errEl.style.display = 'block';
+        }
+      }
+    </script>
   </main>
 
   <footer>
