@@ -376,6 +376,11 @@
               style="display:inline-block;background:#1dbf73;color:white;padding:12px 28px;border-radius:50px;font-weight:700;text-decoration:none;font-size:0.9rem;">
               View Fiverr Profile →
             </a>
+            <br><br>
+            <button onclick="resetContactForm()"
+              style="background:none;border:2px solid #4361ee;color:#4361ee;padding:10px 24px;border-radius:50px;font-size:0.85rem;font-weight:700;font-family:inherit;cursor:pointer;">
+              ✉️ Send Another Message
+            </button>
           </div>
           <div id="contact-form-fields">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
@@ -485,7 +490,6 @@
         btn.disabled    = true;
 
         try {
-          // ── FIX 4: Import Firebase fresh, avoid race condition with dashboard.js ──
           const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
           const { getDatabase, ref, push, get } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
 
@@ -496,16 +500,11 @@
             projectId:   'kashif-portfolio-17481',
           };
 
-          // ── FIX 4: Safely get or create Firebase app ──
           let app;
-          try {
-            app = getApp();
-          } catch(e) {
-            app = initializeApp(firebaseConfig);
-          }
+          try { app = getApp(); } catch(e) { app = initializeApp(firebaseConfig); }
           const db = getDatabase(app);
 
-          // ── Check whitelist ──
+          // ── Check whitelist first (public visitors can't auth so handle gracefully) ──
           let isWhitelisted = false;
           try {
             const wlKey  = email.replace(/[.@]/g, '_');
@@ -514,20 +513,21 @@
           } catch(wlErr) { isWhitelisted = false; }
 
           if (!isWhitelisted) {
-            // ── Fetch rate limit settings ──
+            // ── Fetch rate limit settings (fallback to defaults if permission denied) ──
             let rl = { hourly: 3, daily: 5, minchars: 10 };
             try {
               const rlSnap = await get(ref(db, 'settings/rateLimit'));
               if (rlSnap.val()) rl = { ...rl, ...rlSnap.val() };
             } catch(rlErr) { /* use defaults */ }
 
+            // Min chars check from Firebase settings
             if (message.length < rl.minchars) {
               errEl.textContent = `Message too short (min ${rl.minchars} chars).`;
               errEl.style.display = 'block';
               btn.textContent = 'Send Message →'; btn.disabled = false; return;
             }
 
-            // ── FIX 2 & 3: Safe localStorage with try/catch + safe key without btoa ──
+            // ── Safe localStorage — no btoa crash, handles private/strict browsers ──
             try {
               const lsKey  = 'kd_msg_' + email.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 12);
               const stored = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
@@ -548,13 +548,11 @@
                 errEl.style.display = 'block';
                 btn.textContent = 'Send Message →'; btn.disabled = false; return;
               }
-
               stored.hourly.push(now);
               stored.daily.push(now);
               localStorage.setItem(lsKey, JSON.stringify(stored));
             } catch(lsErr) {
-              // FIX 2: localStorage blocked (Brave/private mode) — skip rate limit, continue sending
-              console.warn('localStorage unavailable, skipping rate limit:', lsErr);
+              console.warn('localStorage blocked, skipping rate limit:', lsErr);
             }
           }
 
@@ -575,21 +573,42 @@
           const screen_size = window.screen.width + 'x' + window.screen.height;
           const language    = navigator.language || 'unknown';
 
-          // ── Geo from IP ──
+          // ── Geo from IP — tries 3 APIs in order until one works ──
           let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown', flag: '' };
-          try {
-            const geoRes  = await fetch('https://ipapi.co/json/');
-            const geoData = await geoRes.json();
-            geo = {
-              ip:       geoData.ip            || 'Unknown',
-              city:     geoData.city          || 'Unknown',
-              region:   geoData.region        || 'Unknown',
-              country:  geoData.country_name  || 'Unknown',
-              isp:      geoData.org           || 'Unknown',
-              timezone: geoData.timezone      || 'Unknown',
-              flag:     geoData.country       || ''
-            };
-          } catch(geoErr) {}
+
+          async function tryGeo() {
+            // API 1: ip-api.com — most reliable, works great on mobile
+            try {
+              const r = await fetch('http://ip-api.com/json/?fields=status,country,countryCode,regionName,city,isp,timezone,query', { signal: AbortSignal.timeout(4000) });
+              const d = await r.json();
+              if(d.status === 'success') {
+                return { ip: d.query||'Unknown', city: d.city||'Unknown', region: d.regionName||'Unknown', country: d.country||'Unknown', isp: d.isp||'Unknown', timezone: d.timezone||'Unknown', flag: d.countryCode||'' };
+              }
+            } catch(e) {}
+
+            // API 2: ipwho.is — free backup, no key needed
+            try {
+              const r = await fetch('https://ipwho.is/', { signal: AbortSignal.timeout(4000) });
+              const d = await r.json();
+              if(d.success) {
+                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country||'Unknown', isp: d.connection?.isp||'Unknown', timezone: d.timezone?.id||'Unknown', flag: d.country_code||'' };
+              }
+            } catch(e) {}
+
+            // API 3: ipapi.co — original fallback
+            try {
+              const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(4000) });
+              const d = await r.json();
+              if(d.ip) {
+                return { ip: d.ip||'Unknown', city: d.city||'Unknown', region: d.region||'Unknown', country: d.country_name||'Unknown', isp: d.org||'Unknown', timezone: d.timezone||'Unknown', flag: d.country||'' };
+              }
+            } catch(e) {}
+
+            return null; // all failed
+          }
+
+          const geoResult = await tryGeo();
+          if(geoResult) geo = geoResult;
 
           // ── Step 1: Save to Firebase ──
           await push(ref(db, 'messages'), {
@@ -618,11 +637,17 @@
             await emailjs.send(
               EJS_SERVICE_ID,
               EJS_TEMPLATE_ID,
-              { to_name: name, to_email: email, reply_to: email, message: message },
+              {
+                to_name:  name,
+                to_email: email,
+                reply_to: email,
+                message:  message
+              },
               { publicKey: EJS_PUBLIC_KEY }
             );
           } catch(ejErr) {
-            console.warn('EmailJS failed (message still saved):', ejErr);
+            // Auto-reply failed silently — message still saved in Firebase
+            console.warn('EmailJS failed:', ejErr);
           }
 
           // ── Step 3: Show success ──
@@ -630,13 +655,25 @@
           document.getElementById('form-success').style.display = 'block';
 
         } catch(e) {
-          // ── FIX 1: Log the REAL error so we can debug ──
           console.error('Form submit error:', e);
           btn.textContent = 'Send Message →';
           btn.disabled    = false;
-          errEl.textContent = 'Failed to send — error: ' + e.message;
+          errEl.textContent = 'Failed to send — ' + e.message;
           errEl.style.display = 'block';
         }
+      }
+
+      // ── RESET FORM ──
+      function resetContactForm() {
+        document.getElementById('cf-name').value    = '';
+        document.getElementById('cf-email').value   = '';
+        document.getElementById('cf-message').value = '';
+        document.getElementById('cf-error').style.display        = 'none';
+        document.getElementById('form-success').style.display    = 'none';
+        document.getElementById('contact-form-fields').style.display = 'block';
+        const btn = document.getElementById('cf-submit-btn');
+        btn.textContent = 'Send Message →';
+        btn.disabled    = false;
       }
     </script>
   </main>

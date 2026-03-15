@@ -7,235 +7,576 @@
   <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:        #05050f;
+      --surface:   #0d0d1a;
+      --card:      #111122;
+      --border:    rgba(255,255,255,0.06);
+      --accent:    #4361ee;
+      --pink:      #f72585;
+      --green:     #48bb78;
+      --fiverr:    #1dbf73;
+      --gold:      #f0b90b;
+      --text:      #e2e8f0;
+      --muted:     #4a5568;
+      --danger:    #fc8181;
+    }
+
+    html, body { height: 100%; }
 
     body {
       font-family: "Outfit", sans-serif;
-      background: #0a0a14;
-      min-height: 100vh;
-      color: white;
-      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
     }
 
-    /* LOGIN */
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+    /* ══════════════════════════════════════
+       LOGIN SCREEN
+    ══════════════════════════════════════ */
     #login-screen {
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: radial-gradient(ellipse at 30% 40%, rgba(67,97,238,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(247,37,133,0.08) 0%, transparent 60%);
     }
+
     .login-box {
       width: 100%; max-width: 380px;
-      background: #13131f; border-radius: 24px;
-      padding: 40px 32px; text-align: center;
-      border: 1px solid rgba(255,255,255,0.06);
-      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      background: rgba(13,13,26,0.9);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 44px 36px;
+      text-align: center;
+      border: 1px solid var(--border);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.7),
+                  0 0 0 1px rgba(67,97,238,0.1);
     }
-    .login-box .lock { font-size: 2.8rem; margin-bottom: 14px; display: block; }
+
+    .login-box .lock {
+      font-size: 3rem; margin-bottom: 16px;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(67,97,238,0.5));
+    }
+
     .login-box h1 {
-      font-size: 1.5rem; font-weight: 800;
-      background: linear-gradient(to right, #4361ee, #f72585);
+      font-size: 1.6rem; font-weight: 800;
+      background: linear-gradient(135deg, #4361ee, #f72585);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 6px;
     }
-    .login-box p { color: #555; font-size: 0.85rem; margin-bottom: 28px; }
+
+    .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 28px; }
+
     .inp {
       width: 100%; padding: 13px 18px;
-      background: #0a0a14; border: 2px solid rgba(255,255,255,0.07);
-      border-radius: 12px; color: white; font-size: 0.95rem;
+      background: rgba(5,5,15,0.8);
+      border: 2px solid rgba(255,255,255,0.07);
+      border-radius: 14px; color: white; font-size: 0.95rem;
       font-family: "Outfit", sans-serif; outline: none;
-      margin-bottom: 10px; transition: border-color 0.3s;
+      margin-bottom: 10px; transition: border-color 0.3s, box-shadow 0.3s;
     }
-    .inp:focus { border-color: #4361ee; }
+    .inp:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(67,97,238,0.15);
+    }
+
     .login-btn {
       width: 100%; padding: 14px;
       background: linear-gradient(135deg, #4361ee, #7209b7);
-      border: none; border-radius: 12px; color: white;
-      font-size: 1rem; font-weight: 700; font-family: "Outfit", sans-serif;
+      border: none; border-radius: 14px; color: white;
+      font-size: 1rem; font-weight: 700;
+      font-family: "Outfit", sans-serif;
       cursor: pointer; transition: 0.3s; margin-top: 4px;
+      position: relative; overflow: hidden;
     }
-    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(67,97,238,0.4); }
+    .login-btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0);
+      transition: 0.3s;
+    }
+    .login-btn:hover::after { background: rgba(255,255,255,0.08); }
+    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(67,97,238,0.45); }
     .login-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-    .login-err { color: #fc8181; font-size: 0.82rem; margin-top: 10px; display: none; }
 
-    /* ADMIN PANEL */
-    #admin-panel { display: none; max-width: 620px; margin: 0 auto; padding: 30px 0 60px; }
-
-    .panel-header { text-align: center; margin-bottom: 32px; }
-    .panel-header .badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: rgba(72,187,120,0.1); border: 1px solid rgba(72,187,120,0.25);
-      color: #48bb78; padding: 5px 14px; border-radius: 50px;
-      font-size: 0.75rem; font-weight: 700; margin-bottom: 14px;
+    .login-err {
+      color: var(--danger); font-size: 0.82rem;
+      margin-top: 10px; display: none;
     }
-    .panel-header h1 {
-      font-size: 1.7rem; font-weight: 800;
-      background: linear-gradient(to right, #4361ee, #f72585);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+
+    /* ══════════════════════════════════════
+       MAIN LAYOUT — 3 COLUMNS
+    ══════════════════════════════════════ */
+    #admin-panel {
+      display: none;
+      height: 100vh;
+      grid-template-columns: 220px 1fr 340px;
+      grid-template-rows: 56px 1fr;
+    }
+
+    #admin-panel.active { display: grid; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      grid-column: 1 / -1;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(13,13,26,0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 800; font-size: 0.95rem;
+    }
+
+    .topbar-brand .shield {
+      width: 28px; height: 28px; border-radius: 8px;
+      background: linear-gradient(135deg, #4361ee, #7209b7);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    .topbar-right {
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .topbar-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(72,187,120,0.1);
+      border: 1px solid rgba(72,187,120,0.2);
+      color: var(--green); padding: 4px 12px;
+      border-radius: 50px; font-size: 0.72rem; font-weight: 700;
+    }
+
+    .topbar-badge .pulse {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(72,187,120,0.7); }
+      50%      { box-shadow: 0 0 0 5px rgba(72,187,120,0); }
+    }
+
+    .topbar-logout {
+      background: rgba(252,129,129,0.08);
+      border: 1px solid rgba(252,129,129,0.2);
+      color: var(--danger); padding: 6px 14px;
+      border-radius: 50px; font-size: 0.75rem;
+      font-weight: 700; cursor: pointer;
+      font-family: "Outfit", sans-serif;
+      transition: 0.2s;
+    }
+    .topbar-logout:hover { background: var(--danger); color: white; }
+
+    /* ── LEFT SIDEBAR ── */
+    .sidebar {
+      grid-row: 2;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .sidebar-section {
+      font-size: 0.62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); padding: 8px 8px 4px;
+    }
+
+    /* Status Card */
+    .side-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 14px;
+      margin-bottom: 6px;
+    }
+
+    .side-card-title {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .status-row {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(5,5,15,0.6);
+      border-radius: 10px; padding: 8px 10px;
+      margin-bottom: 10px; font-size: 0.78rem; font-weight: 700;
+      color: #bbb;
+    }
+
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #333; flex-shrink: 0; transition: 0.4s;
+    }
+    .dot.online   { background: var(--green); box-shadow: 0 0 0 3px rgba(72,187,120,0.25), 0 0 8px rgba(72,187,120,0.5); }
+    .dot.offline  { background: var(--danger); }
+    .dot.available { background: var(--fiverr); box-shadow: 0 0 0 3px rgba(29,191,115,0.25), 0 0 8px rgba(29,191,115,0.5); }
+    .dot.busy     { background: var(--danger); }
+
+    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+    .tgl-btn {
+      padding: 8px 4px; border: 1px solid transparent;
+      border-radius: 10px; font-size: 0.72rem; font-weight: 700;
+      font-family: "Outfit", sans-serif; cursor: pointer;
+      transition: all 0.2s; display: flex; flex-direction: column;
+      align-items: center; gap: 3px;
+    }
+    .tgl-btn .ico { font-size: 1.1rem; }
+    .tgl-btn .lbl { font-size: 0.62rem; }
+    .btn-on  { background: rgba(72,187,120,0.08); border-color: rgba(72,187,120,0.2); color: var(--green); }
+    .btn-on:hover  { background: var(--green); border-color: var(--green); color: white; }
+    .btn-off { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.2); color: var(--danger); }
+    .btn-off:hover { background: var(--danger); border-color: var(--danger); color: white; }
+    .btn-av  { background: rgba(29,191,115,0.08); border-color: rgba(29,191,115,0.2); color: var(--fiverr); }
+    .btn-av:hover  { background: var(--fiverr); border-color: var(--fiverr); color: white; }
+    .btn-bz  { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.2); color: var(--danger); }
+    .btn-bz:hover  { background: var(--danger); border-color: var(--danger); color: white; }
+
+    /* Rate Limit */
+    .rl-row {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(5,5,15,0.6); border-radius: 10px;
+      padding: 8px 10px; margin-bottom: 6px;
+    }
+    .rl-label { flex: 1; color: #666; font-size: 0.68rem; font-weight: 600; }
+    .rl-val { color: var(--accent); font-weight: 800; font-size: 0.85rem; min-width: 24px; text-align: center; }
+    .rl-btn {
+      width: 22px; height: 22px; border-radius: 50%;
+      border: none; font-size: 0.85rem; font-weight: 800;
+      cursor: pointer; transition: 0.2s;
+      font-family: "Outfit", sans-serif;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rl-minus { background: rgba(252,129,129,0.15); color: var(--danger); }
+    .rl-minus:hover { background: var(--danger); color: white; }
+    .rl-plus  { background: rgba(72,187,120,0.15); color: var(--green); }
+    .rl-plus:hover  { background: var(--green); color: white; }
+    .rl-hint { color: #2a2a3a; font-size: 0.65rem; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.04); }
+
+    .back-link {
+      display: flex; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 0.75rem; font-weight: 600;
+      text-decoration: none; padding: 8px 10px;
+      border-radius: 10px; transition: 0.2s;
+      margin-top: auto;
+    }
+    .back-link:hover { background: rgba(255,255,255,0.04); color: var(--accent); }
+
+    /* ── MIDDLE — MESSAGE LIST ── */
+    .msg-list-pane {
+      grid-row: 2;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    .msg-list-header {
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .msg-list-title {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .msg-list-title h2 {
+      font-size: 0.9rem; font-weight: 800; color: var(--text);
+    }
+
+    .unread-badge {
+      background: var(--pink); color: white;
+      border-radius: 50px; padding: 2px 8px;
+      font-size: 0.65rem; font-weight: 800; display: none;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+    }
+    .search-wrap .search-icon {
+      position: absolute; left: 10px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted); font-size: 0.8rem;
+      pointer-events: none;
+    }
+    #search-input {
+      width: 100%; padding: 8px 12px 8px 30px;
+      background: rgba(5,5,15,0.8);
+      border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-size: 0.82rem; font-family: "Outfit", sans-serif;
+      outline: none; transition: 0.2s;
+    }
+    #search-input:focus { border-color: var(--accent); }
+    #search-input::placeholder { color: var(--muted); }
+
+    /* Message Cards */
+    #msg-list {
+      flex: 1; overflow-y: auto;
+      padding: 8px;
+    }
+
+    .date-group-label {
+      font-size: 0.62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--muted); padding: 10px 8px 4px;
+    }
+
+    .msg-card {
+      padding: 12px; border-radius: 12px;
+      cursor: pointer; transition: 0.2s;
+      border: 1px solid transparent;
+      margin-bottom: 4px; position: relative;
+    }
+
+    .msg-card:hover { background: rgba(255,255,255,0.04); border-color: var(--border); }
+    .msg-card.active { background: rgba(67,97,238,0.1); border-color: rgba(67,97,238,0.3); }
+    .msg-card.unread .msg-card-name::after {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--pink);
+      display: inline-block; margin-left: 6px;
+      box-shadow: 0 0 6px var(--pink);
+    }
+    .msg-card.read { opacity: 0.6; }
+
+    .msg-card-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 8px; margin-bottom: 4px;
+    }
+    .msg-card-name {
+      font-size: 0.85rem; font-weight: 700; color: var(--text);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .msg-card-time { font-size: 0.65rem; color: var(--muted); white-space: nowrap; }
+    .msg-card-email { font-size: 0.72rem; color: var(--accent); margin-bottom: 4px; }
+    .msg-card-preview {
+      font-size: 0.75rem; color: var(--muted);
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .msg-card-chips {
+      display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap;
+    }
+    .chip {
+      font-size: 0.6rem; font-weight: 700;
+      padding: 2px 7px; border-radius: 20px;
+    }
+    .chip-device { background: rgba(67,97,238,0.12); color: #818cf8; }
+    .chip-vip    { background: rgba(240,185,11,0.12); color: var(--gold); }
+    .chip-unread { background: rgba(247,37,133,0.12); color: var(--pink); }
+
+    .inbox-empty {
+      text-align: center; color: var(--muted);
+      padding: 40px 20px; font-size: 0.85rem;
+    }
+
+    /* ── RIGHT — MESSAGE VIEWER ── */
+    .msg-viewer {
+      grid-row: 2;
+      background: var(--surface);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    .viewer-empty {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 12px; color: var(--muted);
+    }
+
+    .viewer-empty .empty-icon { font-size: 3rem; opacity: 0.3; }
+    .viewer-empty p { font-size: 0.82rem; }
+
+    .viewer-content {
+      display: none; flex-direction: column;
+      height: 100%; overflow: hidden;
+    }
+    .viewer-content.active { display: flex; }
+
+    /* Viewer Header */
+    .viewer-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .viewer-name-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 10px;
       margin-bottom: 4px;
     }
-    .panel-header p { color: #444; font-size: 0.85rem; }
 
-    /* CARD */
-    .card {
-      background: #13131f; border-radius: 20px;
-      padding: 24px; margin-bottom: 16px;
-      border: 1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .card-title {
-      font-size: 0.78rem; font-weight: 800;
-      text-transform: uppercase; letter-spacing: 0.1em;
-      color: #444; margin-bottom: 18px;
+    .viewer-name {
+      font-size: 1.1rem; font-weight: 800;
       display: flex; align-items: center; gap: 8px;
     }
 
-    /* STATUS */
-    .status-row {
-      display: flex; align-items: center; gap: 12px;
-      background: #0a0a14; border-radius: 12px;
-      padding: 12px 16px; margin-bottom: 14px;
+    .viewer-email-row {
+      display: flex; align-items: center; gap: 8px;
     }
-    .dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: #333; flex-shrink: 0; transition: 0.4s;
-    }
-    .dot.online   { background: #48bb78; box-shadow: 0 0 0 3px rgba(72,187,120,0.2); }
-    .dot.offline  { background: #fc8181; }
-    .dot.available { background: #1dbf73; box-shadow: 0 0 0 3px rgba(29,191,115,0.2); }
-    .dot.busy     { background: #fc8181; }
-    .status-label { font-size: 0.9rem; font-weight: 700; color: #bbb; }
 
-    /* TOGGLE BUTTONS */
-    .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .tgl-btn {
-      padding: 14px 10px; border: 2px solid transparent;
-      border-radius: 14px; font-size: 0.9rem; font-weight: 700;
-      font-family: "Outfit", sans-serif; cursor: pointer;
-      transition: all 0.3s; display: flex; flex-direction: column;
-      align-items: center; gap: 5px;
+    .viewer-email {
+      color: var(--accent); font-size: 0.82rem; font-weight: 600;
     }
-    .tgl-btn .ico { font-size: 1.4rem; }
-    .tgl-btn .lbl { font-size: 0.78rem; }
-    .btn-on  { background: rgba(72,187,120,0.08); border-color: rgba(72,187,120,0.25); color: #48bb78; }
-    .btn-on:hover  { background: #48bb78; border-color: #48bb78; color: white; transform: translateY(-2px); }
-    .btn-off { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.25); color: #fc8181; }
-    .btn-off:hover { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-2px); }
-    .btn-av  { background: rgba(29,191,115,0.08); border-color: rgba(29,191,115,0.25); color: #1dbf73; }
-    .btn-av:hover  { background: #1dbf73; border-color: #1dbf73; color: white; transform: translateY(-2px); }
-    .btn-bz  { background: rgba(252,129,129,0.08); border-color: rgba(252,129,129,0.25); color: #fc8181; }
-    .btn-bz:hover  { background: #fc8181; border-color: #fc8181; color: white; transform: translateY(-2px); }
 
-    /* RATE LIMIT */
-    .rl-row {
-      display: flex; align-items: center; gap: 10px;
-      background: #0a0a14; border-radius: 12px;
-      padding: 12px 16px; margin-bottom: 8px;
+    .copy-btn {
+      background: rgba(67,97,238,0.1);
+      border: 1px solid rgba(67,97,238,0.2);
+      color: var(--accent); padding: 3px 10px;
+      border-radius: 50px; font-size: 0.65rem;
+      font-weight: 700; cursor: pointer;
+      font-family: "Outfit", sans-serif;
+      transition: 0.2s;
     }
-    .rl-label { flex: 1; color: #999; font-size: 0.82rem; font-weight: 600; }
-    .rl-val { color: #4361ee; font-weight: 800; font-size: 0.95rem; min-width: 32px; text-align: center; }
-    .rl-btn {
-      width: 30px; height: 30px; border-radius: 50%;
-      border: none; font-size: 1rem; font-weight: 800;
-      cursor: pointer; transition: 0.2s; font-family: "Outfit", sans-serif;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .rl-minus { background: rgba(252,129,129,0.15); color: #fc8181; }
-    .rl-minus:hover { background: #fc8181; color: white; }
-    .rl-plus  { background: rgba(72,187,120,0.15); color: #48bb78; }
-    .rl-plus:hover  { background: #48bb78; color: white; }
-    .rl-hint { color: #333; font-size: 0.75rem; margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+    .copy-btn:hover { background: var(--accent); color: white; }
+    .copy-btn.copied { background: var(--green); border-color: var(--green); color: white; }
 
-    /* INBOX */
-    .inbox-header {
-      display: flex; align-items: center;
-      justify-content: space-between; margin-bottom: 16px;
+    .viewer-time { font-size: 0.72rem; color: var(--muted); }
+
+    /* Viewer Body */
+    .viewer-body {
+      flex: 1; overflow-y: auto;
+      padding: 20px;
     }
-    .unread-badge {
-      background: #f72585; color: white;
-      border-radius: 50px; padding: 2px 10px;
-      font-size: 0.7rem; font-weight: 800; display: none;
+
+    .viewer-message {
+      background: rgba(67,97,238,0.06);
+      border: 1px solid rgba(67,97,238,0.15);
+      border-radius: 16px; padding: 16px 18px;
+      font-size: 0.92rem; line-height: 1.7;
+      color: var(--text); margin-bottom: 20px;
+      white-space: pre-wrap;
     }
-    .msg-card {
-      background: #0a0a14; border-radius: 14px;
-      padding: 16px; margin-bottom: 10px;
-      border-left: 3px solid #4361ee; transition: 0.3s;
+
+    /* Metadata Grid */
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-bottom: 20px;
     }
-    .msg-card.unread { border-left-color: #f72585; }
-    .msg-card.read   { border-left-color: #2a2a3a; opacity: 0.65; }
-    .msg-top {
-      display: flex; justify-content: space-between;
-      align-items: flex-start; gap: 10px; margin-bottom: 10px;
+
+    .meta-chip {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px 12px;
     }
-    .msg-name  { font-weight: 800; color: #eee; font-size: 0.9rem; }
-    .msg-email { color: #4361ee; font-size: 0.78rem; margin-top: 2px; }
-    .msg-time  { color: #444; font-size: 0.72rem; text-align: right; white-space: nowrap; }
-    .msg-dev {
-      display: inline-block; background: rgba(67,97,238,0.12);
-      color: #4361ee; padding: 2px 8px; border-radius: 20px;
-      font-size: 0.68rem; font-weight: 700; margin-top: 4px;
+
+    .meta-label {
+      font-size: 0.62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--muted); margin-bottom: 4px;
+      display: flex; align-items: center; gap: 4px;
     }
-    .msg-body {
-      color: #bbb; font-size: 0.85rem; line-height: 1.6;
-      margin-bottom: 12px; padding: 10px 12px;
-      background: rgba(255,255,255,0.02); border-radius: 8px;
+
+    .meta-val {
+      font-size: 0.82rem; font-weight: 700; color: var(--text);
     }
-    .msg-geo {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
-      gap: 8px; margin-bottom: 12px;
+
+    .meta-sub {
+      font-size: 0.68rem; color: var(--muted); margin-top: 1px;
     }
-    .geo-item { background: rgba(255,255,255,0.02); border-radius: 8px; padding: 8px 10px; }
-    .geo-label { color: #444; font-size: 0.68rem; margin-bottom: 2px; }
-    .geo-val   { color: #ccc; font-size: 0.78rem; font-weight: 700; }
-    .geo-sub   { color: #555; font-size: 0.68rem; margin-top: 1px; }
-    .msg-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* Viewer Actions */
+    .viewer-actions {
+      padding: 12px 20px 16px;
+      border-top: 1px solid var(--border);
+      display: flex; gap: 8px; flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
     .act-btn {
-      padding: 6px 14px; border-radius: 50px; border: none;
-      font-size: 0.72rem; font-weight: 700; cursor: pointer;
-      font-family: "Outfit", sans-serif; transition: 0.2s;
+      padding: 8px 16px; border-radius: 50px;
+      border: none; font-size: 0.75rem; font-weight: 700;
+      cursor: pointer; font-family: "Outfit", sans-serif;
+      transition: 0.2s; display: flex; align-items: center; gap: 5px;
     }
-    .act-read { background: rgba(72,187,120,0.12); color: #48bb78; }
-    .act-read:hover { background: #48bb78; color: white; }
-    .act-vip  { background: rgba(240,185,11,0.12); color: #f0b90b; }
-    .act-vip:hover  { background: #f0b90b; color: #000; }
-    .act-del  { background: rgba(252,129,129,0.12); color: #fc8181; }
-    .act-del:hover  { background: #fc8181; color: white; }
-    .inbox-empty { text-align:center; color:#333; padding:30px; font-size:0.85rem; }
+    .act-read   { background: rgba(72,187,120,0.1);  color: var(--green);  border: 1px solid rgba(72,187,120,0.2); }
+    .act-read:hover  { background: var(--green);  color: white; }
+    .act-vip    { background: rgba(240,185,11,0.1);  color: var(--gold);   border: 1px solid rgba(240,185,11,0.2); }
+    .act-vip:hover   { background: var(--gold);   color: #000; }
+    .act-del    { background: rgba(252,129,129,0.1); color: var(--danger); border: 1px solid rgba(252,129,129,0.2); }
+    .act-del:hover   { background: var(--danger); color: white; }
+    .act-reply  { background: rgba(67,97,238,0.1);   color: var(--accent); border: 1px solid rgba(67,97,238,0.2); }
+    .act-reply:hover { background: var(--accent); color: white; }
 
-    /* BOTTOM */
-    .logout-btn {
-      width: 100%; padding: 13px;
-      background: transparent; border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px; color: #444; font-size: 0.9rem;
-      font-family: "Outfit", sans-serif; cursor: pointer;
-      transition: 0.3s; margin-top: 6px;
-    }
-    .logout-btn:hover { border-color: #fc8181; color: #fc8181; }
-    .back-link {
-      display: block; text-align: center; color: #4361ee;
-      font-size: 0.82rem; font-weight: 600; text-decoration: none;
-      margin-top: 18px; transition: 0.3s;
-    }
-    .back-link:hover { color: #f72585; }
-
-    /* TOAST */
+    /* ── TOAST ── */
     #toast {
       position: fixed; bottom: 28px; left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: #13131f; color: white;
-      padding: 12px 26px; border-radius: 50px;
-      font-weight: 700; font-size: 0.85rem;
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(13,13,26,0.95);
+      backdrop-filter: blur(20px);
+      color: white; padding: 12px 24px;
+      border-radius: 50px; font-weight: 700;
+      font-size: 0.82rem;
+      border: 1px solid var(--border);
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
       transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
       z-index: 9999; white-space: nowrap;
+      pointer-events: none;
     }
     #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── MOBILE RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #admin-panel.active {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px auto 1fr;
+        overflow-y: auto;
+        height: auto;
+      }
+      .sidebar {
+        grid-row: 2;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        overflow: visible;
+      }
+      .msg-list-pane {
+        grid-row: 3;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        max-height: 50vh;
+      }
+      .msg-viewer {
+        grid-row: 4;
+        min-height: 60vh;
+      }
+      body { overflow: auto; }
+    }
+
+    @media (max-width: 600px) {
+      .meta-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN -->
+  <!-- ════════════════════════════════════════
+       LOGIN SCREEN
+  ════════════════════════════════════════ -->
   <div id="login-screen">
     <div class="login-box">
       <span class="lock">🔐</span>
@@ -248,81 +589,133 @@
     </div>
   </div>
 
-  <!-- ADMIN PANEL -->
+  <!-- ════════════════════════════════════════
+       ADMIN PANEL
+  ════════════════════════════════════════ -->
   <div id="admin-panel">
-    <div class="panel-header">
-      <div class="badge">🔒 Firebase Authenticated</div>
-      <h1>🛡️ Command Center</h1>
-      <p>Kashif Dawar — Portfolio Admin</p>
-    </div>
 
-    <div class="card">
-      <div class="card-title">👤 Developer Status</div>
-      <div class="status-row">
-        <div class="dot" id="admin-status-dot"></div>
-        <span class="status-label" id="admin-status-label">Loading...</span>
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <div class="topbar-brand">
+        <div class="shield">🛡️</div>
+        Command Center
       </div>
-      <div class="btn-grid">
-        <button class="tgl-btn btn-on"  onclick="setStatus('online')">
-          <span class="ico">🟢</span><span class="lbl">Go Online</span>
-        </button>
-        <button class="tgl-btn btn-off" onclick="setStatus('offline')">
-          <span class="ico">⚫</span><span class="lbl">Go Offline</span>
-        </button>
+      <div class="topbar-right">
+        <div class="topbar-badge">
+          <div class="pulse"></div>
+          Firebase Live
+        </div>
+        <button class="topbar-logout" onclick="doLogout()">🚪 Sign Out</button>
       </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">⚡ Fiverr Availability</div>
-      <div class="status-row">
-        <div class="dot" id="admin-fiverr-dot"></div>
-        <span class="status-label" id="admin-fiverr-label">Loading...</span>
+    <!-- LEFT SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Developer Status -->
+      <div class="side-card">
+        <div class="side-card-title">👤 Developer Status</div>
+        <div class="status-row">
+          <div class="dot" id="admin-status-dot"></div>
+          <span id="admin-status-label" style="font-size:0.78rem;font-weight:700;color:#bbb;">Loading...</span>
+        </div>
+        <div class="btn-grid">
+          <button class="tgl-btn btn-on"  onclick="setStatus('online')">
+            <span class="ico">🟢</span><span class="lbl">Online</span>
+          </button>
+          <button class="tgl-btn btn-off" onclick="setStatus('offline')">
+            <span class="ico">⚫</span><span class="lbl">Offline</span>
+          </button>
+        </div>
       </div>
-      <div class="btn-grid">
-        <button class="tgl-btn btn-av" onclick="setFiverr(true)">
-          <span class="ico">✅</span><span class="lbl">Available</span>
-        </button>
-        <button class="tgl-btn btn-bz" onclick="setFiverr(false)">
-          <span class="ico">🔴</span><span class="lbl">Busy</span>
-        </button>
+
+      <!-- Fiverr Availability -->
+      <div class="side-card">
+        <div class="side-card-title">⚡ Fiverr</div>
+        <div class="status-row">
+          <div class="dot" id="admin-fiverr-dot"></div>
+          <span id="admin-fiverr-label" style="font-size:0.78rem;font-weight:700;color:#bbb;">Loading...</span>
+        </div>
+        <div class="btn-grid">
+          <button class="tgl-btn btn-av" onclick="setFiverr(true)">
+            <span class="ico">✅</span><span class="lbl">Available</span>
+          </button>
+          <button class="tgl-btn btn-bz" onclick="setFiverr(false)">
+            <span class="ico">🔴</span><span class="lbl">Busy</span>
+          </button>
+        </div>
       </div>
+
+      <!-- Spam Protection -->
+      <div class="side-card">
+        <div class="side-card-title">⚙️ Spam Protection</div>
+        <div class="rl-row">
+          <span class="rl-label">Max / hour</span>
+          <button class="rl-btn rl-minus" onclick="adjustLimit('hourly',-1)">−</button>
+          <span class="rl-val" id="rl-hourly">3</span>
+          <button class="rl-btn rl-plus"  onclick="adjustLimit('hourly',+1)">+</button>
+        </div>
+        <div class="rl-row">
+          <span class="rl-label">Max / day</span>
+          <button class="rl-btn rl-minus" onclick="adjustLimit('daily',-1)">−</button>
+          <span class="rl-val" id="rl-daily">5</span>
+          <button class="rl-btn rl-plus"  onclick="adjustLimit('daily',+1)">+</button>
+        </div>
+        <div class="rl-row">
+          <span class="rl-label">Min chars</span>
+          <button class="rl-btn rl-minus" onclick="adjustLimit('minchars',-5)">−</button>
+          <span class="rl-val" id="rl-minchars">10</span>
+          <button class="rl-btn rl-plus"  onclick="adjustLimit('minchars',+5)">+</button>
+        </div>
+        <p class="rl-hint">⭐ Whitelisted bypass all limits</p>
+      </div>
+
+      <a href="index.html" class="back-link">← Back to Portfolio</a>
+
     </div>
 
-    <div class="card">
-      <div class="card-title">⚙️ Spam Protection</div>
-      <div class="rl-row">
-        <span class="rl-label">Max messages / hour per visitor</span>
-        <button class="rl-btn rl-minus" onclick="adjustLimit('hourly',-1)">−</button>
-        <span class="rl-val" id="rl-hourly">3</span>
-        <button class="rl-btn rl-plus"  onclick="adjustLimit('hourly',+1)">+</button>
+    <!-- MIDDLE — MESSAGE LIST -->
+    <div class="msg-list-pane">
+      <div class="msg-list-header">
+        <div class="msg-list-title">
+          <h2>📩 Messages</h2>
+          <span class="unread-badge" id="unread-count">0</span>
+        </div>
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-input" placeholder="Search by name or email..." oninput="filterMessages()">
+        </div>
       </div>
-      <div class="rl-row">
-        <span class="rl-label">Max messages / day per visitor</span>
-        <button class="rl-btn rl-minus" onclick="adjustLimit('daily',-1)">−</button>
-        <span class="rl-val" id="rl-daily">5</span>
-        <button class="rl-btn rl-plus"  onclick="adjustLimit('daily',+1)">+</button>
-      </div>
-      <div class="rl-row">
-        <span class="rl-label">Min characters in message</span>
-        <button class="rl-btn rl-minus" onclick="adjustLimit('minchars',-5)">−</button>
-        <span class="rl-val" id="rl-minchars">10</span>
-        <button class="rl-btn rl-plus"  onclick="adjustLimit('minchars',+5)">+</button>
-      </div>
-      <p class="rl-hint">💡 Whitelisted visitors bypass all limits. Use ⭐ in the inbox below.</p>
-    </div>
-
-    <div class="card">
-      <div class="inbox-header">
-        <div class="card-title" style="margin-bottom:0;">📩 Messages Inbox</div>
-        <span class="unread-badge" id="unread-count">0</span>
-      </div>
-      <div id="messages-container">
+      <div id="msg-list">
         <div class="inbox-empty">Loading messages...</div>
       </div>
     </div>
 
-    <button class="logout-btn" onclick="doLogout()">🚪 Sign Out</button>
-    <a href="index.html" class="back-link">← Back to Portfolio</a>
+    <!-- RIGHT — MESSAGE VIEWER -->
+    <div class="msg-viewer">
+      <div class="viewer-empty" id="viewer-empty">
+        <div class="empty-icon">💬</div>
+        <p>Select a message to read</p>
+      </div>
+      <div class="viewer-content" id="viewer-content">
+        <div class="viewer-header">
+          <div class="viewer-name-row">
+            <div class="viewer-name" id="v-name"></div>
+            <div class="viewer-time" id="v-time"></div>
+          </div>
+          <div class="viewer-email-row">
+            <div class="viewer-email" id="v-email"></div>
+            <button class="copy-btn" id="copy-email-btn" onclick="copyEmail()">📋 Copy Email</button>
+          </div>
+        </div>
+        <div class="viewer-body">
+          <div class="viewer-message" id="v-message"></div>
+          <div class="meta-grid" id="v-meta"></div>
+        </div>
+        <div class="viewer-actions" id="v-actions"></div>
+      </div>
+    </div>
+
   </div>
 
   <div id="toast"></div>
@@ -348,6 +741,11 @@
     const db   = getDatabase(app);
     const auth = getAuth(app);
 
+    // ── STATE ──
+    let allMessages = [];
+    let activeId    = null;
+
+    // ── AUTH ──
     onAuthStateChanged(auth, u => u ? showPanel() : showLogin());
 
     window.doLogin = async function() {
@@ -355,11 +753,8 @@
       const pass  = document.getElementById('password-input').value;
       const btn   = document.getElementById('login-btn');
       const err   = document.getElementById('login-error');
-
       if (!email || !pass) { err.textContent='❌ Enter email and password.'; err.style.display='block'; return; }
-
       btn.disabled=true; btn.textContent='Signing in...'; err.style.display='none';
-
       try {
         await signInWithEmailAndPassword(auth, email, pass);
       } catch(e) {
@@ -374,152 +769,308 @@
 
     function showPanel() {
       document.getElementById('login-screen').style.display='none';
-      document.getElementById('admin-panel').style.display='block';
+      document.getElementById('admin-panel').classList.add('active');
       initListeners(); loadRLSettings(); loadMessages();
     }
 
     function showLogin() {
       document.getElementById('login-screen').style.display='flex';
-      document.getElementById('admin-panel').style.display='none';
+      document.getElementById('admin-panel').classList.remove('active');
       const b=document.getElementById('login-btn'); b.disabled=false; b.textContent='Sign In Securely';
     }
 
+    // ── STATUS LISTENERS ──
     function initListeners() {
       onValue(ref(db,'presence/status'), s => {
-        const on=s.val()==='online';
-        const d=document.getElementById('admin-status-dot');
-        const l=document.getElementById('admin-status-label');
+        const on = s.val()==='online';
+        const d  = document.getElementById('admin-status-dot');
+        const l  = document.getElementById('admin-status-label');
         if(!d||!l) return;
-        d.className='dot '+(on?'online':'offline');
-        l.textContent=on?'🟢 Currently Online':'⚫ Currently Away';
+        d.className = 'dot '+(on?'online':'offline');
+        l.textContent = on ? '🟢 Currently Online' : '⚫ Currently Away';
       });
       onValue(ref(db,'fiverr/available'), s => {
-        const av=s.val()!==false;
-        const d=document.getElementById('admin-fiverr-dot');
-        const l=document.getElementById('admin-fiverr-label');
+        const av = s.val()!==false;
+        const d  = document.getElementById('admin-fiverr-dot');
+        const l  = document.getElementById('admin-fiverr-label');
         if(!d||!l) return;
-        d.className='dot '+(av?'available':'busy');
-        l.textContent=av?'✅ Available for Orders':'🔴 Currently Busy';
+        d.className = 'dot '+(av?'available':'busy');
+        l.textContent = av ? '✅ Available' : '🔴 Busy';
       });
     }
 
     window.setStatus = async s => {
-      try { await set(ref(db,'presence/status'),s); showToast(s==='online'?'🟢 Online!':'⚫ Away'); }
-      catch(e) { showToast('❌ Failed'); }
-    };
-    window.setFiverr = async av => {
-      try { await set(ref(db,'fiverr/available'),av); showToast(av?'✅ Available!':'🔴 Busy'); }
+      try { await set(ref(db,'presence/status'),s); showToast(s==='online'?'🟢 Online!':'⚫ Away!'); }
       catch(e) { showToast('❌ Failed'); }
     };
 
-    const RL_DEF={hourly:3,daily:5,minchars:10};
-    let rl={...RL_DEF};
+    window.setFiverr = async av => {
+      try { await set(ref(db,'fiverr/available'),av); showToast(av?'✅ Available!':'🔴 Busy!'); }
+      catch(e) { showToast('❌ Failed'); }
+    };
+
+    // ── RATE LIMIT ──
+    const RL_DEF = {hourly:3, daily:5, minchars:10};
+    let rl = {...RL_DEF};
 
     function loadRLSettings() {
       onValue(ref(db,'settings/rateLimit'), s => {
         if(s.val()) {
-          rl={...RL_DEF,...s.val()};
-          document.getElementById('rl-hourly').textContent=rl.hourly;
-          document.getElementById('rl-daily').textContent=rl.daily;
-          document.getElementById('rl-minchars').textContent=rl.minchars;
+          rl = {...RL_DEF, ...s.val()};
+          document.getElementById('rl-hourly').textContent   = rl.hourly;
+          document.getElementById('rl-daily').textContent    = rl.daily;
+          document.getElementById('rl-minchars').textContent = rl.minchars;
         }
       });
     }
 
-    window.adjustLimit = async function(key,delta) {
-      const el=document.getElementById('rl-'+key);
-      const mins={hourly:1,daily:1,minchars:5}, maxs={hourly:20,daily:50,minchars:50};
-      const val=Math.max(mins[key],Math.min(maxs[key],parseInt(el.textContent)+delta));
-      el.textContent=val; rl[key]=val;
-      await set(ref(db,'settings/rateLimit'),rl);
+    window.adjustLimit = async function(key, delta) {
+      const el   = document.getElementById('rl-'+key);
+      const mins = {hourly:1, daily:1, minchars:5};
+      const maxs = {hourly:20, daily:50, minchars:50};
+      const val  = Math.max(mins[key], Math.min(maxs[key], parseInt(el.textContent)+delta));
+      el.textContent = val; rl[key] = val;
+      await set(ref(db,'settings/rateLimit'), rl);
       showToast('✅ Saved!');
     };
 
+    // ── LOAD MESSAGES ──
     function loadMessages() {
       onValue(ref(db,'messages'), s => {
-        const box=document.getElementById('messages-container');
-        const data=s.val();
+        const data = s.val();
         if(!data) {
-          box.innerHTML='<div class="inbox-empty">📭 No messages yet.</div>';
-          document.getElementById('unread-count').style.display='none'; return;
+          allMessages = [];
+          renderList([]);
+          document.getElementById('unread-count').style.display='none';
+          return;
         }
-        const msgs=Object.entries(data).map(([id,m])=>({id,...m})).sort((a,b)=>b.time-a.time);
-        const unread=msgs.filter(m=>m.status==='unread').length;
-        const badge=document.getElementById('unread-count');
-        badge.textContent=unread; badge.style.display=unread>0?'inline-block':'none';
+        allMessages = Object.entries(data)
+          .map(([id,m]) => ({id, ...m}))
+          .sort((a,b) => b.time - a.time);
 
-        box.innerHTML=msgs.map(m=>`
-          <div class="msg-card ${m.status||'unread'}" id="msg-${m.id}">
-            <div class="msg-top">
-              <div>
-                <div class="msg-name">
-                  ${m.flag?'<span style="margin-right:4px;">'+flag(m.flag)+'</span>':''}
-                  ${x(m.name||'Unknown')}
-                  ${m.whitelisted?'<span style="color:#f0b90b;font-size:0.68rem;margin-left:6px;">⭐ VIP</span>':''}
-                </div>
-                <div class="msg-email">${x(m.email||'')}</div>
-                <span class="msg-dev">${m.device||'unknown'}</span>
-              </div>
-              <div class="msg-time">${fmt(m.time)}</div>
-            </div>
-            <div class="msg-body">${x(m.message||'')}</div>
-            <div class="msg-geo">
-              <div class="geo-item">
-                <div class="geo-label">📍 Location</div>
-                <div class="geo-val">${x(m.city||'?')}, ${x(m.region||'?')}</div>
-                <div class="geo-sub">${x(m.country||'Unknown')}</div>
-              </div>
-              <div class="geo-item">
-                <div class="geo-label">🌐 IP</div>
-                <div class="geo-val">${x(m.ip||'Unknown')}</div>
-                <div class="geo-sub">${x(m.isp||'')}</div>
-              </div>
-              <div class="geo-item">
-                <div class="geo-label">💻 Device</div>
-                <div class="geo-val">${x(m.os||'?')} · ${x(m.browser||'?')}</div>
-                <div class="geo-sub">${x(m.screen_size||'')} · ${x(m.language||'')}</div>
-              </div>
-              <div class="geo-item">
-                <div class="geo-label">🕐 Timezone</div>
-                <div class="geo-val">${x(m.timezone||'Unknown')}</div>
-              </div>
-            </div>
-            <div class="msg-actions">
-              ${m.status==='unread'
-                ?`<button class="act-btn act-read" onclick="markRead('${m.id}')">✅ Mark Read</button>`
-                :`<span style="color:#333;font-size:0.72rem;">✓ Read</span>`}
-              <button class="act-btn act-vip" onclick="vipEmail('${x(m.email||'')}')">⭐ Whitelist</button>
-              <button class="act-btn act-del" onclick="delMsg('${m.id}')">🗑 Delete</button>
-            </div>
-          </div>
-        `).join('');
+        const unread = allMessages.filter(m => m.status==='unread').length;
+        const badge  = document.getElementById('unread-count');
+        badge.textContent  = unread;
+        badge.style.display = unread>0 ? 'inline-block' : 'none';
+
+        renderList(allMessages);
+
+        // Refresh active viewer if open
+        if(activeId) {
+          const m = allMessages.find(m => m.id===activeId);
+          if(m) renderViewer(m);
+        }
       });
     }
 
-    window.markRead = async id => { await set(ref(db,'messages/'+id+'/status'),'read'); showToast('✅ Marked read'); };
-    window.delMsg   = async id => { await remove(ref(db,'messages/'+id)); showToast('🗑 Deleted'); };
+    // ── RENDER MESSAGE LIST ──
+    function renderList(msgs) {
+      const box = document.getElementById('msg-list');
+      if(!msgs.length) {
+        box.innerHTML = '<div class="inbox-empty">📭 No messages yet.</div>';
+        return;
+      }
+
+      // Group by date
+      const groups = {};
+      msgs.forEach(m => {
+        const label = dateLabel(m.time);
+        if(!groups[label]) groups[label] = [];
+        groups[label].push(m);
+      });
+
+      box.innerHTML = Object.entries(groups).map(([label, list]) => `
+        <div class="date-group-label">${label}</div>
+        ${list.map(m => `
+          <div class="msg-card ${m.status||'unread'} ${m.id===activeId?'active':''}"
+               id="card-${m.id}"
+               onclick="openMessage('${m.id}')">
+            <div class="msg-card-top">
+              <div class="msg-card-name">
+                ${m.flag ? flagEmoji(m.flag) : ''}
+                ${x(m.name||'Unknown')}
+              </div>
+              <div class="msg-card-time">${shortTime(m.time)}</div>
+            </div>
+            <div class="msg-card-email">${x(m.email||'')}</div>
+            <div class="msg-card-preview">${x(m.message||'').substring(0,60)}${(m.message||'').length>60?'...':''}</div>
+            <div class="msg-card-chips">
+              <span class="chip chip-device">${x(m.os||'?')} · ${x(m.browser||'?')}</span>
+              ${m.whitelisted ? '<span class="chip chip-vip">⭐ VIP</span>' : ''}
+              ${(m.status||'unread')==='unread' ? '<span class="chip chip-unread">NEW</span>' : ''}
+            </div>
+          </div>
+        `).join('')}
+      `).join('');
+    }
+
+    // ── OPEN MESSAGE IN VIEWER ──
+    window.openMessage = function(id) {
+      activeId = id;
+      const m  = allMessages.find(m => m.id===id);
+      if(!m) return;
+
+      // Update active state in list
+      document.querySelectorAll('.msg-card').forEach(c => c.classList.remove('active'));
+      const card = document.getElementById('card-'+id);
+      if(card) card.classList.add('active');
+
+      renderViewer(m);
+
+      // Auto mark as read
+      if(m.status==='unread') {
+        set(ref(db,'messages/'+id+'/status'), 'read');
+      }
+    };
+
+    function renderViewer(m) {
+      document.getElementById('viewer-empty').style.display   = 'none';
+      const vc = document.getElementById('viewer-content');
+      vc.classList.add('active');
+
+      // Header
+      document.getElementById('v-name').innerHTML =
+        `${m.flag ? flagEmoji(m.flag) : ''} ${x(m.name||'Unknown')}
+         ${m.whitelisted ? '<span style="color:var(--gold);font-size:0.7rem;font-weight:800;">⭐ VIP</span>' : ''}`;
+      document.getElementById('v-email').textContent  = m.email || '';
+      document.getElementById('v-time').textContent   = fmt(m.time);
+
+      // Message
+      document.getElementById('v-message').textContent = m.message || '';
+
+      // Metadata chips
+      document.getElementById('v-meta').innerHTML = `
+        <div class="meta-chip">
+          <div class="meta-label">📍 Location</div>
+          <div class="meta-val">${x(m.city||'Unknown')}, ${x(m.region||'Unknown')}</div>
+          <div class="meta-sub">${x(m.country||'Unknown')}</div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-label">🌐 IP Address</div>
+          <div class="meta-val">${x(m.ip||'Unknown')}</div>
+          <div class="meta-sub">${x(m.isp||'')}</div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-label">💻 Device</div>
+          <div class="meta-val">${x(m.os||'?')} · ${x(m.browser||'?')}</div>
+          <div class="meta-sub">${x(m.device||'')} · ${x(m.screen_size||'')} · ${x(m.language||'')}</div>
+        </div>
+        <div class="meta-chip">
+          <div class="meta-label">🕐 Timezone</div>
+          <div class="meta-val">${x(m.timezone||'Unknown')}</div>
+        </div>
+      `;
+
+      // Action buttons
+      document.getElementById('v-actions').innerHTML = `
+        ${(m.status||'unread')==='unread'
+          ? `<button class="act-btn act-read" onclick="markRead('${m.id}')">✅ Mark Read</button>`
+          : `<button class="act-btn" style="opacity:0.4;cursor:default;border:1px solid var(--border);color:var(--muted);" disabled>✓ Read</button>`}
+        <button class="act-btn act-reply" onclick="replyEmail('${x(m.email||'')}','${x(m.name||'')}')">✉️ Reply</button>
+        <button class="act-btn act-vip"   onclick="vipEmail('${x(m.email||'')}')">⭐ Whitelist</button>
+        <button class="act-btn act-del"   onclick="delMsg('${m.id}')">🗑 Delete</button>
+      `;
+    }
+
+    // ── SEARCH ──
+    window.filterMessages = function() {
+      const q = document.getElementById('search-input').value.toLowerCase().trim();
+      if(!q) { renderList(allMessages); return; }
+      const filtered = allMessages.filter(m =>
+        (m.name||'').toLowerCase().includes(q) ||
+        (m.email||'').toLowerCase().includes(q) ||
+        (m.message||'').toLowerCase().includes(q)
+      );
+      renderList(filtered);
+    };
+
+    // ── ACTIONS ──
+    window.markRead = async id => {
+      await set(ref(db,'messages/'+id+'/status'),'read');
+      showToast('✅ Marked as read');
+    };
+
+    window.delMsg = async id => {
+      if(id===activeId) {
+        document.getElementById('viewer-content').classList.remove('active');
+        document.getElementById('viewer-empty').style.display='flex';
+        activeId = null;
+      }
+      await remove(ref(db,'messages/'+id));
+      showToast('🗑 Deleted');
+    };
+
     window.vipEmail = async email => {
       if(!email) return;
-      const k=email.replace(/[.@]/g,'_');
-      await set(ref(db,'whitelist/'+k),{email,addedAt:Date.now()});
+      const k = email.replace(/[.@]/g,'_');
+      await set(ref(db,'whitelist/'+k), {email, addedAt: Date.now()});
       showToast('⭐ '+email+' whitelisted!');
     };
 
-    function flag(code) {
+    window.replyEmail = function(email, name) {
+      if(!email) return;
+      const subject = encodeURIComponent('Re: Your message to Kashif Dawar');
+      const body    = encodeURIComponent(`Hi ${name},\n\nThank you for reaching out!\n\nBest regards,\nKashif Dawar`);
+      window.open(`mailto:${email}?subject=${subject}&body=${body}`, '_blank');
+    };
+
+    window.copyEmail = function() {
+      const email = document.getElementById('v-email').textContent;
+      if(!email) return;
+      navigator.clipboard.writeText(email).then(() => {
+        const btn = document.getElementById('copy-email-btn');
+        btn.textContent = '✅ Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = '📋 Copy Email';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    };
+
+    // ── HELPERS ──
+    function flagEmoji(code) {
       if(!code||code.length!==2) return '';
-      return String.fromCodePoint(...[...code.toUpperCase()].map(c=>0x1F1E0-65+c.charCodeAt(0)));
+      return String.fromCodePoint(...[...code.toUpperCase()].map(c => 0x1F1E0-65+c.charCodeAt(0)));
     }
-    function x(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function x(s) {
+      return String(s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     function fmt(ts) {
       if(!ts) return '';
-      const d=new Date(ts);
-      return d.toLocaleDateString('en-GB')+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+      const d = new Date(ts);
+      return d.toLocaleDateString('en-GB') + ' ' +
+             d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+    }
+
+    function shortTime(ts) {
+      if(!ts) return '';
+      const d   = new Date(ts);
+      const now = new Date();
+      if(d.toDateString()===now.toDateString())
+        return d.toLocaleTimeString('en-GB', {hour:'2-digit', minute:'2-digit'});
+      return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
+    }
+
+    function dateLabel(ts) {
+      if(!ts) return 'Older';
+      const d   = new Date(ts);
+      const now = new Date();
+      const yesterday = new Date(now); yesterday.setDate(now.getDate()-1);
+      if(d.toDateString()===now.toDateString())       return 'Today';
+      if(d.toDateString()===yesterday.toDateString()) return 'Yesterday';
+      return d.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
     }
 
     function showToast(msg) {
-      const t=document.getElementById('toast');
-      t.textContent=msg; t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'),3000);
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
     }
   </script>
 </body>
