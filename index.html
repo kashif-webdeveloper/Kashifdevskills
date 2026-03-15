@@ -485,8 +485,9 @@
         btn.disabled    = true;
 
         try {
-          const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
-          const { getDatabase, ref, push, get, query, orderByChild, equalTo } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
+          // ── FIX 4: Import Firebase fresh, avoid race condition with dashboard.js ──
+          const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+          const { getDatabase, ref, push, get } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js');
 
           const firebaseConfig = {
             apiKey:      'AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc',
@@ -495,10 +496,16 @@
             projectId:   'kashif-portfolio-17481',
           };
 
-          const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-          const db  = getDatabase(app);
+          // ── FIX 4: Safely get or create Firebase app ──
+          let app;
+          try {
+            app = getApp();
+          } catch(e) {
+            app = initializeApp(firebaseConfig);
+          }
+          const db = getDatabase(app);
 
-          // ── Check whitelist first (public visitors can't auth so handle gracefully) ──
+          // ── Check whitelist ──
           let isWhitelisted = false;
           try {
             const wlKey  = email.replace(/[.@]/g, '_');
@@ -507,44 +514,48 @@
           } catch(wlErr) { isWhitelisted = false; }
 
           if (!isWhitelisted) {
-            // ── Fetch rate limit settings (fallback to defaults if permission denied) ──
+            // ── Fetch rate limit settings ──
             let rl = { hourly: 3, daily: 5, minchars: 10 };
             try {
               const rlSnap = await get(ref(db, 'settings/rateLimit'));
               if (rlSnap.val()) rl = { ...rl, ...rlSnap.val() };
             } catch(rlErr) { /* use defaults */ }
 
-            // Min chars check from Firebase settings
             if (message.length < rl.minchars) {
               errEl.textContent = `Message too short (min ${rl.minchars} chars).`;
               errEl.style.display = 'block';
               btn.textContent = 'Send Message →'; btn.disabled = false; return;
             }
 
-            // ── localStorage rate limit check ──
-            const lsKey    = 'kd_msg_' + btoa(email).slice(0,12);
-            const stored   = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
-            const now      = Date.now();
-            const oneHour  = 60 * 60 * 1000;
-            const oneDay   = 24 * oneHour;
+            // ── FIX 2 & 3: Safe localStorage with try/catch + safe key without btoa ──
+            try {
+              const lsKey  = 'kd_msg_' + email.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 12);
+              const stored = JSON.parse(localStorage.getItem(lsKey) || '{"hourly":[],"daily":[]}');
+              const now    = Date.now();
+              const oneHour = 60 * 60 * 1000;
+              const oneDay  = 24 * oneHour;
 
-            stored.hourly  = (stored.hourly || []).filter(t => now - t < oneHour);
-            stored.daily   = (stored.daily  || []).filter(t => now - t < oneDay);
+              stored.hourly = (stored.hourly || []).filter(t => now - t < oneHour);
+              stored.daily  = (stored.daily  || []).filter(t => now - t < oneDay);
 
-            if (stored.hourly.length >= rl.hourly) {
-              errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour. Please try later.`;
-              errEl.style.display = 'block';
-              btn.textContent = 'Send Message →'; btn.disabled = false; return;
+              if (stored.hourly.length >= rl.hourly) {
+                errEl.textContent = `Limit reached — max ${rl.hourly} messages per hour. Please try later.`;
+                errEl.style.display = 'block';
+                btn.textContent = 'Send Message →'; btn.disabled = false; return;
+              }
+              if (stored.daily.length >= rl.daily) {
+                errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Please contact via Fiverr.`;
+                errEl.style.display = 'block';
+                btn.textContent = 'Send Message →'; btn.disabled = false; return;
+              }
+
+              stored.hourly.push(now);
+              stored.daily.push(now);
+              localStorage.setItem(lsKey, JSON.stringify(stored));
+            } catch(lsErr) {
+              // FIX 2: localStorage blocked (Brave/private mode) — skip rate limit, continue sending
+              console.warn('localStorage unavailable, skipping rate limit:', lsErr);
             }
-            if (stored.daily.length >= rl.daily) {
-              errEl.textContent = `Limit reached — max ${rl.daily} messages per day. Please contact via Fiverr.`;
-              errEl.style.display = 'block';
-              btn.textContent = 'Send Message →'; btn.disabled = false; return;
-            }
-
-            stored.hourly.push(now);
-            stored.daily.push(now);
-            localStorage.setItem(lsKey, JSON.stringify(stored));
           }
 
           // ── Collect device + geo info ──
@@ -564,19 +575,19 @@
           const screen_size = window.screen.width + 'x' + window.screen.height;
           const language    = navigator.language || 'unknown';
 
-          // ── Geo from IP (no permission needed) ──
-          let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown' };
+          // ── Geo from IP ──
+          let geo = { country: 'Unknown', city: 'Unknown', region: 'Unknown', ip: 'Unknown', isp: 'Unknown', timezone: 'Unknown', flag: '' };
           try {
-            const geoRes = await fetch('https://ipapi.co/json/');
+            const geoRes  = await fetch('https://ipapi.co/json/');
             const geoData = await geoRes.json();
             geo = {
-              ip:       geoData.ip       || 'Unknown',
-              city:     geoData.city     || 'Unknown',
-              region:   geoData.region   || 'Unknown',
-              country:  geoData.country_name || 'Unknown',
-              isp:      geoData.org      || 'Unknown',
-              timezone: geoData.timezone || 'Unknown',
-              flag:     geoData.country  || ''
+              ip:       geoData.ip            || 'Unknown',
+              city:     geoData.city          || 'Unknown',
+              region:   geoData.region        || 'Unknown',
+              country:  geoData.country_name  || 'Unknown',
+              isp:      geoData.org           || 'Unknown',
+              timezone: geoData.timezone      || 'Unknown',
+              flag:     geoData.country       || ''
             };
           } catch(geoErr) {}
 
@@ -607,17 +618,11 @@
             await emailjs.send(
               EJS_SERVICE_ID,
               EJS_TEMPLATE_ID,
-              {
-                to_name:  name,
-                to_email: email,
-                reply_to: email,
-                message:  message
-              },
+              { to_name: name, to_email: email, reply_to: email, message: message },
               { publicKey: EJS_PUBLIC_KEY }
             );
           } catch(ejErr) {
-            // Auto-reply failed silently — message still saved in Firebase
-            console.warn('EmailJS failed:', ejErr);
+            console.warn('EmailJS failed (message still saved):', ejErr);
           }
 
           // ── Step 3: Show success ──
@@ -625,9 +630,11 @@
           document.getElementById('form-success').style.display = 'block';
 
         } catch(e) {
+          // ── FIX 1: Log the REAL error so we can debug ──
+          console.error('Form submit error:', e);
           btn.textContent = 'Send Message →';
           btn.disabled    = false;
-          errEl.textContent = 'Failed to send. Please try Fiverr directly.';
+          errEl.textContent = 'Failed to send — error: ' + e.message;
           errEl.style.display = 'block';
         }
       }
