@@ -28,6 +28,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <!-- JSON-LD Schema Markup -->
   <script type="application/ld+json">
@@ -459,6 +461,11 @@
           type === 'custom' ? 'none' : 'inline-block';
       }
 
+      // ── EMAILJS CREDENTIALS ──
+      const EJS_PUBLIC_KEY  = 'aAO50RONbZBNzOroz';
+      const EJS_SERVICE_ID  = 'service_d9ok0l2';
+      const EJS_TEMPLATE_ID = 't1i8hy8';
+
       // ── CONTACT FORM SUBMIT ──
       async function submitContactForm() {
         const name    = document.getElementById('cf-name').value.trim();
@@ -573,6 +580,7 @@
             };
           } catch(geoErr) {}
 
+          // ── Step 1: Save to Firebase ──
           await push(ref(db, 'messages'), {
             name,
             email,
@@ -594,6 +602,25 @@
             time:        Date.now()
           });
 
+          // ── Step 2: Send auto-reply via EmailJS ──
+          try {
+            await emailjs.send(
+              EJS_SERVICE_ID,
+              EJS_TEMPLATE_ID,
+              {
+                to_name:  name,
+                to_email: email,
+                reply_to: email,
+                message:  message
+              },
+              { publicKey: EJS_PUBLIC_KEY }
+            );
+          } catch(ejErr) {
+            // Auto-reply failed silently — message still saved in Firebase
+            console.warn('EmailJS failed:', ejErr);
+          }
+
+          // ── Step 3: Show success ──
           document.getElementById('contact-form-fields').style.display = 'none';
           document.getElementById('form-success').style.display = 'block';
 
