@@ -1,0 +1,83 @@
+{
+  "id": "/",
+  "name": "Kashif Dawar | Full-Stack Developer & SEO Expert",
+  "short_name": "Kashif.Dev",
+  "description": "Portfolio of Kashif Dawar — Full-Stack MERN Developer & Technical SEO Specialist from Islamabad, Pakistan. React.js, Node.js, Firebase, PWA expert.",
+  "start_url": "/Kashifdevskills/",
+  "scope": "/Kashifdevskills/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "background_color": "#f0f4f8",
+  "theme_color": "#4361ee",
+  "lang": "en",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    },
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "View Projects",
+      "short_name": "Projects",
+      "description": "See Kashif's featured projects",
+      "url": "/Kashifdevskills/#portfolio",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+    },
+    {
+      "name": "Contact Kashif",
+      "short_name": "Contact",
+      "description": "Send a message to Kashif",
+      "url": "/Kashifdevskills/#contact",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+    },
+    {
+      "name": "View Certificates",
+      "short_name": "Certs",
+      "description": "See all 13 Binance Academy certificates",
+      "url": "/Kashifdevskills/certificate.html",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+    },
+    {
+      "name": "Hire on Fiverr",
+      "short_name": "Fiverr",
+      "description": "Hire Kashif directly on Fiverr",
+      "url": "https://www.fiverr.com/s/WEW18rx",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192", "type": "image/jpeg" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "390x844",
+      "type": "image/jpeg",
+      "label": "Kashif Dawar Portfolio — Mobile View",
+      "form_factor": "narrow"
+    }
+  ],
+  "categories": ["portfolio", "developer", "business", "productivity"],
+  "iarc_rating_id": ""
+}

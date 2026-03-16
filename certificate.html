@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/jpeg" href="Kashifdawar.jpg">
+  <link rel="shortcut icon" href="Kashifdawar.jpg">
+  <link rel="apple-touch-icon" href="Kashifdawar.jpg">
+  
+  <link rel="manifest" href="manifest.json">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C1D3Q3T7YS"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-C1D3Q3T7YS'); </script>
+
+  <title>Professional Certifications | Kashif Dawar</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ================= MATCHING INDEX.HTML VARIABLES ================= */
+    :root {
+      --primary: #4361ee;
+      --secondary: #7209b7;
+      --accent: #f72585; 
+      --gradient-main: linear-gradient(135deg, #4361ee 0%, #7209b7 100%);
+      --gradient-text: linear-gradient(to right, #4361ee, #f72585);
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.8);
+      --glass-blur: blur(12px);
+      --text-dark: #1a1a2e;
+      --text-gray: #4a5568;
+      --bg-body: #f0f4f8;
+      --shadow-card: 0 10px 30px -5px rgba(0,0,0,0.08);
+      --radius: 24px;
+      --font: "Outfit", sans-serif;
+    }
+
+    /* ================= GLOBAL STYLES ================= */
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body { 
+      font-family: var(--font); 
+      background: var(--bg-body);
+      /* Exact same background mesh as Index */
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(67, 97, 238, 0.1) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(247, 37, 133, 0.1) 0px, transparent 50%);
+      color: var(--text-dark); 
+      line-height: 1.6; 
+      overflow-x: hidden; 
+    }
+    
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+    /* ================= NAVBAR (Glassmorphism) ================= */
+    .navbar {
+      position: sticky; top: 15px;
+      width: 90%; max-width: 1100px; margin: 0 auto;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      padding: 12px 30px;
+      border-radius: 50px;
+      border: var(--glass-border);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      z-index: 1000;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .back-btn {
+      font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px; font-size: 1rem;
+    }
+    .back-btn:hover { transform: translateX(-5px); color: var(--secondary); }
+    
+    .verify-btn {
+      background: var(--gradient-main); color: white; padding: 8px 20px;
+      border-radius: 50px; font-weight: 600; font-size: 0.9rem;
+      box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+    }
+    .verify-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4); }
+
+    /* ================= NARRATIVE SECTION ================= */
+    .narrative-section {
+      max-width: 900px; margin: 60px auto 40px; padding: 40px;
+      background: white; border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      border-left: 5px solid #F0B90B; /* Binance Gold Accent */
+      position: relative;
+    }
+    .narrative-title { font-size: 2.2em; font-weight: 800; margin-bottom: 25px; line-height: 1.2; color: var(--text-dark); }
+    .narrative-text { color: var(--text-gray); font-size: 1.05em; margin-bottom: 25px; text-align: justify; line-height: 1.8; }
+    .highlight { color: var(--primary); font-weight: 700; }
+
+    /* ================= CERTIFICATE GRID ================= */
+    .cert-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 35px; max-width: 1100px; margin: 0 auto 80px; padding: 0 20px;
+    }
+    
+    .cert-card {
+      background: white; border-radius: var(--radius); box-shadow: var(--shadow-card);
+      overflow: hidden; border: 4px solid white; transition: 0.4s ease;
+      display: flex; flex-direction: column;
+      animation: fadeUp 0.8s ease forwards; opacity: 0; transform: translateY(20px);
+    }
+    .cert-card:hover { transform: translateY(-8px); border-color: #F0B90B; box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    
+    .cert-card img { width: 100%; height: auto; display: block; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    
+    .cert-body { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+    .cert-title { font-size: 1.25em; font-weight: 800; margin-bottom: 8px; color: var(--text-dark); line-height: 1.3; }
+    .cert-issuer { 
+      font-size: 0.85em; font-weight: 700; color: #F0B90B; /* Binance Gold Text */
+      margin-bottom: 12px; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .cert-desc { font-size: 0.95em; color: var(--text-gray); line-height: 1.6; }
+
+    /* Animation Delays for 13 Cards */
+    .cert-card:nth-child(1) { animation-delay: 0.1s; }
+    .cert-card:nth-child(2) { animation-delay: 0.2s; }
+    .cert-card:nth-child(3) { animation-delay: 0.3s; }
+    .cert-card:nth-child(4) { animation-delay: 0.4s; }
+    .cert-card:nth-child(5) { animation-delay: 0.5s; }
+    .cert-card:nth-child(6) { animation-delay: 0.6s; }
+    .cert-card:nth-child(7) { animation-delay: 0.7s; }
+    .cert-card:nth-child(8) { animation-delay: 0.8s; }
+    .cert-card:nth-child(9) { animation-delay: 0.9s; }
+    .cert-card:nth-child(10) { animation-delay: 1.0s; }
+    .cert-card:nth-child(11) { animation-delay: 1.1s; }
+    .cert-card:nth-child(12) { animation-delay: 1.2s; }
+    .cert-card:nth-child(13) { animation-delay: 1.3s; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    /* ================= FOOTER ================= */
+    footer { 
+      text-align: center; padding: 60px 20px; background: white; 
+      border-radius: 50px 50px 0 0; margin-top: 100px;
+      box-shadow: 0 -10px 40px rgba(0,0,0,0.03);
+    }
+    .social-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+    .social-icon {
+      font-size: 1.4em; width: 55px; height: 55px; background: #f8f9fa; border-radius: 50%;
+      display: flex; justify-content: center; align-items: center; color: var(--text-dark); transition: 0.3s;
+    }
+    .social-icon:hover { background: var(--gradient-main); color: white; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3); }
+    /* Binance Gold Hover */
+    .social-icon.binance-icon:hover { background: #F0B90B; color: black; box-shadow: 0 10px 20px rgba(240, 185, 11, 0.4); }
+    /* Fiverr Green Hover - NEW */
+    .social-icon.fiverr-icon:hover { background: #1dbf73; color: white; box-shadow: 0 10px 20px rgba(29, 191, 115, 0.4); }
+
+  </style>
+</head>
+<body>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('[SW] Registered:', reg.scope))
+          .catch(err => console.log('[SW] Error:', err));
+      });
+    }
+  </script>
+
+  <nav class="navbar">
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+    <a href="https://app.binance.com/uni-qr/cpro/Square-Creator-59ce146ffe55?l=en&r=R8ZWV16Q&uc=app_square_share_link&us=copylink" target="_blank" class="verify-btn">
+      Verify Profile <i class="fas fa-check-circle" style="margin-left:5px;"></i>
+    </a>
+  </nav>
+
+  <section class="narrative-section fade-in">
+    <h1 class="narrative-title">Professional Accreditation &<br><span style="background: linear-gradient(to right, #F0B90B, #ff9f00); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Blockchain Competency Portfolio</span></h1>
+    
+    <p class="narrative-text">
+      The digital landscape is undergoing a tectonic shift, moving from centralized data silos to decentralized, trustless infrastructure. As a Full-Stack Developer and undergraduate Software Engineer, I recognized early on that mastering the syntax of Web2 was merely the foundation. To truly build the future, one must understand the architecture of trust. This realization launched my <strong>"Zero-to-Hero" journey</strong> into the complex, rapidly evolving world of Web3, blockchain, and Fintech.
+    </p>
+
+    <p class="narrative-text">
+      This portfolio represents far more than a collection of digital badges. It is the culmination of hundreds of hours of rigorous academic study, technical labs, and strategic analysis. It is proof of a deliberate effort to bridge the critical gap between theoretical computer science and real-world financial application. My goal was not just to learn how to write a smart contract, but to understand the economic, legal, and infrastructural ecosystems in which that contract operates. To achieve this, I sought out certifications from the world's leading blockchain education platform, <strong>Binance Academy</strong>, in strategic partnership with top-tier global institutions.
+    </p>
+
+    <p class="narrative-text">
+      <span class="highlight">The Academic Foundation: Bridging Tech & Strategy.</span> My pursuit of excellence led me to university-accredited programs that elevate blockchain beyond mere coding. Through partnership with <strong>ESCP Business School</strong>, I undertook the "Blockchain Mastery" course, focusing on advanced corporate solutions. This transformed my perspective from that of a developer to a solutions architect, understanding how distributed ledgers can solve enterprise-scale problems in supply chain, identity, and finance. Similarly, my studies with <strong>VŠE (Prague University of Economics)</strong> in "Digital Assets & Industry" provided a rigorous economic framework for understanding cryptocurrencies not just as speculative tools, but as a new asset class redefining global markets.
+    </p>
+
+    <p class="narrative-text">
+      <span class="highlight">Navigating the Regulatory Landscape.</span> In Fintech, compliance is not an optional add-on; it is the bedrock of legitimacy. Acknowledging this, I specialized in "Regulatory Risks & Frameworks" with the <strong>Global Fintech Institute</strong>. This critical training equipped me with a deep understanding of Anti-Money Laundering (AML) directives, Know Your Customer (KYC) protocols, and emerging frameworks like Europe's MiCA. This expertise allows me to build DApps (Decentralized Applications) that are not only technically sound but also compliant with international legal standards, a crucial requirement for any serious Fintech venture.
+    </p>
+
+    <p class="narrative-text">
+      <span class="highlight">Infrastructure and Scalability.</span> A decentralized network is only as strong as its nodes. To master the physical layer of blockchain, I became a certified <strong>AWS Blockchain Node Runner</strong> for the BNB Chain. This hands-on technical certification validated my ability to deploy, manage, and secure high-availability nodes on cloud infrastructure. It ensures I possess the practical skills necessary to maintain the uptime and resilience required for enterprise-grade blockchain applications.
+    </p>
+
+    <p class="narrative-text">
+      <span class="highlight">Specialized Protocols and Financial Mechanics.</span> My background as an active crypto trader fuels my technical focus. I didn't just want to use DeFi; I wanted to deconstruct it. My deep dives into <strong>DeFi (Decentralized Finance)</strong> protocols gave me mastery over Automated Market Makers (AMMs), liquidity pool mathematics, and yield farming strategies. Further specializing, I studied the <strong>Injective Protocol</strong>, a Layer-1 blockchain built specifically for finance, understanding the intricacies of on-chain order books and derivatives. My certifications in <strong>Crypto Trading</strong> and <strong>Cryptocurrency Fundamentals</strong> cover everything from technical analysis indicators to the underlying tokenomics that drive ecosystem value.
+    </p>
+
+    <p class="narrative-text">
+      <span class="highlight">The Complete Web3 Architect.</span> The remaining credentials round out a holistic skill set. My <strong>NFT Deep Dive</strong> goes beyond digital art to explore utility in ticketing and digital identity. The <strong>DApps Deep Dive</strong> connects my frontend React/Next.js skills with backend smart contracts via Web3.js. The <strong>Blockchain Deep Dive</strong> and <strong>P2P Fundamentals</strong> ensure my knowledge of consensus mechanisms (Proof-of-Work vs. Proof-of-Stake) and cryptographic primitives is unshakable. Finally, my study of <strong>Blockchain for Sustainability</strong> with the <strong>University of Oulu</strong> reflects a forward-thinking approach to ESG (Environmental, Social, and Governance) concerns in the industry.
+    </p>
+
+    <p class="narrative-text" style="margin-bottom: 0;">
+      Below is my verified "Hall of Fame." These 13 certifications represent a commitment to continuous evolution, proving competence across the full spectrum of decentralized technology—from the underlying peer-to-peer architecture to high-level corporate strategy and regulatory compliance. I am ready to architect the decentralized future.
+    </p>
+  </section>
+
+  <div class="cert-grid">
+    
+    <div class="cert-card">
+      <img src="cert-vse.png" loading="lazy" alt="Digital Assets & Industry VSE">
+      <div class="cert-body">
+        <div class="cert-title">Digital Assets & Blockchain Industry University Course</div>
+        <div class="cert-issuer"><i class="fas fa-university"></i> VŠE (Prague) & Binance Academy</div>
+        <p class="cert-desc">
+          A comprehensive academic program bridging the gap between blockchain technology and business strategy. Focuses on the economic implications of digital assets, European regulatory frameworks, and integrating decentralized solutions into traditional industry models.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="1000081919.jpg" loading="lazy" alt="Blockchain Mastery ESCP">
+      <div class="cert-body">
+        <div class="cert-title">Blockchain Mastery: Advanced Corporate Solutions</div>
+        <div class="cert-issuer"><i class="fas fa-university"></i> ESCP Business School</div>
+        <p class="cert-desc">
+          Accredited University-level course focused on the end-to-end implementation of blockchain technology. Validates expertise in transitioning from decentralized fundamentals to high-level corporate architectures and industrial-scale token solutions.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-regulatory.png" loading="lazy" alt="Regulatory Risks">
+      <div class="cert-body">
+        <div class="cert-title">Regulatory Risks & Frameworks</div>
+        <div class="cert-issuer"><i class="fas fa-balance-scale"></i> Global Fintech Institute</div>
+        <p class="cert-desc">
+          Advanced study of the legal landscape surrounding digital assets. Covers MiCA regulations, Anti-Money Laundering (AML) directives, and the compliance requirements necessary for launching legitimate fintech products in global markets.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-sustainability.png" loading="lazy" alt="Sustainability">
+      <div class="cert-body">
+        <div class="cert-title">Blockchain for Sustainability</div>
+        <div class="cert-issuer"><i class="fas fa-leaf"></i> University of Oulu</div>
+        <p class="cert-desc">
+          Explores the intersection of ESG (Environmental, Social, and Governance) goals and blockchain. Covers energy-efficient consensus mechanisms (Proof-of-Stake) and using distributed ledgers for supply chain transparency.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-aws.png" loading="lazy" alt="AWS Blockchain Node Runners">
+      <div class="cert-body">
+        <div class="cert-title">AWS Blockchain Node Runners</div>
+        <div class="cert-issuer"><i class="fab fa-aws"></i> Binance & AWS</div>
+        <p class="cert-desc">
+          Specialized training in deploying and managing blockchain nodes on Amazon Web Services (AWS) infrastructure. Validates expertise in BNB Chain architecture, cloud security, and ensuring high availability for decentralized networks.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-injective.png" loading="lazy" alt="Injective">
+      <div class="cert-body">
+        <div class="cert-title">Injective: Finance Blockchain</div>
+        <div class="cert-issuer"><i class="fas fa-cube"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Technical deep dive into Injective Protocol, a layer-1 blockchain built specifically for finance. Focuses on on-chain order books, derivatives trading architecture, and cross-chain interoperability via Cosmos IBC.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-trading.png" loading="lazy" alt="Trading Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">Crypto Trading Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-chart-line"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Focuses on market mechanics, including liquidity pools, order types (limit/market/stop), technical analysis indicators, and risk management strategies for algorithmic trading bots.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-defi.png" loading="lazy" alt="DeFi Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">DeFi Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-lock"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Mastery of Decentralized Finance protocols. Covers Automated Market Makers (AMMs) like Uniswap, lending/borrowing logic (Aave/Compound), and yield farming strategies.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-dapps.png" loading="lazy" alt="DApps Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">DApps Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-mobile-alt"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Architecture of Decentralized Applications. Focuses on connecting frontend user interfaces (React/Next.js) to backend smart contracts using libraries like Ethers.js and Web3.js.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-nft.png" loading="lazy" alt="NFT Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">NFT Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-palette"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Technical understanding of Non-Fungible Tokens. Covers the ERC-721 and ERC-1155 standards, metadata storage (IPFS), and use cases beyond art, such as digital identity and ticketing.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-crypto.png" loading="lazy" alt="Crypto Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">Cryptocurrency Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-graduation-cap"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Comprehensive analysis of cryptographic primitives, public/private key cryptography, and the economic models (Tokenomics) that drive value in digital asset ecosystems.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-blockchain-deep.png" loading="lazy" alt="Blockchain Deep Dive">
+      <div class="cert-body">
+        <div class="cert-title">Blockchain Deep Dive</div>
+        <div class="cert-issuer"><i class="fas fa-link"></i> Binance Academy</div>
+        <p class="cert-desc">
+          Core fundamentals of distributed ledger technology. Covers consensus algorithms (PoW vs PoS), The Trilemma (Scalability, Security, Decentralization), and Layer 2 scaling solutions.
+        </p>
+      </div>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert-ebi.png" loading="lazy" alt="Blockchain and P2P Fundamentals">
+      <div class="cert-body">
+        <div class="cert-title">Blockchain and P2P Fundamentals</div>
+        <div class="cert-issuer"><i class="fas fa-network-wired"></i> European Business Institute</div>
+        <p class="cert-desc">
+          Fundamental examination of peer-to-peer network architecture. Covers the historical context of decentralized systems, the mechanics of distributed consensus without central authorities, and the underlying cryptographic principles that enable secure, trustless transactions.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/kashif-dawar-a2107939b" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@kashifdawarkashi" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.facebook.com/share/1AWbeP2kJP/" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://x.com/Kashifdawa45874" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+      <a href="https://github.com/kashif-webdeveloper" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+      <a href="https://app.binance.com/uni-qr/cpro/Square-Creator-59ce146ffe55?l=en&r=R8ZWV16Q&uc=app_square_share_link&us=copylink" target="_blank" class="social-icon binance-icon"><i class="fas fa-coins"></i></a>
+      <a href="https://www.fiverr.com/s/WEW18rx" target="_blank" class="social-icon fiverr-icon"><i class="fas fa-briefcase"></i></a>
+    </div>
+    <p>© 2025 Kashif Dawar. Built with ❤️ & Code.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
