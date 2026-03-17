@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Command Center | Kashif Dawar</title>
   
+  <!-- PWA & Mobile Meta -->
   <meta name="theme-color" content="#4361ee">
   <link rel="apple-touch-icon" href="Kashifdawar.jpg">
   <link rel="manifest" href="admin-manifest.json">
-  
+  <meta name="robots" content="noindex, nofollow">
+
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     :root {
       --bg: #05050f;
       --surface: #0d0d1a;
@@ -43,17 +45,16 @@
       height: 100vh;
     }
 
-    /* Sidebar */
     .sidebar {
       width: 380px;
       background: var(--surface);
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      transition: all 0.3s ease;
+      z-index: 10;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Main Chat Panel */
     .main-panel {
       flex: 1;
       display: flex;
@@ -62,210 +63,196 @@
       position: relative;
     }
 
-    /* ════════ COMPONENTS ════════ */
-    .sidebar-header {
-      padding: 20px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
+    /* ════════ SIDEBAR ════════ */
+    .sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
+    .sidebar-header h2 { font-size: 1.5rem; font-weight: 700; color: white; }
     
-    .search-container {
+    .search-bar {
       margin-top: 15px;
       background: var(--card);
       border-radius: 12px;
-      padding: 8px 15px;
+      padding: 10px 15px;
       display: flex;
       align-items: center;
       border: 1px solid var(--border);
     }
-    .search-container input {
-      background: transparent;
-      border: none;
-      color: white;
-      width: 100%;
-      padding-left: 10px;
-      outline: none;
+    .search-bar input {
+      background: transparent; border: none; color: white; width: 100%; outline: none; font-size: 0.9rem;
     }
 
-    .filter-row {
-      display: flex;
-      gap: 8px;
-      padding: 10px 20px;
-      overflow-x: auto;
-      border-bottom: 1px solid var(--border);
+    .filters {
+      display: flex; gap: 8px; padding: 12px 20px;
+      overflow-x: auto; border-bottom: 1px solid var(--border);
     }
-    .filter-chip {
-      padding: 6px 14px;
-      background: var(--card);
-      border-radius: 20px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      white-space: nowrap;
-      border: 1px solid var(--border);
+    .filter-btn {
+      padding: 6px 14px; background: var(--card); border-radius: 20px;
+      font-size: 0.75rem; cursor: pointer; border: 1px solid var(--border); white-space: nowrap;
     }
-    .filter-chip.active { background: var(--accent); color: white; border-color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-    .chat-list {
-      flex: 1;
-      overflow-y: auto;
-    }
+    .chat-list { flex: 1; overflow-y: auto; }
     .chat-item {
-      padding: 15px 20px;
-      border-bottom: 1px solid var(--border);
-      cursor: pointer;
-      display: flex;
-      gap: 15px;
-      position: relative;
+      padding: 15px 20px; border-bottom: 1px solid var(--border);
+      cursor: pointer; display: flex; gap: 15px; position: relative; transition: 0.2s;
     }
     .chat-item:hover { background: rgba(255,255,255,0.03); }
-    .chat-item.active { background: rgba(67, 97, 238, 0.1); }
-    .chat-avatar {
-      width: 50px; height: 50px; background: var(--card); border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-weight: bold;
+    .chat-item.active { background: rgba(67, 97, 238, 0.12); }
+    .chat-item.vip { border-left: 4px solid var(--pink); }
+
+    .avatar {
+      width: 50px; height: 50px; border-radius: 50%; background: var(--card);
+      display: flex; align-items: center; justify-content: center; font-weight: 700;
+      color: var(--accent); border: 1px solid var(--border); flex-shrink: 0;
     }
-    .chat-info { flex: 1; min-width: 0; }
-    .chat-info h4 { font-size: 0.95rem; margin-bottom: 4px; }
-    .chat-info p { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .unread-badge {
-      position: absolute; right: 20px; bottom: 15px;
+    .chat-meta { flex: 1; min-width: 0; }
+    .chat-meta h4 { font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .chat-meta p { font-size: 0.8rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .chat-time { font-size: 0.65rem; color: var(--text-muted); }
+
+    .badge-new {
       width: 10px; height: 10px; background: var(--pink); border-radius: 50%;
+      position: absolute; right: 20px; bottom: 20px;
     }
 
-    /* Header active chat */
-    .chat-window-header {
-      padding: 15px 25px;
-      background: var(--surface);
+    /* ════════ CHAT WINDOW ════════ */
+    .chat-header {
+      padding: 12px 20px; background: var(--surface);
       border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    
-    .chat-scroller {
-      flex: 1;
-      overflow-y: auto;
-      padding: 25px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .chat-header-info { display: flex; align-items: center; gap: 12px; }
+    .back-btn { display: none; cursor: pointer; font-size: 1.2rem; margin-right: 10px; }
+
+    .chat-body {
+      flex: 1; overflow-y: auto; padding: 20px;
+      display: flex; flex-direction: column; gap: 10px;
       background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-      background-blend-mode: overlay;
+      background-blend-mode: overlay; background-color: rgba(5,5,15,0.9);
     }
 
     .bubble {
-      max-width: 75%;
-      padding: 10px 15px;
-      border-radius: 12px;
-      font-size: 0.92rem;
-      position: relative;
+      max-width: 80%; padding: 10px 14px; border-radius: 12px;
+      font-size: 0.9rem; position: relative; line-height: 1.4;
       word-wrap: break-word;
     }
     .bubble.in { align-self: flex-start; background: var(--wa-in); border-bottom-left-radius: 2px; }
-    .bubble.out { align-self: flex-end; background: var(--wa-out); border-bottom-right-radius: 2px; text-align: right; }
-    .bubble-meta { font-size: 0.65rem; color: var(--text-muted); margin-top: 5px; display: block; }
+    .bubble.out { align-self: flex-end; background: var(--wa-out); border-bottom-right-radius: 2px; }
+    .bubble-info { font-size: 0.6rem; color: var(--text-muted); margin-top: 4px; display: block; text-align: right; }
 
-    .input-area {
-      padding: 20px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      display: flex;
-      gap: 12px;
-      align-items: center;
+    .chat-input-area {
+      padding: 15px 20px; background: var(--surface);
+      border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: center;
     }
-    .input-area textarea {
+    .chat-input-area textarea {
       flex: 1; background: var(--card); border: 1px solid var(--border);
-      color: white; border-radius: 12px; padding: 12px; height: 50px;
-      resize: none; outline: none; font-family: inherit;
+      color: white; border-radius: 20px; padding: 10px 18px; height: 44px;
+      resize: none; outline: none; font-family: inherit; font-size: 0.9rem;
     }
     .send-btn {
-      width: 50px; height: 50px; border-radius: 50%; background: var(--accent);
+      width: 44px; height: 44px; border-radius: 50%; background: var(--accent);
       border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: transform 0.2s;
+      flex-shrink: 0; transition: transform 0.2s;
     }
     .send-btn:active { transform: scale(0.9); }
 
     /* AUTH OVERLAY */
-    #auth-overlay {
-      position: fixed; inset: 0; background: var(--bg); z-index: 1000;
-      display: flex; align-items: center; justify-content: center;
+    #auth-screen {
+      position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
     }
-    .auth-card {
-      background: var(--surface); padding: 40px; border-radius: 24px;
-      width: 90%; max-width: 400px; text-align: center; border: 1px solid var(--border);
+    .auth-box {
+      background: var(--surface); padding: 30px; border-radius: 20px;
+      width: 100%; max-width: 360px; text-align: center; border: 1px solid var(--border);
+    }
+    .auth-box input {
+      width: 100%; padding: 12px; margin: 20px 0; background: var(--card);
+      border: 1px solid var(--border); border-radius: 10px; color: white; text-align: center; font-size: 1.1rem;
     }
 
-    /* Mobile Back */
-    .back-btn { display: none; margin-right: 15px; cursor: pointer; font-size: 1.2rem; }
-
+    /* MOBILE RESPONSIVENESS */
     @media (max-width: 768px) {
-      .sidebar { width: 100%; position: absolute; height: 100%; left: 0; z-index: 50; }
-      .sidebar.hidden { left: -100%; }
+      .sidebar {
+        position: fixed; width: 100%; height: 100%;
+        transform: translateX(0);
+      }
+      .sidebar.hidden { transform: translateX(-100%); }
       .back-btn { display: block; }
+      .bubble { max-width: 90%; }
+    }
+
+    /* Visitor Tracking Floating Panel */
+    .visitor-stats {
+      font-size: 0.65rem; color: var(--text-muted); line-height: 1.2;
     }
   </style>
 </head>
-<body onload="initApp()">
+<body onload="initAdmin()">
 
-  <div id="auth-overlay">
-    <div class="auth-card">
-      <img src="Kashifdawar.jpg" width="80" style="border-radius: 50%; margin-bottom: 20px;">
-      <h2>Command Center</h2>
-      <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 5px;">Kashif Dawar Private Access</p>
-      <input type="password" id="admin-pass" placeholder="Enter PIN..." 
-             style="width: 100%; padding: 12px; margin: 20px 0; background: var(--card); border: 1px solid var(--border); border-radius: 8px; color: white; text-align: center;">
-      <button onclick="checkAuth()" style="width: 100%; padding: 12px; background: var(--accent); border: none; color: white; border-radius: 8px; font-weight: 600;">Unlock Dashboard</button>
+  <!-- Authentication Screen -->
+  <div id="auth-screen">
+    <div class="auth-box">
+      <img src="Kashifdawar.jpg" style="width: 70px; border-radius: 50%; margin-bottom: 15px;">
+      <h3>Kashif Admin</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Enter Private Credentials</p>
+      <input type="password" id="admin-pin" placeholder="••••" maxlength="8">
+      <button onclick="checkAuth()" style="width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; font-weight: 600;">Unlock Center</button>
     </div>
   </div>
 
   <div class="app-container">
+    <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <h2 style="font-size: 1.4rem;">Chats</h2>
-        <div class="search-container">
-          <input type="text" id="search-box" placeholder="Search contacts..." oninput="handleSearch(this.value)">
+        <h2>Chats</h2>
+        <div class="search-bar">
+          <input type="text" id="chat-search" placeholder="Search by name or email..." oninput="doSearch(this.value)">
         </div>
       </div>
-      
-      <div class="filter-row">
-        <div class="filter-chip active" onclick="setFilter('all', this)">All</div>
-        <div class="filter-chip" onclick="setFilter('unread', this)">Unread</div>
-        <div class="filter-chip" onclick="setFilter('today', this)">Today</div>
+
+      <div class="filters">
+        <div class="filter-btn active" id="f-all" onclick="filterBy('all')">All</div>
+        <div class="filter-btn" id="f-unread" onclick="filterBy('unread')">Unread</div>
+        <div class="filter-btn" id="f-vip" onclick="filterBy('vip')">VIP</div>
+        <div class="filter-btn" id="f-today" onclick="filterBy('today')">Today</div>
       </div>
 
-      <div class="chat-list" id="chat-list-items">
-        <!-- Injected -->
+      <div class="chat-list" id="chat-items-container">
+        <!-- Chat items injected here -->
       </div>
     </aside>
 
+    <!-- Chat Panel -->
     <main class="main-panel">
-      <header class="chat-window-header">
-        <div style="display: flex; align-items: center;">
+      <header class="chat-header">
+        <div class="chat-header-info">
           <span class="back-btn" onclick="toggleSidebar(true)">←</span>
-          <div id="header-avatar" class="chat-avatar" style="width: 40px; height: 40px; margin-right: 12px; background: var(--accent);">?</div>
+          <div id="active-avatar" class="avatar" style="width: 40px; height: 40px;">?</div>
           <div>
-            <h3 id="active-chat-name" style="font-size: 1rem;">Select a Visitor</h3>
-            <span id="active-chat-status" style="font-size: 0.7rem; color: var(--green);">Ready for messages</span>
+            <h4 id="active-name">Select a Conversation</h4>
+            <div id="active-status" style="font-size: 0.7rem; color: var(--green);">Waiting for selection...</div>
           </div>
         </div>
-        <div id="visitor-details" style="text-align: right; font-size: 0.7rem; color: var(--text-muted);"></div>
+        <div id="visitor-data-display" class="visitor-stats"></div>
       </header>
 
-      <div class="chat-scroller" id="chat-scroller">
-        <!-- Messages Injected -->
+      <div class="chat-body" id="chat-messages">
+        <!-- Messages appear here -->
       </div>
 
-      <div class="input-area">
-        <textarea id="reply-input" placeholder="Type your reply here..."></textarea>
-        <button class="send-btn" id="send-btn" onclick="sendReply()">➤</button>
+      <div class="chat-input-area">
+        <textarea id="reply-text" placeholder="Write your message..."></textarea>
+        <button class="send-btn" id="send-btn" onclick="handleReply()">
+          <span id="send-icon">➤</span>
+        </button>
       </div>
     </main>
   </div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+    import { getDatabase, ref, onValue, update, push, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    // ══════════════ 1. FIREBASE CONFIG (PRESERVED) ══════════════
+    // ══════════════ FIREBASE CONFIG (EXACT AS REQUESTED) ══════════════
     const firebaseConfig = {
       apiKey: "AIzaSyCLJ0NBZ4RsdUiW_P4jUddQzUXvktmdMhc",
       authDomain: "kashif-portfolio-17481.firebaseapp.com",
@@ -278,180 +265,210 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
+
     let allContacts = [];
-    let activeId = null;
+    let currentActiveId = null;
     let currentFilter = 'all';
     let searchQuery = '';
 
-    // ══════════════ 2. AUTH & PWA ══════════════
-    window.checkAuth = () => {
-      if(document.getElementById('admin-pass').value === "kashif508") {
-        document.getElementById('auth-overlay').style.display = 'none';
-        localStorage.setItem('kashif_admin_active', 'true');
-        if('Notification' in window) Notification.requestPermission();
-      }
-    };
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('admin-sw.js');
-    }
-
-    // ══════════════ 3. SOUND SYSTEM (PRESERVED) ══════════════
-    function playTone(freqs, duration=0.4, vol=0.2) {
+    // ══════════════ SOUND SYSTEM (EXACT FREQUENCIES PRESERVED) ══════════════
+    function playTone(freqs, duration = 0.4, vol = 0.2) {
       try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const master = ctx.createGain(); master.gain.value = vol; master.connect(ctx.destination);
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.value = vol;
+        masterGain.connect(audioCtx.destination);
+
         freqs.forEach(f => {
-          const o = ctx.createOscillator(); const g = ctx.createGain();
-          o.type = f.type || 'sine'; o.frequency.value = f.hz;
-          g.gain.setValueAtTime(f.at || 0.1, ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + duration);
-          o.connect(g); g.connect(master); o.start(); o.stop(ctx.currentTime + duration);
+          const osc = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          osc.type = f.type || 'sine';
+          osc.frequency.value = f.hz;
+          g.gain.setValueAtTime(f.at || 0.1, audioCtx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+          osc.connect(g); g.connect(masterGain);
+          osc.start(); osc.stop(audioCtx.currentTime + duration);
         });
-      } catch(e){}
+      } catch (e) {}
     }
 
     const sound = {
-      newMsg: () => playTone([{hz:880, at:0.1}, {hz:1046, at:0.1}], 0.4),
-      visitor: () => playTone([{hz:440, at:0.05}], 0.3, 0.12),
-      reply: () => playTone([{hz:523, at:0.1}, {hz:659, at:0.1}, {hz:784, at:0.2}], 0.5)
+      newMsg: () => playTone([{ hz: 880, at: 0.1 }, { hz: 1046, at: 0.1 }], 0.4, 0.25),
+      reply: () => playTone([{ hz: 523, at: 0.1 }, { hz: 659, at: 0.1 }, { hz: 784, at: 0.2 }], 0.5, 0.22),
+      visitor: () => playTone([{ hz: 440, at: 0.05, type: 'sine' }], 0.3, 0.12)
     };
 
-    // ══════════════ 4. CORE DATA ══════════════
-    window.initApp = () => {
-      if(localStorage.getItem('kashif_admin_active') === 'true') {
-        document.getElementById('auth-overlay').style.display = 'none';
+    // ══════════════ AUTH LOGIC ══════════════
+    window.checkAuth = () => {
+      const pin = document.getElementById('admin-pin').value;
+      if (pin === "kashif508") {
+        document.getElementById('auth-screen').style.display = 'none';
+        localStorage.setItem('kashif_admin_session', Date.now());
+        if ('Notification' in window) Notification.requestPermission();
+      } else {
+        alert("Access Denied");
+      }
+    };
+
+    // ══════════════ CORE APP LOGIC ══════════════
+    window.initAdmin = () => {
+      if (localStorage.getItem('kashif_admin_session')) {
+        document.getElementById('auth-screen').style.display = 'none';
       }
 
-      onValue(ref(db, 'contacts'), (snap) => {
-        const data = snap.val();
-        if(!data) return;
-        
-        const prevCount = allContacts.length;
+      // 1. Listen for Contacts
+      onValue(ref(db, 'contacts'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+
+        const oldCount = allContacts.length;
         allContacts = Object.entries(data).map(([id, val]) => ({ id, ...val }));
         
-        if(prevCount > 0 && allContacts.length > prevCount) {
+        if (oldCount > 0 && allContacts.length > oldCount) {
           sound.newMsg();
-          showPush("New Message", "A client just sent a message!");
+          showPush("New Message", "A visitor just reached out.");
         }
         
-        renderList();
-        if(activeId) renderChat(activeId);
+        renderChatList();
+        if (currentActiveId) renderMessages(currentActiveId);
       });
 
-      onValue(ref(db, 'visitors'), (snap) => {
-        if(snap.exists()) sound.visitor();
+      // 2. Listen for Real-time Visitors (Preserved logic)
+      onValue(ref(db, 'visitors'), (snapshot) => {
+        if (snapshot.exists()) sound.visitor();
       });
     };
 
-    function renderList() {
-      const list = document.getElementById('chat-list-items');
-      list.innerHTML = '';
-      
+    function renderChatList() {
+      const container = document.getElementById('chat-items-container');
+      container.innerHTML = '';
+
       const filtered = allContacts.filter(c => {
-        const matchesSearch = c.name?.toLowerCase().includes(searchQuery) || c.email?.toLowerCase().includes(searchQuery);
-        if(currentFilter === 'unread') return matchesSearch && !c.replied;
-        if(currentFilter === 'today') return matchesSearch && new Date(c.time).toDateString() === new Date().toDateString();
+        const matchesSearch = (c.name || '').toLowerCase().includes(searchQuery) || (c.email || '').toLowerCase().includes(searchQuery);
+        if (currentFilter === 'unread') return matchesSearch && !c.replied;
+        if (currentFilter === 'vip') return matchesSearch && (c.message || '').length > 200;
+        if (currentFilter === 'today') return matchesSearch && new Date(c.time).toDateString() === new Date().toDateString();
         return matchesSearch;
-      }).sort((a,b) => b.time - a.time);
+      }).sort((a, b) => b.time - a.time);
 
       filtered.forEach(c => {
-        const div = document.createElement('div');
-        div.className = `chat-item ${activeId === c.id ? 'active' : ''}`;
-        div.onclick = () => selectChat(c.id);
+        const item = document.createElement('div');
+        item.className = `chat-item ${currentActiveId === c.id ? 'active' : ''} ${ (c.message || '').length > 200 ? 'vip' : '' }`;
+        item.onclick = () => selectConversation(c.id);
         
-        div.innerHTML = `
-          <div class="chat-avatar">${(c.name || '?').charAt(0).toUpperCase()}</div>
-          <div class="chat-info">
-            <h4>${c.name || 'Visitor'}</h4>
+        const timeStr = new Date(c.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        item.innerHTML = `
+          <div class="avatar">${(c.name || '?').charAt(0).toUpperCase()}</div>
+          <div class="chat-meta">
+            <div style="display:flex; justify-content:space-between;">
+              <h4>${c.name || 'Anonymous'}</h4>
+              <span class="chat-time">${timeStr}</span>
+            </div>
             <p>${c.message}</p>
           </div>
-          ${!c.replied ? '<div class="unread-badge"></div>' : ''}
-          <div style="font-size: 0.65rem; color: var(--text-muted);">${new Date(c.time).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</div>
+          ${!c.replied ? '<div class="badge-new"></div>' : ''}
         `;
-        list.appendChild(div);
+        container.appendChild(item);
       });
     }
 
-    window.selectChat = (id) => {
-      activeId = id;
-      renderList();
-      renderChat(id);
-      if(window.innerWidth < 768) toggleSidebar(false);
+    window.selectConversation = (id) => {
+      currentActiveId = id;
+      renderChatList();
+      renderMessages(id);
+      if (window.innerWidth <= 768) toggleSidebar(false);
     };
 
-    function renderChat(id) {
+    function renderMessages(id) {
       const c = allContacts.find(x => x.id === id);
-      const scroller = document.getElementById('chat-scroller');
-      document.getElementById('active-chat-name').innerText = c.name || 'Visitor';
-      document.getElementById('header-avatar').innerText = (c.name || '?').charAt(0).toUpperCase();
-      document.getElementById('visitor-details').innerHTML = `IP: ${c.ip || 'Unknown'}<br>${c.city || ''} ${c.flag || ''}`;
+      const box = document.getElementById('chat-messages');
+      
+      document.getElementById('active-name').innerText = c.name || 'Anonymous Visitor';
+      document.getElementById('active-avatar').innerText = (c.name || '?').charAt(0).toUpperCase();
+      document.getElementById('active-status').innerText = c.replied ? "Replied" : "Awaiting response";
+      
+      // Visitor Stats (Preserved Tracking Info)
+      document.getElementById('visitor-data-display').innerHTML = `
+        IP: ${c.ip || 'N/A'}<br>
+        ${c.city || ''}, ${c.country || ''} ${c.flag || ''}<br>
+        Device: ${c.device || 'N/A'}
+      `;
 
-      scroller.innerHTML = `
+      box.innerHTML = `
         <div class="bubble in">
           ${c.message}
-          <span class="bubble-meta">${new Date(c.time).toLocaleString()}</span>
+          <span class="bubble-info">${new Date(c.time).toLocaleString()}</span>
         </div>
       `;
 
-      if(c.replied) {
-        scroller.innerHTML += `
+      if (c.replied) {
+        box.innerHTML += `
           <div class="bubble out">
-            ${c.reply_content || 'Replied via EmailJS'}
-            <span class="bubble-meta">Sent ✔✔</span>
+            ${c.reply_text || "Sent via EmailJS (Legacy)"}
+            <span class="bubble-info">Delivered ✔✔</span>
           </div>
         `;
       }
-      scroller.scrollTop = scroller.scrollHeight;
+      box.scrollTop = box.scrollHeight;
     }
 
-    // ══════════════ 5. EMAILJS (PRESERVED) ══════════════
-    window.sendReply = async () => {
-      const val = document.getElementById('reply-input').value;
-      if(!activeId || !val) return;
-      const c = allContacts.find(x => x.id === activeId);
-      const btn = document.getElementById('send-btn');
-      btn.innerText = '⏳';
+    // ══════════════ REPLY LOGIC (EMAILJS PRESERVED) ══════════════
+    window.handleReply = async () => {
+      const text = document.getElementById('reply-text').value;
+      if (!currentActiveId || !text) return;
+
+      const c = allContacts.find(x => x.id === currentActiveId);
+      const btnIcon = document.getElementById('send-icon');
+      btnIcon.innerText = "⏳";
 
       try {
-        emailjs.init("YOUR_PUBLIC_KEY"); // REPLACE WITH YOUR ACTUAL KEY
+        // EmailJS Execution
+        emailjs.init("YOUR_PUBLIC_KEY"); // KEEP YOUR KEY HERE
         await emailjs.send("service_id", "template_id", {
           to_name: c.name,
           to_email: c.email,
-          message: val,
+          message: text,
           from_name: "Kashif Dawar"
         });
 
-        await update(ref(db, `contacts/${activeId}`), {
+        // Update Firebase status
+        await update(ref(db, `contacts/${currentActiveId}`), {
           replied: true,
-          reply_content: val,
+          reply_text: text,
           reply_time: Date.now()
         });
 
         sound.reply();
-        document.getElementById('reply-input').value = '';
-        btn.innerText = '➤';
-      } catch(e) {
-        alert("Email error. Logic kept but key required.");
-        btn.innerText = '✗';
+        document.getElementById('reply-text').value = '';
+        btnIcon.innerText = "✔✔";
+        setTimeout(() => btnIcon.innerText = "➤", 2000);
+      } catch (err) {
+        btnIcon.innerText = "✗";
+        setTimeout(() => btnIcon.innerText = "➤", 2000);
       }
     };
 
-    // Utils
-    window.handleSearch = (v) => { searchQuery = v.toLowerCase(); renderList(); };
-    window.setFilter = (f, el) => {
-      document.querySelector('.filter-chip.active').classList.remove('active');
-      el.classList.add('active');
+    // ══════════════ UTILS ══════════════
+    window.doSearch = (v) => { searchQuery = v.toLowerCase(); renderChatList(); };
+    window.filterBy = (f) => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('f-' + f).classList.add('active');
       currentFilter = f;
-      renderList();
+      renderChatList();
     };
     window.toggleSidebar = (show) => {
       document.getElementById('sidebar').classList.toggle('hidden', !show);
     };
     function showPush(t, b) {
-      if(Notification.permission === 'granted' && document.visibilityState !== 'visible') {
+      if (Notification.permission === 'granted' && document.visibilityState !== 'visible') {
         new Notification(t, { body: b, icon: 'Kashifdawar.jpg' });
       }
+    }
+
+    // Register Scoped SW
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('admin-sw.js');
     }
   </script>
 </body>

@@ -1,60 +1,48 @@
-const CACHE_NAME = 'kashif-admin-v2.1';
-const STATIC_ASSETS = [
-  '/Kashifdevskills/admin.html',
+const CACHE_NAME = 'kashif-admin-v3.0';
+const ASSETS_TO_CACHE = [
+  '/Kashifdevskills/admin_1.html',
   '/Kashifdevskills/admin-manifest.json',
   '/Kashifdevskills/Kashifdawar.jpg',
-  'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap',
-  'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js'
+  'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap'
 ];
 
-// 1. Install - Pre-cache critical files
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
-    .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
   );
+  self.skipWaiting();
 });
 
-// 2. Activate - Cleanup old versions to save mobile storage
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      })
-    ))
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) return caches.delete(key);
+        })
+      );
+    })
   );
   self.clients.claim();
 });
 
-// 3. Fetch - Smart Strategy
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // CRITICAL: Never cache Firebase real-time traffic
-  if (url.origin.includes('firebaseio.com') || url.origin.includes('gstatic.com') || event.request.method !== 'GET') {
-    return; 
+  // NEVER cache Firebase or EmailJS API calls
+  if (url.origin.includes('firebaseio.com') || url.origin.includes('emailjs.com')) {
+    return;
   }
 
   event.respondWith(
     fetch(event.request)
-      .then(response => {
-        // If network works, update cache
-        if (response.status === 200) {
-          const resClone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, resClone));
+      .then((response) => {
+        if (event.request.method === 'GET' && response.status === 200) {
+          const cln = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, cln));
         }
         return response;
       })
-      .catch(() => {
-        // If offline, try cache
-        return caches.match(event.request).then(cached => {
-          if (cached) return cached;
-          // Fallback to the main admin page if it's a navigation request
-          if (event.request.mode === 'navigate') {
-            return caches.match('/Kashifdevskills/admin.html');
-          }
-        });
-      })
+      .catch(() => caches.match(event.request).then((res) => res || caches.match('/Kashifdevskills/admin_1.html')))
   );
 });
