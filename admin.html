@@ -6,6 +6,7 @@
   <title>Command Center | Kashif Dawar</title>
   <meta name="robots" content="noindex, nofollow">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -254,6 +255,28 @@
     .chat-reply-input::placeholder { color: var(--muted); }
     .chat-reply-send { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #7209b7); border: none; color: white; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .2s; flex-shrink: 0; }
     .chat-reply-send:hover { transform: scale(1.08); box-shadow: 0 6px 18px rgba(67,97,238,0.5); }
+    .chat-reply-send:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* Reply sent messages thread */
+    .reply-thread { padding: 0 20px 8px; display: flex; flex-direction: column; gap: 6px; }
+    .reply-bubble {
+      align-self: flex-end; max-width: 82%;
+      background: linear-gradient(135deg, rgba(67,97,238,0.22), rgba(114,9,183,0.18));
+      border: 1px solid rgba(67,97,238,0.25);
+      border-radius: 18px 18px 4px 18px;
+      padding: 10px 14px 6px;
+      font-size: 0.85rem; line-height: 1.5; color: var(--text);
+      word-break: break-word; position: relative;
+    }
+    .reply-bubble-text { margin-bottom: 4px; }
+    .reply-tick {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 3px; font-size: 0.62rem; color: var(--muted); margin-top: 2px;
+    }
+    .reply-tick .tick-time { font-size: 0.58rem; }
+    .tick-sending { color: var(--muted); }
+    .tick-sent    { color: #a0aec0; }       /* ✔✔ grey — delivered to server */
+    .tick-failed  { color: var(--danger); } /* ✗ red — failed */
 
     /* META GRID */
     .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
@@ -435,6 +458,7 @@
         <div class="meta-grid" id="v-meta"></div>
       </div>
       <!-- WhatsApp-style reply input -->
+      <div class="reply-thread" id="reply-thread"></div>
       <div class="chat-reply-bar">
         <textarea class="chat-reply-input" id="reply-input" placeholder="Type a reply…" rows="1"
           oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px'"
@@ -755,9 +779,11 @@
     document.getElementById('v-sender-label').textContent = m.name || 'Unknown';
     document.getElementById('v-message').textContent      = m.message || '';
 
-    /* Clear reply box */
+    /* Clear reply box + thread */
     const ri = document.getElementById('reply-input');
     if (ri) { ri.value = ''; ri.style.height = 'auto'; }
+    const rt = document.getElementById('reply-thread');
+    if (rt) rt.innerHTML = '';
 
     /* Meta chips */
     document.getElementById('v-meta').innerHTML = `
@@ -778,21 +804,97 @@
     `;
   }
 
-  /* ══════════════ WHATSAPP REPLY ══════════════ */
-  window.sendChatReply = function() {
-    const input = document.getElementById('reply-input');
-    const text  = input ? input.value.trim() : '';
-    const email = document.getElementById('v-email').textContent.trim();
-    const name  = document.getElementById('v-sender-label').textContent.trim();
-    if (!email) { showToast('⚠️ No recipient email.'); return; }
-    const body = (text
-      ? text + '\n\nBest regards,\nKashif Dawar\nFull-Stack Developer'
-      : `Hi ${name},\n\nThank you for reaching out! I have reviewed your message and would love to help.\n\nBest regards,\nKashif Dawar`);
-    window.open(
-      `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(email)}&su=${encodeURIComponent('Re: Your message to Kashif Dawar')}&body=${encodeURIComponent(body)}`,
-      '_blank'
-    );
-    if (input) { input.value = ''; input.style.height = 'auto'; }
+  /* ══════════════ EMAILJS INIT ══════════════ */
+  const EJS_PUBLIC_KEY  = 'aAO50RONbZBNzOroz';
+  const EJS_SERVICE_ID  = 'service_d9ok0l2';
+  const EJS_TEMPLATE_ID = 'template_umpx76r'; /* Contact Us template — for admin replies */
+  let ejsReady = false;
+
+  function initEmailJS() {
+    if (typeof emailjs === 'undefined') return;
+    try { emailjs.init({ publicKey: EJS_PUBLIC_KEY }); ejsReady = true; }
+    catch(e) {}
+  }
+  /* Try immediately and also after DOM fully loads */
+  initEmailJS();
+  window.addEventListener('load', initEmailJS);
+
+  /* ══════════════ DIRECT SEND REPLY — NO NEW TAB ══════════════ */
+  window.sendChatReply = async function() {
+    const input    = document.getElementById('reply-input');
+    const sendBtn  = document.querySelector('.chat-reply-send');
+    const text     = input ? input.value.trim() : '';
+    const toEmail  = document.getElementById('v-email').textContent.trim();
+    const toName   = document.getElementById('v-sender-label').textContent.trim();
+
+    if (!text)    { showToast('⚠️ Type a message first.'); return; }
+    if (!toEmail) { showToast('⚠️ No recipient email.'); return; }
+
+    /* If EmailJS not ready — fall back to Gmail tab gracefully */
+    if (!ejsReady || typeof emailjs === 'undefined') {
+      initEmailJS();
+      if (!ejsReady) {
+        showToast('⚠️ Email service loading, opening Gmail…');
+        window.open(
+          `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(toEmail)}&su=${encodeURIComponent('Re: Your message to Kashif Dawar')}&body=${encodeURIComponent(text)}`,
+          '_blank'
+        );
+        return;
+      }
+    }
+
+    /* Append bubble immediately with ⏳ (sending state) */
+    const msgId   = 'rm-' + Date.now();
+    const nowTime = new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const thread  = document.getElementById('reply-thread');
+    if (thread) {
+      const bubble = document.createElement('div');
+      bubble.className = 'reply-bubble';
+      bubble.id        = msgId;
+      bubble.innerHTML = `
+        <div class="reply-bubble-text">${x(text)}</div>
+        <div class="reply-tick">
+          <span class="tick-time">${nowTime}</span>
+          <span class="tick-sending" title="Sending…">⏳</span>
+        </div>`;
+      thread.appendChild(bubble);
+      thread.scrollTop = thread.scrollHeight;
+    }
+
+    /* Disable send button while in flight */
+    if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = '…'; }
+    if (input)   { input.value = ''; input.style.height = 'auto'; }
+
+    try {
+      await emailjs.send(EJS_SERVICE_ID, EJS_TEMPLATE_ID, {
+        name:       toName,       /* matches {{name}} in Contact Us template */
+        to_email:   toEmail,      /* matches {{to_email}} */
+        message:    text,         /* matches {{message}} */
+        subject:    'Re: Your message to Kashif Dawar', /* matches {{subject}} */
+      });
+
+      /* ✔✔ grey — sent successfully to email server */
+      const bubble = document.getElementById(msgId);
+      if (bubble) {
+        bubble.querySelector('.reply-tick').innerHTML = `
+          <span class="tick-time">${nowTime}</span>
+          <span class="tick-sent" title="Sent to inbox">✔✔</span>`;
+      }
+      showToast('✔✔ Message sent to ' + toEmail);
+
+    } catch(e) {
+      /* ✗ red — EmailJS failed */
+      const bubble = document.getElementById(msgId);
+      if (bubble) {
+        bubble.querySelector('.reply-tick').innerHTML = `
+          <span class="tick-time">${nowTime}</span>
+          <span class="tick-failed" title="Failed: ${x(e.text || e.message || 'error')}">✗ Failed</span>`;
+        bubble.style.borderColor = 'rgba(252,129,129,0.35)';
+      }
+      showToast('❌ Send failed: ' + (e.text || e.message || 'EmailJS error'));
+    } finally {
+      if (sendBtn) { sendBtn.disabled = false; sendBtn.textContent = '➤'; }
+    }
   };
 
   /* ══════════════ SEARCH & FILTER — DEBOUNCED ══════════════ */
@@ -1155,17 +1257,26 @@
 
   /* ══════════════ DURATION ══════════════ */
   function calcDur(v) {
-    if (v.duration_sec && v.duration_sec > 5) {
-      const s = v.duration_sec;
+    /* Priority 1: explicit duration_sec saved by tracker (any value >= 1) */
+    if (v.duration_sec != null && v.duration_sec >= 1) {
+      const s = Math.round(v.duration_sec);
       if (s >= 3600) return Math.floor(s / 3600) + 'h ' + Math.floor((s % 3600) / 60) + 'm';
       if (s >= 60)   return Math.floor(s / 60) + 'm ' + (s % 60) + 's';
       return s + 's';
     }
-    if (v.arrival_time && v.last_active && v.last_active > v.arrival_time) {
+    /* Priority 2: calculate from timestamps */
+    if (v.arrival_time && v.last_active) {
       const s = Math.round((v.last_active - v.arrival_time) / 1000);
       if (s >= 3600) return Math.floor(s / 3600) + 'h ' + Math.floor((s % 3600) / 60) + 'm';
       if (s >= 60)   return Math.floor(s / 60) + 'm ' + (s % 60) + 's';
-      if (s > 0)     return s + 's';
+      if (s >= 1)    return s + 's';
+      /* arrival and last_active are the same — visitor just arrived/bounced instantly */
+      return '< 1s';
+    }
+    /* Priority 3: only arrival known — visitor is still on site or exit wasn't captured */
+    if (v.arrival_time) {
+      const s = Math.round((Date.now() - v.arrival_time) / 1000);
+      if (s >= 1 && s < 3600) return '~' + (s >= 60 ? Math.floor(s/60) + 'm ' + (s%60) + 's' : s + 's');
     }
     return '—';
   }
