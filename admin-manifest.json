@@ -1,0 +1,26 @@
+{
+  "id": "/Kashifdevskills/admin",
+  "name": "Kashif Admin Command Center",
+  "short_name": "Kashif Admin",
+  "description": "WhatsApp-style Admin Dashboard for Portfolio Management",
+  "start_url": "/Kashifdevskills/admin.html",
+  "scope": "/Kashifdevskills/",
+  "display": "standalone",
+  "background_color": "#05050f",
+  "theme_color": "#4361ee",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}
