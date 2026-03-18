@@ -1,0 +1,46 @@
+{
+  "id": "/Kashifdevskills/admin.html",
+  "name": "KD Command Center",
+  "short_name": "CMD Center",
+  "description": "Kashif Dawar Private Admin Dashboard",
+  "start_url": "/Kashifdevskills/admin.html",
+  "scope": "/Kashifdevskills/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#05050f",
+  "theme_color": "#05050f",
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "categories": ["utilities"],
+  "icons": [
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "Kashifdawar.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Messages",
+      "short_name": "Messages",
+      "description": "View incoming messages",
+      "url": "/Kashifdevskills/admin.html#messages",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Visitors",
+      "short_name": "Visitors",
+      "description": "View live visitor sessions",
+      "url": "/Kashifdevskills/admin.html#visitors",
+      "icons": [{ "src": "Kashifdawar.jpg", "sizes": "192x192" }]
+    }
+  ]
+}

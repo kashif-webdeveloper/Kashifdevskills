@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Command Center | Kashif Dawar</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="manifest" href="admin-manifest.json">
+  <meta name="theme-color" content="#05050f">
+  <link rel="apple-touch-icon" href="Kashifdawar.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
   <style>
@@ -1667,6 +1670,11 @@
 
   /* Keep old name so existing callers still work */
   function playNotifSound() { playNewMsgSound(); }
+
+  /* ══════════════ SERVICE WORKER REGISTRATION ══════════════ */
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 </script>
 </body>
 </html>
