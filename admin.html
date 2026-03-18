@@ -35,6 +35,16 @@
     ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.14); }
 
+    /* TRAFFIC GLOW */
+    body { transition: box-shadow 1.5s ease; }
+    body.traffic-high { box-shadow: inset 0 0 130px rgba(247,37,133,0.10); }
+    body.traffic-high .topbar-badge { background: rgba(247,37,133,0.12); border-color: rgba(247,37,133,0.3); color: var(--pink); }
+    body.traffic-high .topbar-badge .pulse { background: var(--pink); }
+
+    /* TABULAR NUMS — stops live numbers from jittering */
+    .stt-val, .rl-val, .tab-badge, .visitor-dur-chip,
+    .heatmap-pct, .stat-box-val { font-variant-numeric: tabular-nums; }
+
     /* ═══════ SKELETON SHIMMER ═══════ */
     @keyframes shimmer {
       0%   { background-position: -400px 0; }
@@ -51,23 +61,50 @@
     .skel-body   { flex: 1; display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
     .skel-line   { height: 10px; border-radius: 6px; }
 
-    /* ═══════ LOGIN ═══════ */
+    /* ═══════ LOGIN — Branded Photo Style ═══════ */
     #login-screen {
       height: 100vh; display: flex; align-items: center; justify-content: center;
-      background: radial-gradient(ellipse at 25% 35%, rgba(67,97,238,0.18) 0%, transparent 55%),
-                  radial-gradient(ellipse at 75% 65%, rgba(247,37,133,0.12) 0%, transparent 55%);
+      background: radial-gradient(ellipse at 30% 30%, rgba(67,97,238,0.22) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 70%, rgba(247,37,133,0.15) 0%, transparent 60%),
+                  var(--bg);
     }
-    .login-box { width: 100%; max-width: 380px; margin: 16px; background: rgba(13,13,26,0.96); backdrop-filter: blur(28px); border-radius: 28px; padding: 48px 38px; text-align: center; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 48px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(67,97,238,0.12); }
-    .login-box .lock { font-size: 3.2rem; margin-bottom: 18px; display: block; filter: drop-shadow(0 0 22px rgba(67,97,238,0.55)); }
-    .login-box h1 { font-size: 1.65rem; font-weight: 800; background: linear-gradient(135deg, #4361ee, #f72585); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; }
-    .login-box > p { color: var(--muted); font-size: 0.85rem; margin-bottom: 30px; }
-    .inp { width: 100%; padding: 13px 18px; background: rgba(5,5,15,0.85); border: 2px solid rgba(255,255,255,0.07); border-radius: 14px; color: white; font-size: 0.95rem; font-family: "Outfit", sans-serif; outline: none; margin-bottom: 10px; transition: border-color .25s, box-shadow .25s; }
-    .inp:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(67,97,238,0.16); }
-    .inp::placeholder { color: var(--muted); }
-    .login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #4361ee, #7209b7); border: none; border-radius: 14px; color: white; font-size: 1rem; font-weight: 700; font-family: "Outfit", sans-serif; cursor: pointer; margin-top: 6px; transition: transform .25s, box-shadow .25s, opacity .25s; }
-    .login-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(67,97,238,0.48); }
+    .login-box {
+      width: 100%; max-width: 380px; margin: 16px;
+      background: rgba(13,13,26,0.97); backdrop-filter: blur(32px);
+      border-radius: 28px; padding: 44px 38px 40px; text-align: center;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 48px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(67,97,238,0.14);
+    }
+    .login-photo {
+      width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
+      display: block; margin: 0 auto 20px;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 0 6px rgba(67,97,238,0.14), 0 0 30px rgba(67,97,238,0.35);
+    }
+    .login-box h1 {
+      font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #e2e8f0 30%, #818cf8);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+    }
+    .login-box > p { color: var(--muted); font-size: 0.82rem; margin-bottom: 28px; letter-spacing: 0.02em; }
+    .inp {
+      width: 100%; padding: 14px 20px; background: rgba(5,5,15,0.88);
+      border: 2px solid rgba(255,255,255,0.07); border-radius: 16px; color: white;
+      font-size: 1.1rem; letter-spacing: 0.12em; font-family: "Outfit", sans-serif;
+      outline: none; margin-bottom: 12px; transition: border-color .25s, box-shadow .25s; text-align: center;
+    }
+    .inp:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(67,97,238,0.18); letter-spacing: 0.16em; }
+    .inp::placeholder { color: var(--muted); letter-spacing: 0.04em; font-size: 0.9rem; }
+    .login-btn {
+      width: 100%; padding: 15px; background: linear-gradient(135deg, #4361ee, #7209b7);
+      border: none; border-radius: 16px; color: white; font-size: 1rem; font-weight: 700;
+      font-family: "Outfit", sans-serif; cursor: pointer; margin-top: 4px; letter-spacing: 0.02em;
+      transition: transform .25s, box-shadow .25s, opacity .25s;
+    }
+    .login-btn:hover  { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(67,97,238,0.52); }
+    .login-btn:active { transform: translateY(0); }
     .login-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
-    .login-err { color: var(--danger); font-size: 0.82rem; margin-top: 10px; display: none; }
+    .login-err { color: var(--danger); font-size: 0.8rem; margin-top: 12px; display: none; line-height: 1.4; }
 
     /* ═══════ ADMIN PANEL — 3-COLUMN ═══════ */
     #admin-panel { display: none; height: 100vh; grid-template-columns: var(--sidebar-w) 1fr var(--detail-w); grid-template-rows: var(--topbar-h) 1fr; overflow: hidden; }
@@ -168,11 +205,23 @@
     .load-more-btn { display: block; width: calc(100% - 16px); margin: 6px 8px 8px; padding: 9px; background: rgba(67,97,238,0.07); border: 1px dashed rgba(67,97,238,0.25); color: var(--accent); border-radius: 12px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: "Outfit", sans-serif; transition: .2s; text-align: center; }
     .load-more-btn:hover { background: rgba(67,97,238,0.15); border-style: solid; }
 
-    /* MESSAGE CARD */
-    .msg-card { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 14px; cursor: pointer; border: 1px solid transparent; margin-bottom: 2px; transition: background .15s, border-color .15s; }
-    .msg-card:hover  { background: rgba(255,255,255,0.04); border-color: var(--border); }
+    /* MESSAGE CARD + MOUSE SPOTLIGHT */
+    .msg-card {
+      display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 14px;
+      cursor: pointer; border: 1px solid transparent; margin-bottom: 2px;
+      transition: background .15s, border-color .15s; position: relative; overflow: hidden;
+    }
+    .msg-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(600px circle at var(--mx,-9999px) var(--my,-9999px), rgba(67,97,238,0.08), transparent 40%);
+      opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 0; border-radius: inherit;
+    }
+    .msg-card:hover::before { opacity: 1; }
+    .msg-card:hover  { background: rgba(255,255,255,0.03); border-color: var(--border); }
     .msg-card.active { background: rgba(67,97,238,0.1); border-color: rgba(67,97,238,0.25); }
+    .msg-card.active::before { opacity: 0; }
     .msg-card.read   { opacity: .68; }
+    .msg-card > * { position: relative; z-index: 1; }
     .msg-avatar { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; color: white; flex-shrink: 0; user-select: none; }
     .msg-card-body  { flex: 1; min-width: 0; }
     .msg-card-top   { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 2px; }
@@ -189,10 +238,22 @@
     .chip-device  { background: rgba(67,97,238,0.12); color: #818cf8; }
     .chip-new     { background: rgba(247,37,133,0.15); color: var(--pink); }
 
-    /* VISITOR CARD */
-    .visitor-card  { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 14px; cursor: pointer; border: 1px solid transparent; margin-bottom: 2px; transition: background .15s, border-color .15s; }
-    .visitor-card:hover  { background: rgba(255,255,255,0.04); border-color: var(--border); }
+    /* VISITOR CARD + MOUSE SPOTLIGHT */
+    .visitor-card {
+      display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 14px;
+      cursor: pointer; border: 1px solid transparent; margin-bottom: 2px;
+      transition: background .15s, border-color .15s; position: relative; overflow: hidden;
+    }
+    .visitor-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(600px circle at var(--mx,-9999px) var(--my,-9999px), rgba(72,187,120,0.07), transparent 40%);
+      opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 0; border-radius: inherit;
+    }
+    .visitor-card:hover::before { opacity: 1; }
+    .visitor-card:hover  { background: rgba(255,255,255,0.03); border-color: var(--border); }
     .visitor-card.active { background: rgba(72,187,120,0.07); border-color: rgba(72,187,120,0.22); }
+    .visitor-card.active::before { opacity: 0; }
+    .visitor-card > * { position: relative; z-index: 1; }
     .visitor-avatar-wrap { position: relative; flex-shrink: 0; }
     .visitor-avatar      { width: 42px; height: 42px; border-radius: 50%; background: rgba(67,97,238,0.12); border: 1px solid rgba(67,97,238,0.18); display: flex; align-items: center; justify-content: center; font-size: 1.15rem; }
     .visitor-active-dot  { position: absolute; bottom: 1px; right: 1px; width: 10px; height: 10px; border-radius: 50%; background: var(--green); border: 2px solid var(--card); box-shadow: 0 0 6px rgba(72,187,120,0.8); }
@@ -310,6 +371,27 @@
     .stat-box-val  { font-size: 1.1rem; font-weight: 800; background: linear-gradient(135deg, #4361ee, #f72585); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .stat-box-label { font-size: 0.58rem; color: var(--muted); margin-top: 2px; }
 
+    /* ═══════ RIGHT-CLICK CONTEXT MENU ═══════ */
+    #ctx-menu {
+      position: fixed; z-index: 99999; display: none;
+      background: rgba(13,13,26,0.98); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+      padding: 6px; min-width: 170px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(67,97,238,0.12);
+    }
+    #ctx-menu.show { display: block; animation: ctxIn .15s cubic-bezier(0.4,0,0.2,1); }
+    @keyframes ctxIn { from { opacity:0; transform:scale(0.93) translateY(-6px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .ctx-item {
+      display: flex; align-items: center; gap: 9px;
+      padding: 8px 12px; border-radius: 8px; cursor: pointer;
+      font-size: 0.76rem; font-weight: 600; color: var(--text);
+      transition: background .15s; white-space: nowrap;
+    }
+    .ctx-item:hover        { background: rgba(67,97,238,0.15); color: white; }
+    .ctx-item.danger:hover { background: rgba(252,129,129,0.15); color: var(--danger); }
+    .ctx-item.gold:hover   { background: rgba(240,185,11,0.15);  color: var(--gold);   }
+    .ctx-sep { height: 1px; background: var(--border); margin: 4px 6px; }
+
     /* TOAST */
     #toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(13,13,26,0.97); backdrop-filter: blur(20px); color: white; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 0.82rem; border: 1px solid var(--border); box-shadow: 0 20px 50px rgba(0,0,0,0.5); transition: transform .4s cubic-bezier(0.23,1,0.32,1); z-index: 9999; white-space: nowrap; pointer-events: none; }
     #toast.show { transform: translateX(-50%) translateY(0); }
@@ -334,15 +416,18 @@
 </head>
 <body>
 
-<!-- LOGIN -->
+<!-- CONTEXT MENU -->
+<div id="ctx-menu"></div>
+
+<!-- LOGIN — Branded photo with Firebase Auth underneath -->
 <div id="login-screen">
   <div class="login-box">
-    <span class="lock">🔐</span>
-    <h1>Admin Access</h1>
-    <p>Sign in with your Firebase credentials</p>
-    <input type="email"    class="inp" id="email-input"    placeholder="Email address"  autocomplete="email">
-    <input type="password" class="inp" id="password-input" placeholder="Password"       autocomplete="current-password">
-    <button class="login-btn" id="login-btn" onclick="doLogin()">Sign In Securely</button>
+    <img src="Kashifdawar.jpg" class="login-photo" alt="Kashif Dawar"
+         onerror="this.style.display='none'">
+    <h1>Command Center</h1>
+    <p>Kashif Dawar &bull; Private Access</p>
+    <input type="password" class="inp" id="password-input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" autocomplete="current-password">
+    <button class="login-btn" id="login-btn" onclick="doLogin()">Unlock Dashboard</button>
     <p class="login-err" id="login-error"></p>
   </div>
 </div>
@@ -577,18 +662,20 @@
     }
   });
 
+  /* Email pre-filled — only password shown in UI */
+  const ADMIN_EMAIL = 'kashifdawarkashi508@gmail.com';
+
   window.doLogin = async function() {
-    const email = document.getElementById('email-input').value.trim();
-    const pass  = document.getElementById('password-input').value;
-    const btn   = document.getElementById('login-btn');
-    const err   = document.getElementById('login-error');
-    if (!email || !pass) { err.textContent = '❌ Enter email and password.'; err.style.display = 'block'; return; }
-    btn.disabled = true; btn.textContent = 'Signing in…'; err.style.display = 'none';
+    const pass = document.getElementById('password-input').value;
+    const btn  = document.getElementById('login-btn');
+    const err  = document.getElementById('login-error');
+    if (!pass) { err.textContent = '❌ Enter your password.'; err.style.display = 'block'; return; }
+    btn.disabled = true; btn.textContent = 'Unlocking…'; err.style.display = 'none';
     try {
-      await signInWithEmailAndPassword(auth, email, pass);
+      await signInWithEmailAndPassword(auth, ADMIN_EMAIL, pass);
     } catch (e) {
       err.textContent = fbErr(e); err.style.display = 'block';
-      btn.disabled = false; btn.textContent = 'Sign In Securely';
+      btn.disabled = false; btn.textContent = 'Unlock Dashboard';
     }
   };
 
@@ -613,7 +700,7 @@
     document.getElementById('login-screen').style.display = 'flex';
     document.getElementById('admin-panel').classList.remove('active');
     const b = document.getElementById('login-btn');
-    b.disabled = false; b.textContent = 'Sign In Securely';
+    b.disabled = false; b.textContent = 'Unlock Dashboard';
   }
 
   /* ══════════════ STATUS LISTENERS ══════════════ */
@@ -762,6 +849,29 @@
     (allMessages.length >= msgLimit
       ? `<button class="load-more-btn" onclick="loadMoreMessages()">Load more messages ↓</button>`
       : '');
+
+    /* Mouse spotlight + right-click context menu */
+    box.querySelectorAll('.msg-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+      card.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        const id = card.id.replace('card-', '');
+        const m  = allMessages.find(m => m.id === id);
+        if (!m) return;
+        showCtxMenu(e.clientX, e.clientY, [
+          { label: '📖 Open',       fn: () => openMessage(id) },
+          { label: '✅ Mark Read',   fn: () => markRead(id) },
+          { label: '⭐ Whitelist',   fn: () => vipEmail(m.email || ''), cls: 'gold' },
+          { label: '📋 Copy Email', fn: () => { navigator.clipboard.writeText(m.email||''); showToast('📋 Copied!'); } },
+          'sep',
+          { label: '🗑 Delete',     fn: () => delMsg(id), cls: 'danger' },
+        ]);
+      });
+    });
   }
 
   /* ══════════════ OPEN MESSAGE ══════════════ */
@@ -785,9 +895,11 @@
     av.style.background = avatarColor(m.name || '?');
     av.textContent      = initials(m.name || '?');
 
-    document.getElementById('v-name').innerHTML =
+    const vNameEl = document.getElementById('v-name');
+    vNameEl.innerHTML =
       `${m.flag ? flagImg(m.flag) : ''} ${x(m.name || 'Unknown')}` +
       (m.whitelisted ? ' <span style="color:var(--gold);font-size:.68rem;font-weight:800;">⭐ VIP</span>' : '');
+    decryptEl(vNameEl, m.name || 'Unknown');
     document.getElementById('v-email').textContent        = m.email || '';
     document.getElementById('v-time').textContent         = fmt(m.time);
     document.getElementById('v-sender-label').textContent = m.name || 'Unknown';
@@ -1085,6 +1197,8 @@
       <div class="stt"><span class="stt-val" style="color:var(--green);">${active}</span><span class="stt-lbl">Active Now</span></div>
       <div class="stt"><span class="stt-val" style="color:var(--accent);">${todayCt}</span><span class="stt-lbl">Today</span></div>
     `;
+    /* Traffic glow: pink inset glow when 3+ active visitors */
+    document.body.classList.toggle('traffic-high', active >= 3);
   }
 
   /* ══════════════ RENDER VISITOR LIST ══════════════ */
@@ -1118,6 +1232,28 @@
       }).join('')
     ).join('') +
     (allVisitors.length >= visitorLimit ? `<button class="load-more-btn" onclick="loadMoreVisitors()">Load more visitors ↓</button>` : '');
+
+    /* Mouse spotlight + right-click context menu */
+    box.querySelectorAll('.visitor-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+      card.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        const id = card.id.replace('vcard-', '');
+        const v  = allVisitors.find(v => v.id === id);
+        if (!v) return;
+        showCtxMenu(e.clientX, e.clientY, [
+          { label: '👁️ Open',       fn: () => openVisitor(id) },
+          { label: '📋 Copy IP',    fn: () => { navigator.clipboard.writeText(v.ip||''); showToast('📋 IP Copied!'); } },
+          'sep',
+          { label: '🚫 Block IP',   fn: () => { window._currentVisitorIP = v.ip; blockIP(); }, cls: 'danger' },
+          { label: '🗑 Delete',     fn: () => delVisitor(id), cls: 'danger' },
+        ]);
+      });
+    });
   }
 
   /* ══════════════ OPEN VISITOR ══════════════ */
@@ -1142,8 +1278,10 @@
     /* Store IP for block button */
     window._currentVisitorIP = v.ip || null;
 
-    document.getElementById('vv-location').innerHTML =
+    const vvLocEl = document.getElementById('vv-location');
+    vvLocEl.innerHTML =
       `${v.flag ? flagImg(v.flag) : '<span style="margin-right:4px;">🌍</span>'} ${x(v.city||'Unknown')}, ${x(v.region||'Unknown')}`;
+    decryptEl(vvLocEl, (v.city||'Unknown') + ', ' + (v.region||'Unknown'));
     document.getElementById('vv-country').textContent = v.country || 'Unknown';
     document.getElementById('vv-time').textContent    = fmt(v.time);
 
@@ -1305,6 +1443,55 @@
     }
     return '—';
   }
+
+  /* ══════════════ TERMINAL DECRYPT ANIMATION ══════════════ */
+  const DECRYPT_CHARS = '!@#$%01ABCDabcdXYZ?';
+  function decryptEl(el, finalText) {
+    if (!finalText) return;
+    const clean = finalText.replace(/[^\x20-\x7E]/g, '');
+    if (clean.length === 0) return;
+    let frame = 0;
+    const total = 22;
+    const iv = setInterval(() => {
+      frame++;
+      if (frame >= total) { clearInterval(iv); return; }
+      const prog = frame / total;
+      const out  = clean.split('').map((c, i) =>
+        i < Math.floor(prog * clean.length) ? c : DECRYPT_CHARS[Math.floor(Math.random() * DECRYPT_CHARS.length)]
+      ).join('');
+      const txts = Array.from(el.childNodes).filter(n => n.nodeType === 3);
+      if (txts.length > 0) txts[0].textContent = out;
+    }, 16);
+  }
+
+  /* ══════════════ CONTEXT MENU ══════════════ */
+  const ctxMenuEl = document.getElementById('ctx-menu');
+
+  function showCtxMenu(cx, cy, items) {
+    ctxMenuEl.innerHTML = items.map(item => {
+      if (item === 'sep') return '<div class="ctx-sep"></div>';
+      return `<div class="ctx-item ${item.cls||''}" data-lbl="${item.label.replace(/"/g,'')}">${item.label}</div>`;
+    }).join('');
+    ctxMenuEl._fns = {};
+    items.filter(i => i !== 'sep').forEach(item => { ctxMenuEl._fns[item.label] = item.fn; });
+    ctxMenuEl.querySelectorAll('.ctx-item').forEach(el => {
+      el.addEventListener('click', () => {
+        const fn = ctxMenuEl._fns[el.textContent.trim()];
+        hideCtxMenu();
+        if (fn) fn();
+      });
+    });
+    ctxMenuEl.style.left = cx + 'px'; ctxMenuEl.style.top = cy + 'px';
+    ctxMenuEl.classList.add('show');
+    const r = ctxMenuEl.getBoundingClientRect();
+    if (r.right  > window.innerWidth)  ctxMenuEl.style.left = (cx - r.width)  + 'px';
+    if (r.bottom > window.innerHeight) ctxMenuEl.style.top  = (cy - r.height) + 'px';
+  }
+
+  function hideCtxMenu() { ctxMenuEl.classList.remove('show'); }
+  document.addEventListener('click',       hideCtxMenu);
+  document.addEventListener('keydown',     e => { if (e.key === 'Escape') hideCtxMenu(); });
+  document.addEventListener('contextmenu', e => { if (!e.target.closest('.msg-card,.visitor-card')) hideCtxMenu(); });
 
   /* ══════════════ HELPERS ══════════════ */
   const COLORS = ['#4361ee','#7209b7','#f72585','#4cc9f0','#2d6a4f','#b5179e','#e63946'];
