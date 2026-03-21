@@ -70,12 +70,12 @@ document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
 // 4. SKILL BARS ANIMATION (ORIGINAL — PRESERVED)
 // ============================================================
 const skills = [
-  { name: "HTML/CSS",       level: 95 },
-  { name: "JavaScript",     level: 90 },
-  { name: "React/Next.js",  level: 88 },
-  { name: "Node.js",        level: 82 },
-  { name: "PostgreSQL",     level: 78 },
-  { name: "Technical SEO",  level: 92 }
+  { name: "HTML/CSS",              level: 95 },
+  { name: "JavaScript",            level: 90 },
+  { name: "Firebase Backend",      level: 85 },
+  { name: "PWA / Service Worker",  level: 88 },
+  { name: "Technical SEO",         level: 92 },
+  { name: "React.js (Learning)",   level: 45 }
 ];
 
 const container = document.getElementById("skill-bars-container");
